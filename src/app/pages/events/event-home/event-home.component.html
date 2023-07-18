@@ -1,0 +1,14 @@
+<mat-card class="item" *ngIf="event" (dblclick)="edit.emit(event)">
+
+    <div class="card card-image-cover">
+        <img src="https://source.unsplash.com/random/300x200" alt="" />
+        <div class="card-body">
+            <h2 class="card-header">{{event.title}}</h2>
+            <p class="text-content2">{{event.description}}</p>
+            <div class="card-footer">
+                <button class="btn-secondary btn">Learn More</button>
+            </div>
+        </div>
+    </div>
+    
+  </mat-card>

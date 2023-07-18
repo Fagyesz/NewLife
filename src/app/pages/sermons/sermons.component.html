@@ -1,0 +1,36 @@
+<div class="flex flex-col items-center w-screen">
+  <h1 class="text-2xl font-bold mb-8">A Live Stream Címe</h1>
+  <div class="w-9/12">
+    <div class="video-wrapper">
+      <iframe
+        class="rounded-lg"
+          width="560"
+          height="515"
+          src="https://www.youtube.com/embed/gh0TkRJanQ8"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+        <div class="my-5">
+
+          <h1 class="text-2xl font-bold mb-4">A Live Megjegyzése</h1>
+          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
+        </div>
+      <ng-template *ngIf="streamState == 1">
+        <p>Stream starting soon...</p>
+      </ng-template>
+      <ng-template *ngIf="streamState == 0">
+        <div><p>Stream offline</p></div>
+        
+      </ng-template>
+    </div>
+    
+    <div class="comment-section">
+      <!-- Comment section content goes here -->
+    </div>
+    <div class="additional-content">
+      <!-- Additional content goes here -->
+    </div>
+  </div>
+</div>

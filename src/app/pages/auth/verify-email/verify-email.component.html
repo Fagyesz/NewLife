@@ -1,0 +1,37 @@
+<div class="p-8">
+  <div class="bg-white bg-opacity-50 rounded-t-lg p-8 border-2">
+    <p class="text-center text-center pb-4 text-2xl text-gray-600 font-strong">
+      Thank You for Registering
+    </p>
+    <div class="formGroup" *ngIf="authService.userData as user">
+      <p class="text-center text-center text-2xl text-gray-400 font-light">
+        We have sent a confirmation email to
+        <strong class="text-gray-600">{{ user.email }}</strong
+        >.
+      </p>
+      <p class="text-center text-center text-2xl text-gray-400 font-light">
+        Please check your email and click on the link to verfiy your email
+        address.
+      </p>
+    </div>
+    <div></div>
+  </div>
+  <div class="bg-gray-100 rounded-b-lg py-12 px-4 lg:px-24 border-2 border-t-0">
+    <p class="text-center text-sm text-gray-500 font-light">
+      Please enter your email address to request a password reset.
+    </p>
+    <form class="mt-6">
+      <div class="relative">
+        <div class="flex items-center justify-center mt-8">
+          <button
+            class="mt-0 text-white py-2 px-4 uppercase rounded bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
+            (click)="authService.SendVerificationMail()"
+          >
+            <i class="fas fa-redo-alt"></i>
+            Resend Verification Email
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
