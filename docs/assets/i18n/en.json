@@ -1,0 +1,28 @@
+{
+
+  "navbar.home": "Home",
+  "navbar.about": "About",
+  "navbar.contact": "Contact",
+  "navbar.events": "Events",
+  "navbar.ministries": "Ministries",
+  "navbar.sermons": "Sermons",
+  "navbar.login": "Login",
+  "navbar.logout": "Logout",
+  "navbar.profile": "Profile",
+  "navbar.accountsettings": "Account Settings",
+  "nabar.logo": "New Life Baptist Church",
+
+  "contact.title": "Title",
+  "contact.description": "Aute magna irure deserunt veniam aliqua magna enim voluptate.",
+  "contact.name": "Name",
+  "contact.email": "Email",
+  "contact.phone": "Phone number",
+  "contact.message": "Message",
+  "contact.button": "Let's talk",
+  "contact.agreement": "By selecting this, you agree to our ",
+  "contact.ppolicy": "privacy policy.",
+
+  "ministries.title": "Our Team",
+  "ministries.description": "Explore the whole collection of open-source web components and elements built with the utility classes from Tailwind"
+
+}

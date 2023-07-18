@@ -1,0 +1,39 @@
+{
+  "navbar.home": "Főoldal",
+  "navbar.about": "Rólunk",
+  "navbar.contact": "Kapcsolat",
+  "navbar.events": "Események",
+  "navbar.ministries": "Szolgálataink",
+  "navbar.sermons": "Istentisztelet",
+  "navbar.login": "Bejelentkezés",
+  "navbar.logout": "Kijelentkezés",
+  "navbar.profile": "Profil",
+  "navbar.accountsettings": "Felhasználói beállítások",
+  "nabar.logo": "Új Élet Baptista Gyülekezet",
+
+  "contact.title": "Cím",
+  "contact.description": "Aute magna irure deserunt veniam aliqua magna enim voluptate.",
+  "contact.name": "Név",
+  "contact.email": "Email",
+  "contact.phone": "Telefonszám",
+  "contact.message": "Üzenet",
+  "contact.button": "Beszéljünk",
+  "contact.agreement": "Ezt kiválasztva elfogadod az",
+  "contact.ppolicy": "Adatvédelmi irányelveket",
+
+  "home.hero.title": "Főoldal címe",
+  "home.hero.donation.title": "Segíts hogy segíthessünk",
+  "home.hero.donation": "Támogatás",
+
+  "ministries.title": "A mi csapatunk",
+  "ministries.description": "Fedezze fel az összes nyílt forráskódú webkomponens és elem gyűjteményét, amelyek a Tailwind hasznos osztályokkal vannak kialakítva.",
+
+  "about.title": "Rólunk",
+  "about.description": "Minden amit tudnod kell rólunk",
+
+  "events.title": "Eseményeink",
+  "events.description": "Minden amit tudnod kell Az eseményeinkről",
+
+  "sermons.title": "Istentisztelet",
+  "sermons.description": "Minden amit tudnod kell az Istentiszteleteinkről"
+}
