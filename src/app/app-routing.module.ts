@@ -14,6 +14,7 @@ import { RegisterComponent } from './pages/auth/register/register.component';
 import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './pages/auth/verify-email/verify-email.component';
 import { DashComponent } from './pages/dash/dash.component';
+import { TestComponent } from './pages/test/test.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -28,16 +29,17 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'logout', redirectTo:"/logout"},
+  { path: 'logout', redirectTo: '/logout' },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'verify', component: VerifyEmailComponent },
   { path: 'dash', component: DashComponent },
+  { path: 'test', component: TestComponent },
   { path: '404', component: ErrorComponent },
   { path: '**', component: ErrorComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

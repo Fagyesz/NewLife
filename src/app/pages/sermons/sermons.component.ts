@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { YoutubeService } from 'src/app/services/youtube.service';
+
 import { DomSanitizer, SafeResourceUrl, Title } from '@angular/platform-browser';
 import { environment } from '../../../environment/environment';
 import { iif } from 'rxjs';
@@ -23,7 +23,7 @@ export class SermonsComponent {
   public SafeUrl: SafeResourceUrl|null=null;
 
   constructor(
-    private Youtube: YoutubeService,
+
     private sanitizer: DomSanitizer
   ) {}
 

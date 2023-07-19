@@ -9,7 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { NgFor } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
-/* pages */
+/* pages and components */
 import { HomeComponent } from './pages/home/home.component';
 import { NavComponent } from './components/nav/nav.component';
 import { AboutComponent } from './pages/about/about.component';
@@ -29,6 +29,10 @@ import { EventProfileComponent } from './pages/events/event-profile/event-profil
 import { EventHomeComponent } from './pages/events/event-home/event-home.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { VerifyEmailComponent } from './pages/auth/verify-email/verify-email.component';
+import { UploadFormComponent } from './components/fileManagment/upload-form/upload-form.component';
+import { UploadListComponent } from './components/fileManagment/upload-list/upload-list.component';
+import { UploadDetailsComponent } from './components/fileManagment/upload-details/upload-details.component';
 
 /* material */
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -36,7 +40,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatCardModule } from '@angular/material/card';
-
 
 /* translation */
 import { TranslationModule } from './translation.module';
@@ -50,7 +53,7 @@ import { CarouselsComponent } from './components/carousels/carousels.component';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 
 /* ng-material */
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 /* Firebase */
 
@@ -59,16 +62,23 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { provideFirebaseApp, initializeApp, getApp } from '@angular/fire/app';
+import {
+  ReCaptchaV3Provider,
+  initializeAppCheck,
+  provideAppCheck,
+} from '@angular/fire/app-check';
+
 import { environment } from '../environment/environment';
-import { VerifyEmailComponent } from './pages/auth/verify-email/verify-email.component';
 
 /* services */
-import { AuthService } from "./services/auth.service";
+import { AuthService } from './services/auth/auth.service';
 import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-password.component';
 
 /* route guard */
 import { authGuard } from './guards/auth.guard';
 import { DashComponent } from './pages/dash/dash.component';
+import { TestComponent } from './pages/test/test.component';
 
 @NgModule({
   declarations: [
@@ -97,14 +107,16 @@ import { DashComponent } from './pages/dash/dash.component';
     VerifyEmailComponent,
     ForgotPasswordComponent,
     DashComponent,
-    
-    
+    UploadFormComponent,
+    UploadListComponent,
+    UploadDetailsComponent,
+    TestComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    HttpClientModule, 
+    HttpClientModule,
     MatMenuModule,
     MatIconModule,
     MatToolbarModule,
@@ -122,10 +134,14 @@ import { DashComponent } from './pages/dash/dash.component';
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,
-    
-
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAppCheck(() =>
+      initializeAppCheck(getApp(), {
+        provider: new ReCaptchaV3Provider(environment.ReCapchaSiteKey),
+      })
+    ),
   ],
   providers: [AuthService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

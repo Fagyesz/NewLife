@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AppCheck } from '@angular/fire/app-check';
 import { TranslateService } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-root',
@@ -9,7 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class AppComponent {
   isLoading: boolean = false;
   loggedIn: boolean = false;
-
+  private appCheck: AppCheck = inject(AppCheck);
 
   constructor(private translate: TranslateService,) {
     translate.setDefaultLang('hu'); // Set default language

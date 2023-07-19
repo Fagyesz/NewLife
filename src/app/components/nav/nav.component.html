@@ -1,5 +1,5 @@
 <div class="Wraper">
-  <div class="navbar rounded-lg navbar-floating  "*ngIf="authService.userData as user">
+  <div class="navbar rounded-lg navbar-floating  ">
     <div class="navbar-start">
       <div class="avatar avatar-ring avatar-md">
         <div class="dropdown-container">
@@ -64,7 +64,7 @@
           </div>
         </label> -->
 
-        <div class="avatar avatar-ring avatar-md">
+        <div class="avatar avatar-ring avatar-md "*ngIf="authService.userData as user">
           <div class="dropdown-container">
             <div class="dropdown">
               <label

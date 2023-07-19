@@ -13,8 +13,8 @@ export const environment = {
     channelId:"UC3GbgMOUrfVnipHXvXQYFkA",
     /* test id */
     /* channelId:"UCZ13TzL1O4nfC30fxua-tSA" */
-
-
+    ReCapchaSiteKey:"6LeRyzcnAAAAAGVLs_mlz6ROw2Xq11X4cOMdWfiG",
+    ReCapchaSecretKey:"6LeRyzcnAAAAAM2do9QN_sge4BtMMbgiTAQSv0xw",
     firebase : {
 
       apiKey: "AIzaSyBSTNuB88ZpzTKG0_AXe41YaYWLp2ElnLY",
@@ -31,9 +31,10 @@ export const environment = {
     
       appId: "1:708224628364:web:812f341acb661d6e6c6da9",
     
-      measurementId: "G-K496GHWMXH"
+      measurementId: "G-K496GHWMXH",
     
     }
+   
   };
   
   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
