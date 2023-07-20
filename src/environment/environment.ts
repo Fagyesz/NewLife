@@ -9,8 +9,6 @@ export const environment = {
     /* channelId:"UCZ13TzL1O4nfC30fxua-tSA" */
     reCAPTCHA3Site:"6LfqBT0nAAAAAHaIX7iU10XLY-uPhPsl3gX1DZRk",
     reCAPTCHA3Secret:"6LfqBT0nAAAAAAKr1Uy1dvGx6I2Mnzgh0_nIaZfv",
-    ReCapchaSiteKey:"6LeRyzcnAAAAAGVLs_mlz6ROw2Xq11X4cOMdWfiG",
-    ReCapchaSecretKey:"6LeRyzcnAAAAAM2do9QN_sge4BtMMbgiTAQSv0xw",
     //apiKey: "AIzaSyBSTNuB88ZpzTKG0_AXe41YaYWLp2ElnLY",
     firebase : {
 
