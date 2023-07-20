@@ -22,8 +22,9 @@ export class AppComponent {
   }
 
   ngOnInit() {
+    
     // Simulate an API call or any asynchronous operation
-    setTimeout(() => {
+        setTimeout(() => {
       this.isLoading = false;
     }, 0.1);
 

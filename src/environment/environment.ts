@@ -1,12 +1,6 @@
 export const environment = {
 
     production: false,
-    /*  
-    
-    
-    f.ff  - AIzaSyARX5uDclRE65EMGtH1LUmfQ11V_wYQj1k
-    */
-  
     apiKey: 'AIzaSyARX5uDclRE65EMGtH1LUmfQ11V_wYQj1k',
 
     /* live id */
