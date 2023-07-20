@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject} from '@angular/core';
+import { AppCheck } from '@angular/fire/app-check';
 
 @Component({
   selector: 'app-test',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./test.component.scss']
 })
 export class TestComponent {
-
+  private appCheck: AppCheck = inject(AppCheck);
 }
