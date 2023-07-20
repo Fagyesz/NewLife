@@ -7,5 +7,5 @@ import { AppCheck } from '@angular/fire/app-check';
   styleUrls: ['./test.component.scss']
 })
 export class TestComponent {
-  private appCheck: AppCheck = inject(AppCheck);
+
 }

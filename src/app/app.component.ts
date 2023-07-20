@@ -11,7 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class AppComponent {
   isLoading: boolean = false;
   loggedIn: boolean = false;
-  private appCheck: AppCheck = inject(AppCheck);
+
 
   constructor(private translate: TranslateService,) {
     translate.setDefaultLang('hu'); // Set default language
