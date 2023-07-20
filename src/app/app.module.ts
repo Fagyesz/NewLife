@@ -138,6 +138,7 @@ import { TestComponent } from './pages/test/test.component';
     provideAppCheck(() =>
       initializeAppCheck(getApp(), {
         provider: new ReCaptchaV3Provider(environment.ReCapchaSiteKey),
+        isTokenAutoRefreshEnabled: true,
       })
     ),
   ],
