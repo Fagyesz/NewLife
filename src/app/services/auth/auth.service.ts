@@ -1,4 +1,4 @@
-import { Injectable, NgZone, inject ,Component} from '@angular/core';
+import { Injectable, NgZone, inject, Component } from '@angular/core';
 import { User } from '../../models/user/user';
 /* import { FireUser } from 'firebase/compat/auth'; */
 import * as auth from 'firebase/auth';
@@ -16,8 +16,8 @@ import { Observable, map } from 'rxjs';
 export class AuthService {
   userData: any; // Save logged in user data
   authState: Observable<User | null> | undefined;
-  loggedIn:boolean=false;
-  
+  loggedIn: boolean = false;
+
   constructor(
     public afs: AngularFirestore, // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service
@@ -30,11 +30,10 @@ export class AuthService {
     this.afAuth.authState.subscribe((user) => {
       if (user) {
         this.userData = user;
-        
+
         localStorage.setItem('user', JSON.stringify(this.userData));
         JSON.parse(localStorage.getItem('user')!);
       } else {
-        
         localStorage.setItem('user', 'null');
         JSON.parse(localStorage.getItem('user')!);
       }
@@ -125,6 +124,13 @@ export class AuthService {
       displayName: user.displayName,
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
+      roles: {
+        admin: false,
+        organizer: {
+          organizerId: null,
+          events: {},
+        },
+      },
     };
     return userRef.set(userData, {
       merge: true,

@@ -7,9 +7,9 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "prod":"npm run build-prod && npm run 404",
+    "prod":"npm run build-prod &&npm run cname  && npm run 404",
     "build-prod":"ng build --configuration production",
-    "cname":"echo pezz.hu >CNAME",
+    "cname":"echo pezz.hu >docs\\CNAME",
     "404":"copy docs\\index.html docs\\404.html"
     
   },

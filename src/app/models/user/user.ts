@@ -1,7 +1,14 @@
 export interface User {
-    uid: string;
-    email: string;
-    displayName: string | null;
-    photoURL: string | null;
-    emailVerified: boolean;
- }
+  uid: string;
+  email: string;
+  displayName: string | null;
+  photoURL: string | null;
+  emailVerified: boolean;
+  roles: {
+    admin: boolean;
+    organizer: {
+      organizerId: string | null;
+      events: {};
+    };
+  };
+}

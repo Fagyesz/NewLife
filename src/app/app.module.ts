@@ -137,7 +137,7 @@ import { TestComponent } from './pages/test/test.component';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAppCheck(() =>
       initializeAppCheck(getApp(), {
-        provider: new ReCaptchaV3Provider(environment.ReCapchaSiteKey),
+        provider: new ReCaptchaV3Provider(environment.ReCapchaSecretKey),
       })
     ),
   ],
