@@ -6,7 +6,12 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "prod":"npm run build-prod && npm run 404",
+    "build-prod":"ng build --configuration production",
+    "cname":"echo pezz.hu >CNAME",
+    "404":"copy docs\\index.html docs\\404.html"
+    
   },
   "private": true,
   "dependencies": {
