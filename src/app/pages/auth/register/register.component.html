@@ -19,7 +19,8 @@
       </button>
       <button
         class="flex items-center py-2 px-4 text-sm uppercase rounded bg-white hover:bg-gray-100 text-indigo-500 border border-transparent hover:border-transparent hover:text-gray-700 shadow-md hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
-        (click)="authService.GoogleAuth()">
+        (click)="authService.GoogleAuth()"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="w-6 h-6 mr-3"
@@ -51,7 +52,7 @@
   <p class="text-center text-sm text-gray-500 font-light">
     Or sign up with credentials
   </p>
-  <form class="mt-6">
+  <form class="mt-6" >
     <div class="relative mt-3">
       <input
         class="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
@@ -78,10 +79,36 @@
     <div class="relative mt-3">
       <input
         class="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
-        id="username"
-        type="text"
-        placeholder="Password"
+        id="password"
+        [type]="passwordType"
+        [placeholder]="placeholderPassword"
+        autocomplete="on"
         #userPwd
+        (keyup)="checkPasswordStrength(userPwd.value)"
+        required
+        
+      />
+      <div class="absolute left-0 inset-y-0 flex items-center">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-7 w-7 ml-3 text-gray-400 p-1"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          (click)="togglePassword()"
+        >
+          <path
+            d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z"
+          />
+        </svg>
+      </div>
+    </div>
+    <div class="relative mt-3">
+      <input
+        class="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
+        id="password_confirm"
+        [type]="password2Type"
+        [placeholder]="placeholderPassword2"
+        #userPwdConfirm
         required
       />
       <div class="absolute left-0 inset-y-0 flex items-center">
@@ -90,6 +117,7 @@
           class="h-7 w-7 ml-3 text-gray-400 p-1"
           viewBox="0 0 20 20"
           fill="currentColor"
+          (click)="togglePassword2()"
         >
           <path
             d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z"
@@ -97,22 +125,57 @@
         </svg>
       </div>
     </div>
-
-    <p class="mt-4 italic text-gray-500 font-light text-xs">
-      Password strength: <span class="font-bold text-green-400">strong</span>
+    <password-strength-meter [password]="pw"></password-strength-meter>
+    <p class="mt-4 italic text-gray-500 font-light text-xs" translate>
+      register.strength
+      <span *ngIf="strength === 'weak'" class="font-bold text-red-400" translate
+        >register.weak</span
+      >
+      <span
+        *ngIf="strength === 'medium'"
+        class="font-bold text-yellow-400"
+        translate
+        >register.medium</span
+      >
+      <span
+        *ngIf="strength === 'strong'"
+        class="font-bold text-green-400"
+        translate
+        >register.strong</span
+      >
     </p>
+
     <div class="mt-4 flex flex-col items-center text-gray-500">
       <label class="flex items-center cursor-pointer gap-2">
-        <input type="checkbox" class="checkbox" />
-        <span>
-          I agree with the
-          <a class="text-indigo-400 hover:text-indigo-500">Privacy Policy</a>
+        <label class="check-container">
+          <input
+            type="checkbox"
+            id="policy"
+            name="policy"
+            class="mr-3"
+            [checked]="policy"
+            (change)="policy = !policy"
+          />
+          <svg viewBox="0 0 64 64" height="1em" width="1em">
+            <path
+              d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"
+              pathLength="575.0541381835938"
+              class="path"
+            ></path>
+          </svg>
+        </label>
+        <span translate>
+          register.agreement
+          <a class="text-indigo-400 hover:text-indigo-500" translate
+            >register.policy</a
+          >
         </span>
       </label>
 
       <button
         class="mt-8 text-white py-2 px-4 uppercase rounded bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
-        (click)="authService.SignUp(userEmail.value, userPwd.value)">
+        (click)="authService.SignUp(userEmail.value, userPwd.value)"
+      >
         Create Account
       </button>
     </div>

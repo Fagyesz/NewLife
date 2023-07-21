@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AppCheck } from '@angular/fire/app-check';
 import { TranslateService } from '@ngx-translate/core';
+import { environment } from 'src/environment/environment';
 
 
 @Component({
@@ -11,10 +12,10 @@ import { TranslateService } from '@ngx-translate/core';
 export class AppComponent {
   isLoading: boolean = false;
   loggedIn: boolean = false;
-
+  defaultLang:string=environment.DefaultLang;
 
   constructor(private translate: TranslateService,) {
-    translate.setDefaultLang('hu'); // Set default language
+    translate.setDefaultLang(this.defaultLang); // Set default language
   }
 
   switchLanguage(lang: string) {

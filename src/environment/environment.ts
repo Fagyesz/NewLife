@@ -1,5 +1,5 @@
 export const environment = {
-
+    DefaultLang:"hu",
     production: false,
     apiKey: 'AIzaSyARX5uDclRE65EMGtH1LUmfQ11V_wYQj1k',
 

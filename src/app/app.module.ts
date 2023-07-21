@@ -8,6 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { NgFor } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 /* pages and components */
 import { HomeComponent } from './pages/home/home.component';
@@ -33,7 +34,7 @@ import { VerifyEmailComponent } from './pages/auth/verify-email/verify-email.com
 import { UploadFormComponent } from './components/fileManagment/upload-form/upload-form.component';
 import { UploadListComponent } from './components/fileManagment/upload-list/upload-list.component';
 import { UploadDetailsComponent } from './components/fileManagment/upload-details/upload-details.component';
-
+import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
 /* material */
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -79,6 +80,8 @@ import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-pas
 import { authGuard } from './guards/auth.guard';
 import { DashComponent } from './pages/dash/dash.component';
 import { TestComponent } from './pages/test/test.component';
+import { PasswordStrengthComponent } from './components/password-strength/password-strength.component';
+
 
 @NgModule({
   declarations: [
@@ -111,6 +114,8 @@ import { TestComponent } from './pages/test/test.component';
     UploadListComponent,
     UploadDetailsComponent,
     TestComponent,
+    PasswordStrengthComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -141,6 +146,8 @@ import { TestComponent } from './pages/test/test.component';
         isTokenAutoRefreshEnabled: true,
       })
     ),
+    ReactiveFormsModule,
+    PasswordStrengthMeterModule.forRoot(),
   ],
   providers: [AuthService],
   bootstrap: [AppComponent],

@@ -1,4 +1,20 @@
 {
+  "Password":"Jelszó",
+
+  "login.title":"Belépés social médiával",
+  "login.subtitle":"vagy belépés hitelesítő adatokkal",
+  "login.remember":"Emlékezz rám",
+  "login.signin":"Bejelentkezés",
+  "login.forget":"Elfelejtett jelszó? ",
+  "login.singup":"Vagy regisztálj itt",
+
+  "register.agreement":"Ezt kiválasztva elfogadod az",
+  "register.policy":"adatvédelmi irányelveket",
+  "register.strength":"Jelszó erőssége:",
+  "register.weak":"gyenge",
+  "register.medium":"közepes",
+  "register.strong":"erős",
+
   "navbar.home": "Főoldal",
   "navbar.about": "Rólunk",
   "navbar.contact": "Kapcsolat",

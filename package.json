@@ -2,16 +2,15 @@
   "name": "newlife",
   "version": "0.0.0",
   "scripts": {
+    "404": "copy docs\\index.html docs\\404.html",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "prod":"npm run build-prod &&npm run cname  && npm run 404",
-    "build-prod":"ng build --configuration production",
-    "cname":"echo pezz.hu >docs\\CNAME",
-    "404":"copy docs\\index.html docs\\404.html"
-    
+    "prod": "npm run build-prod &&npm run cname  && npm run 404",
+    "build-prod": "ng build --configuration production",
+    "cname": "echo pezz.hu >docs\\CNAME"
   },
   "private": true,
   "dependencies": {
@@ -33,6 +32,9 @@
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
     "@popperjs/core": "^2.11.6",
+    "@zxcvbn-ts/core": "^2.2.1",
+    "@zxcvbn-ts/language-en": "^2.1.0",
+    "angular-password-strength-meter": "^6.0.0",
     "bootstrap": "^5.2.3",
     "firebase": "^9.23.0",
     "ngx-spinner": "^16.0.2",
