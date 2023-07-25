@@ -34,7 +34,6 @@ import { VerifyEmailComponent } from './pages/auth/verify-email/verify-email.com
 import { UploadFormComponent } from './components/fileManagment/upload-form/upload-form.component';
 import { UploadListComponent } from './components/fileManagment/upload-list/upload-list.component';
 import { UploadDetailsComponent } from './components/fileManagment/upload-details/upload-details.component';
-import { PasswordStrengthMeterModule } from 'angular-password-strength-meter';
 /* material */
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -147,7 +146,6 @@ import { PasswordStrengthComponent } from './components/password-strength/passwo
       })
     ),
     ReactiveFormsModule,
-    PasswordStrengthMeterModule.forRoot(),
   ],
   providers: [AuthService],
   bootstrap: [AppComponent],

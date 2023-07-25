@@ -1,26 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild, ElementRef, AfterViewInit  } from '@angular/core';
 import { AuthService } from '../../../services/auth/auth.service';
 import { environment } from 'src/environment/environment';
-import { IPasswordStrengthMeterService } from 'angular-password-strength-meter';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-  policy: boolean = false;
-  strength: string = 'weak';
+  
+  registerForm:FormGroup;
+
+  @ViewChild('userEmail', { static: false }) userEmailInput: ElementRef | undefined;
+  @ViewChild('userPwd', { static: false }) userPwdInput: ElementRef| undefined;
+  @ViewChild('userPwdConfirm', { static: false }) userPwdConfirmInput: ElementRef| undefined;
+
+  submitted = false;
+  isInvalid = false;
+  passwordType = 'password';
   placeholderPassword: string = '';
   placeholderPassword2: string = '';
-  passwordType: string = 'password';
-  password2Type: string = 'password';
-  email: string | null = null;
-  pw: string = 'test';
-  pw2: string | null = null;
-
-  checkPw(value: string) {
-    this.pw = value;
-  }
 
   setLang() {
     switch (environment.DefaultLang) {
@@ -37,50 +42,87 @@ export class RegisterComponent implements OnInit {
         break;
     }
   }
-  togglePassword() {
-    this.checkPasswordStrength(this.pw);
-    console.log(this.pw);
-    if (this.passwordType === 'password') {
-      this.passwordType = 'text';
-    } else {
-      this.passwordType = 'password';
-    }
-  }
-  togglePassword2() {
-    if (this.password2Type === 'password') {
-      this.password2Type = 'text';
-    } else {
-      this.password2Type = 'password';
-    }
-  }
+
   constructor(
     public authService: AuthService,
-    public meter: IPasswordStrengthMeterService
-  ) {}
+    private formBuilder: FormBuilder
+  ) {this.registerForm = this.formBuilder.group(
+    {
+      email: [
+        '',
+        {
+          validators: [
+            Validators.required,
+            Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'),
+            
+            
+          ],
+          updateOn: 'blur', // Set updateOn to 'blur' for the email form control
+        },
+      ],
+      password: [
+        '',
+        {
+          validators: [
+            Validators.required,
+            Validators.minLength(6),
+            Validators.maxLength(40),
+            Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()])?.{8,}$/),
+          ],
+          updateOn: 'blur',
+        },
+      ],
+      confirmPassword: [
+        '',
+        {
+          validators: [Validators.required,
+            Validators.minLength(6),
+            Validators.maxLength(40),
+            Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/),],
+          updateOn: 'blur',
+        },
+      ],
+      acceptTerms: [false, Validators.requiredTrue],
+    },
+    {
+      validators: [this.matchPasswords.bind(this)],
+    }
+  );
+}
+
   ngOnInit() {
     this.setLang();
   }
-  checkPasswordStrength(password: string): void {
-    this.pw = password;
-    switch (this.meter.score(this.pw)) {
-      case 0:
-        this.strength = 'weak';
-        break;
-      case 1:
-        this.strength = 'weak';
-        break;
-      case 2:
-        this.strength = 'medium';
-        break;
-      case 3:
-        this.strength = 'medium';
-        break;
-      case 4:
-        this.strength = 'strong';
-        break;
 
-      default:
-        break;
+  get f(): { [key: string]: AbstractControl } {
+    return this.registerForm.controls;
+  }
+
+  onSubmit(): void {
+    this.submitted = true;
+
+    if (this.registerForm.invalid) {
+      return;
+    }
+
+    console.log(JSON.stringify(this.registerForm.value, null, 2));
+  }
+
+  onReset(): void {
+    this.submitted = false;
+    this.registerForm.reset();
+  }
+
+  matchPasswords(control: AbstractControl): { [key: string]: any } | null {
+    const password = control.get('password')?.value;
+    const confirmPassword = control.get('confirmPassword')?.value;
+
+    if (password !== confirmPassword) {
+      control.get('confirmPassword')?.setErrors({ mismatch: true });
+      return { mismatch: true };
+    } else {
+      return null;
     }
   }
+  
 }
