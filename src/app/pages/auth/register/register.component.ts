@@ -1,4 +1,10 @@
-import { Component, OnInit,ViewChild, ElementRef, AfterViewInit  } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,
+} from '@angular/core';
 import { AuthService } from '../../../services/auth/auth.service';
 import { environment } from 'src/environment/environment';
 import {
@@ -14,12 +20,18 @@ import {
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-  
-  registerForm:FormGroup;
+  registerForm: FormGroup;
 
-  @ViewChild('userEmail', { static: false }) userEmailInput: ElementRef | undefined;
-  @ViewChild('userPwd', { static: false }) userPwdInput: ElementRef| undefined;
-  @ViewChild('userPwdConfirm', { static: false }) userPwdConfirmInput: ElementRef| undefined;
+  @ViewChild('userEmail', { static: false }) userEmailInput:
+    | ElementRef
+    | undefined;
+  @ViewChild('userPwd', { static: false }) userPwdInput: ElementRef | undefined;
+  @ViewChild('userPwdConfirm', { static: false }) userPwdConfirmInput:
+    | ElementRef
+    | undefined;
+  @ViewChild('acceptTerms', { static: false }) acceptTerms:
+    | ElementRef
+    | undefined;
 
   submitted = false;
   isInvalid = false;
@@ -46,49 +58,54 @@ export class RegisterComponent implements OnInit {
   constructor(
     public authService: AuthService,
     private formBuilder: FormBuilder
-  ) {this.registerForm = this.formBuilder.group(
-    {
-      email: [
-        '',
-        {
-          validators: [
-            Validators.required,
-            Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'),
-            
-            
-          ],
-          updateOn: 'blur', // Set updateOn to 'blur' for the email form control
-        },
-      ],
-      password: [
-        '',
-        {
-          validators: [
-            Validators.required,
-            Validators.minLength(6),
-            Validators.maxLength(40),
-            Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()])?.{8,}$/),
-          ],
-          updateOn: 'blur',
-        },
-      ],
-      confirmPassword: [
-        '',
-        {
-          validators: [Validators.required,
-            Validators.minLength(6),
-            Validators.maxLength(40),
-            Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/),],
-          updateOn: 'blur',
-        },
-      ],
-      acceptTerms: [false, Validators.requiredTrue],
-    },
-    {
-      validators: [this.matchPasswords.bind(this)],
-    }
-  );
-}
+  ) {
+    this.registerForm = this.formBuilder.group(
+      {
+        email: [
+          '',
+          {
+            validators: [
+              Validators.required,
+              Validators.pattern(
+                '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'
+              ),
+            ],
+            updateOn: 'blur', // Set updateOn to 'blur' for the email form control
+          },
+        ],
+        password: [
+          '',
+          {
+            validators: [
+              Validators.required,
+              Validators.minLength(6),
+              Validators.maxLength(40),
+              Validators.pattern(
+                /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()])?.{8,}$/
+              ),
+            ],
+            updateOn: 'blur',
+          },
+        ],
+        confirmPassword: [
+          '',
+          {
+            validators: [
+              Validators.required,
+              Validators.minLength(6),
+              Validators.maxLength(40),
+              Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/),
+            ],
+            updateOn: 'blur',
+          },
+        ],
+        acceptTerms: [false, Validators.requiredTrue],
+      },
+      {
+        validators: [this.matchPasswords.bind(this)],
+      }
+    );
+  }
 
   ngOnInit() {
     this.setLang();
@@ -105,7 +122,7 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    console.log(JSON.stringify(this.registerForm.value, null, 2));
+    /*  console.log(JSON.stringify(this.registerForm.value, null, 2)); */
   }
 
   onReset(): void {
@@ -124,5 +141,4 @@ export class RegisterComponent implements OnInit {
       return null;
     }
   }
-  
 }

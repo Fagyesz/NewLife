@@ -49,7 +49,7 @@
   </div>
 </div>
 <div class="bg-gray-100 rounded-b-lg py-12 px-4 lg:px-24 border-2 border-t-0">
-  <p class="text-center text-sm text-gray-500 font-light">
+  <p class="text-center text-sm text-gray-500 font-light" translate>
     Or sign up with credentials
   </p>
 
@@ -89,26 +89,19 @@
       class="invalid-feedback"
     >
       <div
-        class="-mt-2 p-2 pt-4 bg-white appearance-none border border-red-500 shadow-sm rounded-md w-full py-3 text-gray-600 leading-tight text-center"
+        class="-mt-1 rounded-md appearance-none border border-red-500 bg-red-50 text-red-500 shadow-sm w-full py-3 leading-tight text-center"
         *ngIf="f['email'].errors['pattern']"
       >
-        <p>Invalid email format.</p>
+        <p translate>Invalid email format.</p>
       </div>
     </div>
-    <!-- <div
-  *ngIf=" f['email'].errors && f['email'].touched"
-  class="invalid-feedback"
->
-  <div *ngIf="f['email'].errors['required']">Email is required</div>
-  <div *ngIf="f['email'].errors['pattern']">Email is invalid</div>
-</div> -->
 
     <!-- password  -->
     <div class="form-group relative mt-3">
       <input
         class="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline invalid:[&:not(:placeholder-shown):not(:focus)]:border-red-500 peer"
         type="password"
-        placeholder="password"
+        [placeholder]="placeholderPassword"
         autocomplete="on"
         formControlName="password"
         #userPwd
@@ -138,11 +131,11 @@
       class="invalid-feedback"
     >
       <div
-        class="-mt-2 p-2 pt-4 bg-white appearance-none border border-red-500 shadow-sm rounded-md w-full py-3 text-gray-600 leading-tight text-center"
+        class="-mt-1 appearance-none border border-red-500 bg-red-50 text-red-500 shadow-sm rounded-md w-full py-3 leading-tight text-center"
         *ngIf="f['password'].errors['pattern']"
       >
-        <p>Your password must be at least 8 characters long</p>
-        <p>and include at least one letter and one digit.</p>
+        <p translate>Your password must be at least 8 characters long</p>
+        <p translate>and include at least one letter and one digit.</p>
       </div>
     </div>
 
@@ -152,13 +145,14 @@
         class="appearance-none border pl-12 border-gray-100 shadow-sm focus:shadow-md focus:placeholder-gray-600 transition rounded-md w-full py-3 text-gray-600 leading-tight focus:outline-none focus:ring-gray-600 focus:shadow-outline"
         id="password_confirm"
         type="password"
-        placeholder="confirmPassword"
+        [placeholder]="placeholderPassword2"
         #userPwdConfirm
         formControlName="confirmPassword"
         [ngClass]="{ 'is-invalid': submitted && f['confirmPassword'].errors }"
         [class.invalid-input]="
           f['confirmPassword'].errors && f['confirmPassword'].touched
         "
+        title="Passwords do not match"
       />
 
       <!-- password error -->
@@ -182,20 +176,26 @@
       class="invalid-feedback"
     >
       <div
-        class="-mt-2 p-2 pt-4 bg-white appearance-none border border-red-500 shadow-sm rounded-md w-full py-3 text-gray-600 leading-tight text-center"
+        class="-mt-1 appearance-none border border-red-500 bg-red-50 text-red-500 shadow-sm rounded-md w-full py-3 leading-tight text-center"
         *ngIf="f['confirmPassword'].errors?.['mismatch']"
-      >
+        translate>
         Passwords do not match
       </div>
     </div>
 
-    <!-- policy -->
+    <!-- acceptTerms -->
     <div
       class="form-group form-check mt-4 flex flex-col items-center text-gray-500"
     >
       <label class="flex items-center cursor-pointer gap-2">
         <label class="check-container">
-          <input type="checkbox" id="policy" name="policy" class="mr-3" />
+          <input
+           type="checkbox" 
+           id="acceptTerms" 
+           name="acceptTerms"
+           class="mr-3" 
+           formControlName="acceptTerms"
+           />
           <svg viewBox="0 0 64 64" height="1em" width="1em">
             <path
               d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16"
@@ -214,10 +214,11 @@
 
       <!-- register button -->
       <button
-        class="mt-8 text-white py-2 px-4 uppercase rounded bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5 group-invalid:pointer-events-none group-invalid:opacity-30"
+        class="mt-8 text-white py-2 px-4 uppercase rounded bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5 disabled:opacity-50 disabled:pointer-events-none"
         (click)="authService.SignUp(userEmail.value, userPwd.value)"
+        [ngClass]="{ disabled: !registerForm.valid }"
         [disabled]="!registerForm.valid"
-      >
+      translate>
         Create Account
       </button>
     </div>
