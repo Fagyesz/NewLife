@@ -21,6 +21,12 @@
     "no-inline-styles": "off",
     "axe/name-role-value": "off",
     "axe/parsing": "off",
-    "button-type": "off"
+    "button-type": "off",
+    "axe/aria": [
+      "default",
+      {
+        "aria-progressbar-name": "off"
+      }
+    ]
   }
 }

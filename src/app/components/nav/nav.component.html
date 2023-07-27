@@ -1,32 +1,17 @@
 <div class="Wraper">
-  <div class="navbar rounded-lg navbar-floating  ">
+  <div class="navbar rounded-lg navbar-floating">
     <div class="navbar-start">
       <div class="avatar avatar-ring avatar-md">
-        <div class="dropdown-container">
-          <div class="dropdown">
-            <label
-              class="btn btn-ghost flex cursor-pointer px-0"
-              tabindex="0"
-            >
-              <img
-                src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
-                alt="avatar"
-              />
-            </label>
-            <div class="dropdown-menu dropdown-menu-bottom-right lg:hidden">
-              
-              <a class="dropdown-item text-sm" href="/about" translate>navbar.about</a>
-              <a class="dropdown-item text-sm" href="/contact" translate>navbar.contact</a>
-              <a class="dropdown-item text-sm" href="/events" translate>navbar.events</a>
-              <a class="dropdown-item text-sm" href="/ministries" translate>navbar.ministries</a>
-              <a class="dropdown-item text-sm" href="/sermons" translate>navbar.sermons</a>
-            </div>
-          </div>
-        </div>
+        <label class="btn btn-ghost flex cursor-pointer px-0" tabindex="0">
+          <img
+            src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
+            alt="avatar"
+          />
+        </label>
       </div>
       <a class="navbar-item" href="/" translate>nabar.logo</a>
     </div>
-    <div class="navbar-center hidden lg:flex">
+    <div class="navbar-center hidden lg:flex divide-x">
       <a class="navbar-item" href="/" translate>navbar.home</a>
       <a class="navbar-item" href="/about" translate>navbar.about</a>
       <a class="navbar-item" href="/contact" translate>navbar.contact</a>
@@ -34,54 +19,87 @@
       <a class="navbar-item" href="/ministries" translate>navbar.ministries</a>
       <a class="navbar-item" href="/sermons" translate>navbar.sermons</a>
     </div>
-    
 
     <div class="navbar-end">
-      <ng-container *ngIf="loggedIn; else loginButtonTemplate">
-        <!-- <label class="mr-10">
-          <input
-            class="toggle-checkbox"
-            type="checkbox"
-            [checked]="!isLightTheme"
-            (change)="onThemeSwitchChange()"
-          />
-          <div class="toggle-slot">
-            <div class="sun-icon-wrapper">
-              <div
-                class="iconify sun-icon"
-                data-icon="feather-sun"
-                data-inline="false"
-              ></div>
+      <div class="dropdown-container px-1 mx-1 lg:hidden">
+        <div class="dropdown">
+          <label
+            class="btn btn-ghost flex cursor-pointer px-0 w-10"
+            tabindex="0"
+          >
+            <mat-icon>menu</mat-icon>
+          </label>
+          <div
+            class="dropdown-menu dropdown-menu-bottom-left divide-y-2 divide-gray-200 hover:divide-gray-600"
+          >
+            <ng-container *ngIf="!loggedIn">
+              <div class="divide-y">
+                <a
+                  class="dropdown-item text-sm"
+                  href="/login"
+                  translate
+                  >navbar.login</a
+                >
+                <a
+                  class="dropdown-item text-sm"
+                  href="/register"
+                  translate
+                  >navbar.singup</a
+                >
+              </div>
+            </ng-container>
+            <div class="others divide-y">
+              <a class="dropdown-item text-sm" href="/about" translate
+                >navbar.about</a
+              >
+              <a class="dropdown-item text-sm" href="/contact" translate
+                >navbar.contact</a
+              >
+              <a class="dropdown-item text-sm" href="/events" translate
+                >navbar.events</a
+              >
+              <a class="dropdown-item text-sm" href="/ministries" translate
+                >navbar.ministries</a
+              >
+              <a class="dropdown-item text-sm" href="/sermons" translate
+                >navbar.sermons</a
+              >
             </div>
-            <div class="toggle-button"></div>
-            <div class="moon-icon-wrapper">
-              <div
-                class="iconify moon-icon"
-                data-icon="feather-moon"
-                data-inline="false"
-              ></div>
-            </div>
+            <ng-container *ngIf="loggedIn">
+              <a
+                class="dropdown-item text-sm"
+                (click)="authService.SignOut()"
+                translate
+                >navbar.logout</a
+              >
+            </ng-container>
           </div>
-        </label> -->
-
-        <div class="avatar avatar-ring avatar-md "*ngIf="authService.userData as user">
+        </div>
+      </div>
+      <ng-container *ngIf="loggedIn">
+        <div
+          class="avatar avatar-ring avatar-md mx-1"
+          *ngIf="authService.userData as user"
+        >
           <div class="dropdown-container">
             <div class="dropdown">
               <label
                 class="btn btn-ghost flex cursor-pointer px-0"
                 tabindex="0"
               >
-                <img
-                  src={{user.photoURL}}
-                  alt="avatar"
-                />
+                <img src="{{ user.photoURL }}" alt="avatar" />
               </label>
               <div class="dropdown-menu dropdown-menu-bottom-left">
-                <a class="dropdown-item text-sm" href="/profile" translate>navbar.profile</a>
+                <a class="dropdown-item text-sm" href="/profile" translate
+                  >navbar.profile</a
+                >
                 <a class="dropdown-item text-sm" href="/settings" translate
                   >navbar.accountsettings</a
                 >
-                <a class="dropdown-item text-sm" (click)="authService.SignOut()" translate
+                <a
+                  class="dropdown-item text-sm"
+                  (click)="authService.SignOut()"
+                  translate
                   >navbar.logout</a
                 >
               </div>
@@ -89,18 +107,10 @@
           </div>
         </div>
       </ng-container>
-      <ng-template #loginButtonTemplate>
-        <div class="flex items-center justify-center">
-          <button
-            class="text-white py-2 px-4 uppercase rounded bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
-            value="Log in"
-            translate
-            (click)="redirectToLoginPage()"
-          >
-            navbar.login
-          </button>
-        </div>
-      </ng-template>
+      <div class="divide-x-2 divide-dotted divide-gray-400 hidden lg:flex mx-3">
+        <a class="navbar-item" href="/login" translate>navbar.login</a>
+        <a class="navbar-item" href="/register" translate>navbar.singup</a>
+      </div>
     </div>
   </div>
 </div>

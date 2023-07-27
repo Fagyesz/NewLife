@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 export class NavComponent implements OnDestroy, OnInit {
   loggedIn: boolean = false;
   isNavCollapsed = true;
+  isDropdownOpen = false;
   public isLightTheme = true;
   
   onThemeSwitchChange() {
@@ -22,6 +23,10 @@ export class NavComponent implements OnDestroy, OnInit {
       this.isLightTheme ? 'light' : 'dark'
     );
   }
+  toggleDropdown(): void {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
   toggleNavbar(): void {
     this.isNavCollapsed = !this.isNavCollapsed;
   }

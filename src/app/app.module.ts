@@ -80,6 +80,10 @@ import { authGuard } from './guards/auth.guard';
 import { DashComponent } from './pages/dash/dash.component';
 import { TestComponent } from './pages/test/test.component';
 import { PasswordStrengthComponent } from './components/password-strength/password-strength.component';
+import { PrivacyComponent } from './pages/policy/privacy/privacy.component';
+import { CookieComponent } from './pages/policy/cookie/cookie.component';
+import { TermsOfServiceComponent } from './pages/policy/terms-of-service/terms-of-service.component';
+import { EulaComponent } from './pages/policy/eula/eula.component';
 
 
 @NgModule({
@@ -114,6 +118,10 @@ import { PasswordStrengthComponent } from './components/password-strength/passwo
     UploadDetailsComponent,
     TestComponent,
     PasswordStrengthComponent,
+    PrivacyComponent,
+    CookieComponent,
+    TermsOfServiceComponent,
+    EulaComponent,
 
   ],
   imports: [

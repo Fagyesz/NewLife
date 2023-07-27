@@ -1,5 +1,5 @@
 <div class="bg-white bg-opacity-50 rounded-t-lg p-8 border-2">
-  <p class="text-center text-sm text-gray-400 font-light">Sign up with</p>
+  <p class="text-center text-sm text-gray-400 font-light" translate>register.title</p>
   <div>
     <div class="flex items-center justify-center space-x-4 mt-3">
       <button
@@ -50,7 +50,7 @@
 </div>
 <div class="bg-gray-100 rounded-b-lg py-12 px-4 lg:px-24 border-2 border-t-0">
   <p class="text-center text-sm text-gray-500 font-light" translate>
-    Or sign up with credentials
+    register.title2
   </p>
 
   <!-- Credential form -->
@@ -92,7 +92,7 @@
         class="-mt-1 rounded-md appearance-none border border-red-500 bg-red-50 text-red-500 shadow-sm w-full py-3 leading-tight text-center"
         *ngIf="f['email'].errors['pattern']"
       >
-        <p translate>Invalid email format.</p>
+        <p translate>register.invalid.email</p>
       </div>
     </div>
 
@@ -128,14 +128,14 @@
     </div>
     <div
       *ngIf="f['password'].errors && f['password'].touched"
-      class="invalid-feedback"
+      class="invalid-feedback "
     >
       <div
         class="-mt-1 appearance-none border border-red-500 bg-red-50 text-red-500 shadow-sm rounded-md w-full py-3 leading-tight text-center"
         *ngIf="f['password'].errors['pattern']"
       >
-        <p translate>Your password must be at least 8 characters long</p>
-        <p translate>and include at least one letter and one digit.</p>
+        <p translate class="p-1">register.invalid.password</p>
+        <p translate class="p-1">register.invalid.password2</p>
       </div>
     </div>
 
@@ -179,7 +179,7 @@
         class="-mt-1 appearance-none border border-red-500 bg-red-50 text-red-500 shadow-sm rounded-md w-full py-3 leading-tight text-center"
         *ngIf="f['confirmPassword'].errors?.['mismatch']"
         translate>
-        Passwords do not match
+        register.invalid.passwordConfirm
       </div>
     </div>
 
@@ -214,12 +214,12 @@
 
       <!-- register button -->
       <button
-        class="mt-8 text-white py-2 px-4 uppercase rounded bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5 disabled:opacity-50 disabled:pointer-events-none"
+        class="mt-6 text-white py-2 px-4 uppercase rounded bg-indigo-500 hover:bg-indigo-600 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5 disabled:opacity-50 disabled:pointer-events-none"
         (click)="authService.SignUp(userEmail.value, userPwd.value)"
         [ngClass]="{ disabled: !registerForm.valid }"
         [disabled]="!registerForm.valid"
       translate>
-        Create Account
+      register.button
       </button>
     </div>
   </form>

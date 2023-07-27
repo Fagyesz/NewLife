@@ -1,4 +1,25 @@
 {
+  "Password": "Password",
+
+  "login.title": "Sign in with",
+  "login.subtitle": "Or sign in with credentials ",
+  "login.remember": "Remember me",
+  "login.signin": "SIGN IN",
+  "login.forget": "Forgot Password? ",
+
+  "register.agreement":"By selecting this, you agree to our ",
+  "register.policy":"privacy policy.",
+  "register.strength:":"Password strength",
+  "register.weak:":"weak",
+  "register.medium:":"medium",
+  "register.strong:":"strong",
+  "register.button":"Create Account",
+  "register.title":"Sign up with",
+  "register.title2":"Or sign up with credentials ",
+  "register.invalid.email":"Invalid email format.",
+  "register.invalid.password":"Your password must be at least 8 characters long",
+  "register.invalid.password2":"and include at least one letter and one digit.",
+  "register.invalid.passwordConfirm":"Passwords do not match ",
 
   "navbar.home": "Home",
   "navbar.about": "About",
@@ -24,5 +45,4 @@
 
   "ministries.title": "Our Team",
   "ministries.description": "Explore the whole collection of open-source web components and elements built with the utility classes from Tailwind"
-
 }

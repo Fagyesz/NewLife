@@ -1,4 +1,30 @@
 {
+  "Password":"Jelszó",
+
+  "login.title":"Belépés social médiával",
+  "login.subtitle":"vagy belépés hitelesítő adatokkal",
+  "login.remember":"Emlékezz rám",
+  "login.signin":"Bejelentkezés",
+  "login.forget":"Elfelejtett jelszó? ",
+  "login.singup":"Vagy regisztálj itt",
+
+  "register.agreement":"Ezt kiválasztva elfogadod az",
+  "register.policy":"adatvédelmi irányelveket",
+  "register.strength":"Jelszó erőssége:",
+  "register.weak":"gyenge",
+  "register.medium":"közepes",
+  "register.strong":"erős",
+  "register.button":"Felhasználó Létrehozása",
+  "register.title":"Regisztráció a következőkkel",
+  "register.title2":"Vagy hitelesítő adatokkal",
+  "register.invalid.email":"Érvénytelen email formátum.",
+  "register.invalid.password":"A jelszónak legalább 8 karakter hosszúnak kell lennie",
+  "register.invalid.password2":"és legalább egy betűt és egy számjegyet kell tartalmaznia",
+  "register.invalid.passwordConfirm":"A jelszavak nem egyeznek meg",
+  
+
+
+
   "navbar.home": "Főoldal",
   "navbar.about": "Rólunk",
   "navbar.contact": "Kapcsolat",
@@ -6,10 +32,12 @@
   "navbar.ministries": "Szolgálataink",
   "navbar.sermons": "Istentisztelet",
   "navbar.login": "Bejelentkezés",
+  "navbar.login": "Bejelentkezés",
   "navbar.logout": "Kijelentkezés",
   "navbar.profile": "Profil",
   "navbar.accountsettings": "Felhasználói beállítások",
   "nabar.logo": "Új Élet Baptista Gyülekezet",
+  "navbar.singup":"Regisztráció",
 
   "contact.title": "Cím",
   "contact.description": "Aute magna irure deserunt veniam aliqua magna enim voluptate.",
