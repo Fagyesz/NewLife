@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { AppCheck } from '@angular/fire/app-check';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/environment/environment';
-
+import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +23,7 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    
+    initFlowbite();
     // Simulate an API call or any asynchronous operation
         setTimeout(() => {
       this.isLoading = false;

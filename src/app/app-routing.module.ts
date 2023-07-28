@@ -15,10 +15,12 @@ import { ForgotPasswordComponent } from './pages/auth/forgot-password/forgot-pas
 import { VerifyEmailComponent } from './pages/auth/verify-email/verify-email.component';
 import { DashComponent } from './pages/dash/dash.component';
 import { TestComponent } from './pages/test/test.component';
+import { AdminComponent } from './pages/admin/admin.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
+  { path: 'admin', component: AdminComponent },
   { path: 'about', component: AboutComponent },
   { path: 'sermons', component: SermonsComponent },
   { path: 'events', component: EventsComponent },

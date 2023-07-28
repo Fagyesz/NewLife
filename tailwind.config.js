@@ -20,6 +20,7 @@ module.exports = {
   },
   content: [
     "./src/**/*.{html,ts}",
+    "./node_modules/flowbite/**/*.js",
   ],
     extend: {
 
@@ -29,5 +30,6 @@ module.exports = {
     require("rippleui"),
     require('@tailwindcss/forms'),
     require('@tailwindcss/aspect-ratio'),
+    require('flowbite/plugin'),
   ],
 }

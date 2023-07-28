@@ -107,7 +107,7 @@
           </div>
         </div>
       </ng-container>
-      <div class="divide-x-2 divide-dotted divide-gray-400 hidden lg:flex mx-3">
+      <div *ngIf="!loggedIn" class="divide-x-2 divide-dotted divide-gray-400 hidden lg:flex mx-3">
         <a class="navbar-item" href="/login" translate>navbar.login</a>
         <a class="navbar-item" href="/register" translate>navbar.singup</a>
       </div>

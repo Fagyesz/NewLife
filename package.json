@@ -36,6 +36,7 @@
     "@zxcvbn-ts/language-en": "^2.1.0",
     "bootstrap": "^5.2.3",
     "firebase": "^9.23.0",
+    "flowbite": "^1.7.0",
     "ngx-spinner": "^16.0.2",
     "ngx-toastr": "^17.0.2",
     "rippleui": "^1.12.1",

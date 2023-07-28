@@ -84,6 +84,9 @@ import { PrivacyComponent } from './pages/policy/privacy/privacy.component';
 import { CookieComponent } from './pages/policy/cookie/cookie.component';
 import { TermsOfServiceComponent } from './pages/policy/terms-of-service/terms-of-service.component';
 import { EulaComponent } from './pages/policy/eula/eula.component';
+import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
+import { RolesComponent } from './pages/admin/roles/roles.component';
+import { AdminComponent } from './pages/admin/admin.component';
 
 
 @NgModule({
@@ -122,6 +125,9 @@ import { EulaComponent } from './pages/policy/eula/eula.component';
     CookieComponent,
     TermsOfServiceComponent,
     EulaComponent,
+    DashboardComponent,
+    RolesComponent,
+    AdminComponent,
 
   ],
   imports: [
