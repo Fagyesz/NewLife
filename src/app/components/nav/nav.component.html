@@ -1,6 +1,8 @@
-<div class="navbar bg-base-400 fixed top-0 left-0 right-0" [ngClass]="{'scrolled': isScrolled} ">
+<div
+  class="isolate z-30 navbar bg-base-400 fixed top-0 left-0 right-0"
+  [ngClass]="{ scrolled: isScrolled }"
+>
   <div class="navbar-start">
-    
     <div class="avatar">
       <div class="w-14 rounded-xl">
         <img
@@ -9,57 +11,184 @@
         />
       </div>
     </div>
-   
   </div>
-  <div class="navbar-center  hidden lg:flex divide-x">
-
+  <div class="navbar-center hidden lg:flex divide-x">
     <!-- <a class="btn btn-ghost normal-case text-xl" href="/" translate>navbar.home</a>
     <a class="btn btn-ghost normal-case text-xl" href="/about" translate>navbar.about</a>
     <a class="btn btn-ghost normal-case text-xl" href="/contact" translate>navbar.contact</a>
     <a class="btn btn-ghost normal-case text-xl" href="/events" translate>navbar.events</a>
     <a class="btn btn-ghost normal-case text-xl" href="/ministries" translate>navbar.ministries</a>
     <a class="btn btn-ghost normal-case text-xl" href="/sermons" translate>navbar.sermons</a> -->
-    <nav class="relative px-4 py-4 flex justify-between items-center bg-white">
-    
-      
-      <ul class="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:items-center lg:w-auto lg:space-x-6">
-        <li><a class="text-sm text-gray-400 hover:text-gray-500" href="/"translate>navbar.home</a></li>
+    <nav class="relative px-4 py-4 flex justify-between items-center">
+      <ul
+        class="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:items-center lg:w-auto lg:space-x-6"
+      >
+        <li>
+          <a
+            class="text-sm text-gray-400 hover:text-gray-500"
+            href="/"
+            translate
+            >navbar.home</a
+          >
+        </li>
         <li class="text-gray-300">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            stroke="currentColor"
+            class="w-4 h-4 current-fill"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+            />
           </svg>
         </li>
-        <li><a class="text-sm text-gray-400 hover:text-gray-500" href="/about" translate>navbar.about</a></li>
+        <li>
+          <a
+            class="text-sm text-gray-400 hover:text-gray-500"
+            href="/about"
+            translate
+            >navbar.about</a
+          >
+        </li>
         <li class="text-gray-300">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            stroke="currentColor"
+            class="w-4 h-4 current-fill"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+            />
           </svg>
         </li>
-        <li><a class="text-sm text-gray-400 hover:text-gray-500" href="/contact" translate>navbar.contact</a></li>
+        <li>
+          <a
+            class="text-sm text-gray-400 hover:text-gray-500"
+            href="/contact"
+            translate
+            >navbar.contact</a
+          >
+        </li>
         <li class="text-gray-300">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            stroke="currentColor"
+            class="w-4 h-4 current-fill"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+            />
           </svg>
         </li>
-        <li><a class="text-sm text-gray-400 hover:text-gray-500" href="/events" translate>navbar.events</a></li>
+        <li>
+          <a
+            class="text-sm text-gray-400 hover:text-gray-500"
+            href="/events"
+            translate
+            >navbar.events</a
+          >
+        </li>
         <li class="text-gray-300">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            stroke="currentColor"
+            class="w-4 h-4 current-fill"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+            />
           </svg>
         </li>
-        <li><a class="text-sm text-gray-400 hover:text-gray-500" href="/ministries" translate>navbar.ministries</a></li>
+        <li>
+          <a
+            class="text-sm text-gray-400 hover:text-gray-500"
+            href="/ministries"
+            translate
+            >navbar.ministries</a
+          >
+        </li>
         <li class="text-gray-300">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            stroke="currentColor"
+            class="w-4 h-4 current-fill"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+            />
           </svg>
         </li>
-        <li><a class="text-sm text-gray-400 hover:text-gray-500" href="/sermons" translate>navbar.sermons</a></li>
-       
+        <li>
+          <a
+            class="text-sm text-gray-400 hover:text-gray-500"
+            href="/sermons"
+            translate
+            >navbar.sermons</a
+          >
+        </li>
       </ul>
-      
     </nav>
   </div>
-  <div class="navbar-end">
+  <div class="navbar-end pr-5">
+    <ul *ngIf="!loggedIn" class="flex justify-between items-center">
+      <li>
+        <a
+          class="text-sm text-gray-400 hover:text-gray-500"
+          href="/login"
+          translate
+          >navbar.login</a
+        >
+      </li>
+      <li class="text-gray-300">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          stroke="currentColor"
+          class="w-4 h-4 current-fill"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
+          />
+        </svg>
+      </li>
+      <li>
+        <a
+          class="text-sm text-gray-400 hover:text-gray-500"
+          href="/register"
+          translate
+          >navbar.singup</a
+        >
+      </li>
+    </ul>
 
     <div class="dropdown dropdown-end lg:hidden">
       <label tabindex="0" class="btn btn-ghost btn-circle">
@@ -82,7 +211,7 @@
         tabindex="0"
         class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
       >
-      <li><a translate (click)="authService.SignOut()">navbar.logout</a></li>
+        <li><a translate (click)="authService.SignOut()">navbar.logout</a></li>
         <li><a href="/" translate>navbar.home</a></li>
         <li><a href="/about" translate>navbar.about</a></li>
         <li><a href="/contact" translate>navbar.contact</a></li>
@@ -91,8 +220,40 @@
         <li><a href="/sermons" translate>navbar.sermons</a></li>
       </ul>
     </div>
+
+    <div
+      *ngIf="loggedIn && authService.userData as user"
+      class="dropdown dropdown-end"
+    >
+      <div tabindex="0" class="avatar btn btn-link">
+        <div class="w-14 mask mask-squircle">
+          <img src="{{ user.photoURL }}" />
+        </div>
+      </div>
+      <ul
+        tabindex="0"
+        class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+      >
+        <div *ngIf="user.roles?.admin"  >
+          <li><a href="/admin" translate>Admin</a></li>
+          <li><a href="/test" translate>Test</a></li>
+          <div class="divider p-0 m-0"></div>
+        </div>
+        <li><a href="/profile" translate>navbar.profile</a></li>
+        <li><a href="/settings" translate>navbar.accountsettings</a></li>
+        <div class="divider p-0 m-0"></div>
+
+        <li><a translate (click)="authService.SignOut()">navbar.logout</a></li>
+      </ul>
+    </div>
   </div>
 </div>
+
+<!-- <div class="avatar">
+  <div class="w-24 mask mask-squircle">
+    <img src="{{ user.photoURL }}" />
+  </div>
+</div> -->
 
 <!-- <div class="Wraper ">
   <div [class.hidden]="isModalOpen"  class="navbar rounded-lg navbar-floating h-auto" >
