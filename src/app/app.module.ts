@@ -27,7 +27,7 @@ import { RegisterComponent } from './pages/auth/register/register.component';
 import { ContentComponent } from './pages/home/content/content.component';
 import { EventListComponent } from './pages/events/event-list/event-list.component';
 import { EventProfileComponent } from './pages/events/event-profile/event-profile.component';
-import { EventHomeComponent } from './pages/events/event-home/event-home.component';
+
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { VerifyEmailComponent } from './pages/auth/verify-email/verify-email.component';
@@ -87,7 +87,10 @@ import { EulaComponent } from './pages/policy/eula/eula.component';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
 import { RolesComponent } from './pages/admin/roles/roles.component';
 import { AdminComponent } from './pages/admin/admin.component';
-
+import { EventCreateComponent } from './pages/events/event-create/event-create.component';
+import { EventDetailsComponent } from './pages/events/event-details/event-details.component';
+import { NavService } from './services/nav/nav.service';
+import { CountdownComponent } from './components/countdown/countdown.component';
 
 @NgModule({
   declarations: [
@@ -112,7 +115,6 @@ import { AdminComponent } from './pages/admin/admin.component';
     ContentComponent,
     EventListComponent,
     EventProfileComponent,
-    EventHomeComponent,
     VerifyEmailComponent,
     ForgotPasswordComponent,
     DashComponent,
@@ -128,7 +130,9 @@ import { AdminComponent } from './pages/admin/admin.component';
     DashboardComponent,
     RolesComponent,
     AdminComponent,
-
+    EventCreateComponent,
+    EventDetailsComponent,
+    CountdownComponent,
   ],
   imports: [
     BrowserModule,
@@ -161,7 +165,7 @@ import { AdminComponent } from './pages/admin/admin.component';
     ),
     ReactiveFormsModule,
   ],
-  providers: [AuthService],
+  providers: [AuthService, NavService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

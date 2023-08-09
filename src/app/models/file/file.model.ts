@@ -1,5 +1,5 @@
 export class FileUpload {
-  id?: string;
+    id?: string;
     name!: string;
     url!: string;
     file: File;

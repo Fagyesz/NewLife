@@ -9,5 +9,6 @@ export interface Event {
     ticket_price:Number;
     tickets_available:Boolean;
     event_image:Location|null;
+    published:false|null;
   }
   

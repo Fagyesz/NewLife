@@ -16,6 +16,8 @@ import { VerifyEmailComponent } from './pages/auth/verify-email/verify-email.com
 import { DashComponent } from './pages/dash/dash.component';
 import { TestComponent } from './pages/test/test.component';
 import { AdminComponent } from './pages/admin/admin.component';
+import { EventListComponent } from './pages/events/event-list/event-list.component';
+import { EventCreateComponent } from './pages/events/event-create/event-create.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -36,6 +38,8 @@ const routes: Routes = [
   { path: 'verify', component: VerifyEmailComponent },
   { path: 'dash', component: DashComponent },
   { path: 'test', component: TestComponent },
+  { path: 'event-test', component: EventListComponent },
+  { path: 'event-add', component: EventCreateComponent },
   { path: '404', component: ErrorComponent },
   { path: '**', component: ErrorComponent },
 ];

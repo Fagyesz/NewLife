@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EventHomeComponent } from './event-home.component';
+import { CountdownComponent } from './countdown.component';
 
-describe('EventHomeComponent', () => {
-  let component: EventHomeComponent;
-  let fixture: ComponentFixture<EventHomeComponent>;
+describe('CountdownComponent', () => {
+  let component: CountdownComponent;
+  let fixture: ComponentFixture<CountdownComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [EventHomeComponent]
+      declarations: [CountdownComponent]
     });
-    fixture = TestBed.createComponent(EventHomeComponent);
+    fixture = TestBed.createComponent(CountdownComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

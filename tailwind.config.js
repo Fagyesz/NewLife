@@ -21,15 +21,19 @@ module.exports = {
   content: [
     "./src/**/*.{html,ts}",
     "./node_modules/flowbite/**/*.js",
+    "./node_modules/tw-elements/dist/js/**/*.js"
   ],
     extend: {
 
     },
   
   plugins: [
-    require("rippleui"),
     require('@tailwindcss/forms'),
     require('@tailwindcss/aspect-ratio'),
     require('flowbite/plugin'),
+    require("tw-elements/dist/plugin.cjs"),
+    require("daisyui"),
+    /* require("rippleui") */
   ],
+  darkMode: "class",
 }

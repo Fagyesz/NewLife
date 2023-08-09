@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FileUploadService } from 'src/app/services/file/file-upload.service';
+import { FileUpload } from 'src/app/models/file/file.model';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -8,19 +9,24 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./upload-list.component.scss']
 })
 export class UploadListComponent implements OnInit {
-  fileUploads?: any[];
+  fileUploads?: FileUpload[];
 
   constructor(private uploadService: FileUploadService) { }
 
-  ngOnInit(): void {
-    console.log(this.uploadService.getFiles(6));
-    this.uploadService.getFiles(6).snapshotChanges().pipe(
+ 
+      ngOnInit(): void {
+        this.retrieveFiles();
+  }
+  retrieveFiles(): void {
+    this.uploadService.getAll().snapshotChanges().pipe(
       map(changes =>
-        // store the key
-        changes.map(c => ({ key: c.payload.key, ...c.payload.val() }))
+        changes.map(c =>
+          ({ id: c.payload.doc.id, ...c.payload.doc.data() })
+        )
       )
-    ).subscribe(fileUploads => {
-      this.fileUploads = fileUploads;
+    ).subscribe(data => {
+      this.fileUploads = data;
     });
+   
   }
 }

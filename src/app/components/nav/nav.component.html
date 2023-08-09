@@ -1,5 +1,101 @@
-<div class="Wraper">
-  <div class="navbar rounded-lg navbar-floating">
+<div class="navbar bg-base-400 fixed top-0 left-0 right-0" [ngClass]="{'scrolled': isScrolled} ">
+  <div class="navbar-start">
+    
+    <div class="avatar">
+      <div class="w-14 rounded-xl">
+        <img
+          src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
+          alt="avatar"
+        />
+      </div>
+    </div>
+   
+  </div>
+  <div class="navbar-center  hidden lg:flex divide-x">
+
+    <!-- <a class="btn btn-ghost normal-case text-xl" href="/" translate>navbar.home</a>
+    <a class="btn btn-ghost normal-case text-xl" href="/about" translate>navbar.about</a>
+    <a class="btn btn-ghost normal-case text-xl" href="/contact" translate>navbar.contact</a>
+    <a class="btn btn-ghost normal-case text-xl" href="/events" translate>navbar.events</a>
+    <a class="btn btn-ghost normal-case text-xl" href="/ministries" translate>navbar.ministries</a>
+    <a class="btn btn-ghost normal-case text-xl" href="/sermons" translate>navbar.sermons</a> -->
+    <nav class="relative px-4 py-4 flex justify-between items-center bg-white">
+    
+      
+      <ul class="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto lg:items-center lg:w-auto lg:space-x-6">
+        <li><a class="text-sm text-gray-400 hover:text-gray-500" href="/"translate>navbar.home</a></li>
+        <li class="text-gray-300">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+          </svg>
+        </li>
+        <li><a class="text-sm text-gray-400 hover:text-gray-500" href="/about" translate>navbar.about</a></li>
+        <li class="text-gray-300">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+          </svg>
+        </li>
+        <li><a class="text-sm text-gray-400 hover:text-gray-500" href="/contact" translate>navbar.contact</a></li>
+        <li class="text-gray-300">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+          </svg>
+        </li>
+        <li><a class="text-sm text-gray-400 hover:text-gray-500" href="/events" translate>navbar.events</a></li>
+        <li class="text-gray-300">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+          </svg>
+        </li>
+        <li><a class="text-sm text-gray-400 hover:text-gray-500" href="/ministries" translate>navbar.ministries</a></li>
+        <li class="text-gray-300">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" class="w-4 h-4 current-fill" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v0m0 7v0m0 7v0m0-13a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
+          </svg>
+        </li>
+        <li><a class="text-sm text-gray-400 hover:text-gray-500" href="/sermons" translate>navbar.sermons</a></li>
+       
+      </ul>
+      
+    </nav>
+  </div>
+  <div class="navbar-end">
+
+    <div class="dropdown dropdown-end lg:hidden">
+      <label tabindex="0" class="btn btn-ghost btn-circle">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h7"
+          />
+        </svg>
+      </label>
+      <ul
+        tabindex="0"
+        class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+      >
+      <li><a translate (click)="authService.SignOut()">navbar.logout</a></li>
+        <li><a href="/" translate>navbar.home</a></li>
+        <li><a href="/about" translate>navbar.about</a></li>
+        <li><a href="/contact" translate>navbar.contact</a></li>
+        <li><a href="/events" translate>navbar.events</a></li>
+        <li><a href="/ministries" translate>navbar.ministries</a></li>
+        <li><a href="/sermons" translate>navbar.sermons</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="Wraper ">
+  <div [class.hidden]="isModalOpen"  class="navbar rounded-lg navbar-floating h-auto" >
     <div class="navbar-start">
       <div class="avatar avatar-ring avatar-md">
         <label class="btn btn-ghost flex cursor-pointer px-0" tabindex="0">
@@ -9,7 +105,7 @@
           />
         </label>
       </div>
-      <a class="navbar-item" href="/" translate>nabar.logo</a>
+
     </div>
     <div class="navbar-center hidden lg:flex divide-x">
       <a class="navbar-item" href="/" translate>navbar.home</a>
@@ -113,4 +209,34 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
+
+<!-- 
+
+<div class="navbar bg-base-100">
+  <div class="flex-1">
+    <a class="btn btn-ghost normal-case text-xl">daisyUI</a>
+  </div>
+  <div class="flex-none gap-2">
+    <div class="form-control">
+      <input type="text" placeholder="Search" class="input input-bordered w-24 md:w-auto" />
+    </div>
+    <div class="dropdown dropdown-end">
+      <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+        <div class="w-10 rounded-full" *ngIf="authService.userData as user">
+          <img src="{{ user.photoURL }}" alt="avatar" />
+        </div>
+      </label>
+      <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+        <li>
+          <a class="justify-between">
+            Profile
+            <span class="badge">New</span>
+          </a>
+        </li>
+        <li><a>Settings</a></li>
+        <li><a>Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</div> -->

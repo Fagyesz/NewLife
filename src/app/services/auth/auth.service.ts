@@ -126,10 +126,7 @@ export class AuthService {
       emailVerified: user.emailVerified,
       roles: {
         admin: false,
-        organizer: {
-          organizerId: null,
-          events: {},
-        },
+        organizer: false,
       },
     };
     return userRef.set(userData, {

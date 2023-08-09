@@ -5,10 +5,7 @@ export interface User {
   photoURL: string | null;
   emailVerified: boolean;
   roles: {
-    admin: boolean;
-    organizer: {
-      organizerId: string | null;
-      events: {};
-    };
+    admin:boolean;
+    organizer:boolean;
   };
 }
