@@ -1,28 +1,75 @@
-<div class="list row">
-    <div class="col-md-6">
-      <h4>Tutorials List</h4>
-      <ul class="list-group">
-        <li
-          class="list-group-item"
-          *ngFor="let event of events; let i = index"
-          [class.active]="i == currentIndex"
-          (click)="setActiveEvent(event, i)"
-        >
-          {{ event.title }}
-        </li>
-      </ul>
+<!-- <div class="list row">
+  <div class="col-md-6">
+    <h4>Tutorials List</h4>
+    <ul class="list-group">
+      <li
+        class="list-group-item"
+        *ngFor="let event of events; let i = index"
+        [class.active]="i == currentIndex"
+        (click)="setActiveEvent(event, i)"
+      >
+        {{ event.title }}
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-6">
+    <div *ngIf="currentEvent">
+      <app-event-details
+        (refreshList)="refreshList()"
+        [event]="currentEvent"
+      ></app-event-details>
     </div>
-    <div class="col-md-6">
-      <div *ngIf="currentEvent">
-        <app-event-details
-          (refreshList)="refreshList()"
-          [event]="currentEvent"
-        ></app-event-details>
-      </div>
-  
-      <div *ngIf="!currentEvent">
-        <br />
-        <p>Please click on a Tutorial...</p>
+
+    <div *ngIf="!currentEvent">
+      <br />
+      <p>Please click on a Tutorial...</p>
+    </div>
+  </div>
+</div>
+ -->
+
+<!--    
+  <div
+    *ngFor="let event of events; let i = index"
+    [class.active]="i == currentIndex"
+    (click)="setActiveEvent(event, i)"
+    class="bg-white shadow-lg rounded-lg overflow-hidden"
+  >
+     
+    <img
+      class="w-full h-48 object-cover"
+      [src]="event.event_image"
+      alt="{{ event.title }}"
+    />
+    <div class="p-6">
+      <h3 class="text-xl font-semibold text-gray-800">{{ event.title }}</h3>
+      <p class="mt-2 text-gray-600">{{ event.description }}</p>
+      
+    </div>
+  </div>
+
+ -->
+<div class="list row flex w-full">
+  <div class="col-md-6 flex flex-wrap place-content-center bg-gray-50">
+    <div 
+      *ngFor="let event of events; let i = index"
+      class="card w-96 bg-base-100 shadow-xl m-5"
+      [class.active]="i == currentIndex"
+      (click)="setActiveEvent(event, i)"
+    >
+      <figure>
+        <img
+          [src]="event.event_image"
+          
+        />
+      </figure>
+      <div class="card-body">
+        <h2 class="card-title">{{ event.title }}</h2>
+        <p>{{ event.description }}</p>
+        <div class="card-actions justify-end">
+          <button class="btn btn-primary">Buy Now</button>
+        </div>
       </div>
     </div>
   </div>
+</div>

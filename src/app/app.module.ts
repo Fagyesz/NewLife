@@ -91,6 +91,11 @@ import { EventCreateComponent } from './pages/events/event-create/event-create.c
 import { EventDetailsComponent } from './pages/events/event-details/event-details.component';
 import { NavService } from './services/nav/nav.service';
 import { CountdownComponent } from './components/countdown/countdown.component';
+import { MatNativeDateModule } from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker'; 
+import {MatFormFieldModule} from '@angular/material/form-field';
+
+
 
 @NgModule({
   declarations: [
@@ -133,6 +138,7 @@ import { CountdownComponent } from './components/countdown/countdown.component';
     EventCreateComponent,
     EventDetailsComponent,
     CountdownComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -164,6 +170,10 @@ import { CountdownComponent } from './components/countdown/countdown.component';
       })
     ),
     ReactiveFormsModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    
   ],
   providers: [AuthService, NavService],
   bootstrap: [AppComponent],

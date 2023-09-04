@@ -57,14 +57,9 @@ export class NavComponent implements OnDestroy, OnInit {
       this.isModalOpen = isOpen;
       console.log("modalstatus in nav "+this.isModalOpen)
     });
-    const userUid = this.authService.getUserUid();
-    if (userUid) {
-      console.log('User UID:', userUid);
-    } else {
-      console.log('User not logged in.');
-    }
     
-
+    // Get Roles from service
+    const userUid = this.authService.getUserUid();
     this.userdata.isAdmin(this.userId).subscribe((isAdmin) => {
       this.isAdmin=isAdmin;
     });
@@ -82,6 +77,6 @@ export class NavComponent implements OnDestroy, OnInit {
   onWindowScroll() {
     // Check the scroll position and update the isScrolled property
     this.isScrolled = window.scrollY > 0;
-    console.log("scrolled")
+  
   }
 }

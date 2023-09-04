@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EventService } from 'src/app/services/event/event.service';
 import { Event } from 'src/app/models/event/event.model';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { Datepicker, Input, initTE } from 'tw-elements';
 
 @Component({
   selector: 'app-event-create',
@@ -11,13 +12,20 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 export class EventCreateComponent implements OnInit {
   event: Event = new Event();
   submitted = false;
+  published=false;
 
   constructor(
     private eventService: EventService,
     public authService: AuthService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void { initTE({ Datepicker, Input });
+  const datepickerDisablePast = document.getElementById(
+    'datepicker-disable-past'
+  );
+  new Datepicker(datepickerDisablePast, {
+    disablePast: true,
+  });}
 
   saveEvent(): void {
     if (this.authService.getCurrentUser()) {
