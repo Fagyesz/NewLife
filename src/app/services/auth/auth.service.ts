@@ -124,14 +124,14 @@ export class AuthService {
       displayName: user.displayName,
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
-      roles: {
-        admin: false,
-        organizer: false,
+      roles:{admin:false,
+        organizer:false
       },
     };
     return userRef.set(userData, {
       merge: true,
     });
+    
   }
   // Sign out
   SignOut() {
@@ -143,9 +143,24 @@ export class AuthService {
   getCurrentUser() {
     return this.userData;
   }
+  getUserAdmin() {
+    return this.userData.roles.admin;
+  }
+  getUserOrganizer() {
+    return this.userData.roles.organizer;
+  }
   get isLoggedIn$(): Observable<boolean> {
     return this.afAuth.authState.pipe(
       map((user) => !!user && user.emailVerified !== false)
     );
   }
+  getUserUid(): string | null {
+    if (this.isLoggedIn) {
+      const user = JSON.parse(localStorage.getItem('user')!);
+      return user ? user.uid : null;
+    } else {
+      return null;
+    }
+  }
+
 }

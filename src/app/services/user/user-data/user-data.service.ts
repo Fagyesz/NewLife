@@ -44,4 +44,36 @@ export class UserDataService {
       ref.where('roles.organizer', '==', true)
     );
   }
+    // Function to check if a user is an admin
+  isAdmin(uid: string): Observable<boolean> {
+    return this.db
+      .doc<User>(`${this.dbPath}/${uid}`)
+      .valueChanges()
+      .pipe(
+        map((user) => {
+          if (user && user.roles && user.roles.admin === true) {
+            return true;
+          } else {
+            return false;
+          }
+        })
+      );
+  }
+   // Function to check if a user is an organizer
+   isOrganizer(uid: string): Observable<boolean> {
+    return this.db
+      .doc<User>(`${this.dbPath}/${uid}`)
+      .valueChanges()
+      .pipe(
+        map((user) => {
+          if (user && user.roles && user.roles.organizer === true) {
+            return true;
+          } else {
+            return false;
+          }
+        })
+      );
+  }
+  
+  
 }

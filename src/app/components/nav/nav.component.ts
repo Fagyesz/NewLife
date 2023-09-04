@@ -4,6 +4,7 @@ import { AuthService } from "../../services/auth/auth.service";
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NavService } from "src/app/services/nav/nav.service";
+import { UserDataService } from 'src/app/services/user/user-data/user-data.service';
 
 @Component({
   selector: 'app-nav',
@@ -17,6 +18,9 @@ export class NavComponent implements OnDestroy, OnInit {
   public isLightTheme = true;
   isModalOpen: boolean = false;
   isScrolled = false;
+  userId:string='null';
+  isAdmin=false;
+  isOrganizer=false;
 
   onThemeSwitchChange() {
     this.isLightTheme = !this.isLightTheme;
@@ -35,8 +39,9 @@ export class NavComponent implements OnDestroy, OnInit {
   }
 
 
-  constructor(public authService: AuthService,private router: Router,private navService:NavService) {
- 
+  constructor(public authService: AuthService,private router: Router,private navService:NavService,public userdata:UserDataService) {
+    if(this.authService.getUserUid()!==null){ this.userId=this.authService.getUserUid()!}
+   
   }
 
 
@@ -51,6 +56,20 @@ export class NavComponent implements OnDestroy, OnInit {
     this.navService.modalState$.subscribe((isOpen) => {
       this.isModalOpen = isOpen;
       console.log("modalstatus in nav "+this.isModalOpen)
+    });
+    const userUid = this.authService.getUserUid();
+    if (userUid) {
+      console.log('User UID:', userUid);
+    } else {
+      console.log('User not logged in.');
+    }
+    
+
+    this.userdata.isAdmin(this.userId).subscribe((isAdmin) => {
+      this.isAdmin=isAdmin;
+    });
+    this.userdata.isOrganizer(this.userId).subscribe((isOrganizer) => {
+      this.isOrganizer=isOrganizer;
     });
   }
   ngOnDestroy(): void {

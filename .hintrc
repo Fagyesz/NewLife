@@ -33,6 +33,12 @@
       {
         "image-alt": "off"
       }
+    ],
+    "axe/structure": [
+      "default",
+      {
+        "list": "off"
+      }
     ]
   }
 }
