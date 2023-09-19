@@ -8,4 +8,6 @@ export class User {
     admin:boolean;
     organizer:boolean;
   };
+  title?:string;
+  description?:string;
 }

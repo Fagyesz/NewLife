@@ -127,6 +127,8 @@ export class AuthService {
       roles:{admin:false,
         organizer:false
       },
+      title:'',
+      description:''
     };
     return userRef.set(userData, {
       merge: true,
@@ -148,6 +150,9 @@ export class AuthService {
   }
   getUserOrganizer() {
     return this.userData.roles.organizer;
+  }
+  getUserTitle() {
+    return this.userData.title;
   }
   get isLoggedIn$(): Observable<boolean> {
     return this.afAuth.authState.pipe(

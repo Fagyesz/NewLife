@@ -3,18 +3,11 @@
     <div
       class="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0"
     >
-      <div>
+      <div class="p-3">
         <p class="font-bold text-gray-700 text-xl">22</p>
-        <p class="text-gray-400">Friends</p>
+        <a class="text-gray-400">Your Events</a>
       </div>
-      <div>
-        <p class="font-bold text-gray-700 text-xl">10</p>
-        <p class="text-gray-400">Photos</p>
-      </div>
-      <div>
-        <p class="font-bold text-gray-700 text-xl">89</p>
-        <p class="text-gray-400">Comments</p>
-      </div>
+      
     </div>
     <div class="relative">
       <div
@@ -33,30 +26,24 @@
       <button
         class="text-white py-2 px-4 uppercase rounded bg-gray-700 hover:bg-gray-800 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5"
       >
-        Message
+        Contact
       </button>
     </div>
   </div>
 
-  <div class="mt-20 text-center border-b pb-12">
+  <div class="mt-20 text-center border-b ">
     <h1 class="text-4xl font-medium text-gray-700">
       <strong>{{ user.displayName ? user.displayName : "User" }}</strong>
     </h1>
-    <p class="font-light text-gray-600 mt-3">Bucharest, Romania</p>
+   
 
-    <p class="mt-8 text-gray-500">Solution Manager - Creative Tim Officer</p>
-    <p class="mt-2 text-gray-500">University of Computer Science</p>
+    <p class="p-6 text-gray-500">{{title ? title:''}}</p>
   </div>
 
-  <div class="mt-12 flex flex-col justify-center">
+  <div class="p-6 flex flex-col justify-center">
     <p class="text-gray-600 text-center font-light lg:px-16">
-      An artist of considerable range, Ryan — the name taken by
-      Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and
-      records all of his own music, giving it a warm, intimate feel with a solid
-      groove structure. An artist of considerable range.
+      {{description}}
     </p>
-    <button class="text-indigo-500 py-2 px-4 font-medium mt-4">
-      Show more
-    </button>
+    
   </div>
 </div>
