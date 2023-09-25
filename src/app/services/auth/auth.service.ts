@@ -128,7 +128,8 @@ export class AuthService {
         organizer:false
       },
       title:'',
-      description:''
+      description:'',
+      active:true,
     };
     return userRef.set(userData, {
       merge: true,
