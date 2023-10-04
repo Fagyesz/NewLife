@@ -19,8 +19,8 @@ export class NavComponent implements OnDestroy, OnInit {
   isModalOpen: boolean = false;
   isScrolled = false;
   userId:string='null';
-  isAdmin=false;
-  isOrganizer=false;
+  role="null";
+ 
 
   onThemeSwitchChange() {
     this.isLightTheme = !this.isLightTheme;
@@ -60,12 +60,10 @@ export class NavComponent implements OnDestroy, OnInit {
     
     // Get Roles from service
     const userUid = this.authService.getUserUid();
-    this.userdata.isAdmin(this.userId).subscribe((isAdmin) => {
-      this.isAdmin=isAdmin;
+    this.userdata.getRole(this.userId).subscribe((role) => {
+      this.role=role;
     });
-    this.userdata.isOrganizer(this.userId).subscribe((isOrganizer) => {
-      this.isOrganizer=isOrganizer;
-    });
+    
   }
   ngOnDestroy(): void {
     

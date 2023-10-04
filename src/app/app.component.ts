@@ -13,13 +13,17 @@ export class AppComponent {
   isLoading: boolean = false;
   loggedIn: boolean = false;
   defaultLang:string=environment.DefaultLang;
-
+  userLanguage:string=this.defaultLang;
   constructor(private translate: TranslateService,) {
+
     translate.setDefaultLang(this.defaultLang); // Set default language
+    const userLanguage = (navigator.language).split('-')[0];
   }
 
+  
   switchLanguage(lang: string) {
-    this.translate.use(lang); // Switch language
+    
+    this.translate.use(this.userLanguage); // Switch language
   }
 
   ngOnInit() {

@@ -4,10 +4,7 @@ export class User {
   displayName?: string | null;
   photoURL?: string | null;
   emailVerified?: boolean;
-  roles?: {
-    admin:boolean;
-    organizer:boolean;
-  };
+  role?: string;
   title?:string;
   description?:string;
   active?:boolean;

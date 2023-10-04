@@ -124,9 +124,7 @@ export class AuthService {
       displayName: user.displayName,
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
-      roles:{admin:false,
-        organizer:false
-      },
+      role:'guest',
       title:'',
       description:'',
       active:true,

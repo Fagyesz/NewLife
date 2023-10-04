@@ -10,4 +10,5 @@ export class Event {
     tickets_available?:Boolean;
     event_image?:Location|null;
     published?:boolean;
+    active?:boolean;
 }

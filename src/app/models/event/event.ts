@@ -10,5 +10,6 @@ export interface Event {
     tickets_available:Boolean;
     event_image:Location|null;
     published:false|null;
+    active?:boolean;
   }
   

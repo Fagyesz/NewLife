@@ -45,7 +45,7 @@ export class UserDataService {
     );
   }
   // Function to check if a user is an admin
-  isAdmin(uid: string): Observable<boolean> {
+  /* isAdmin(uid: string): Observable<boolean> {
     return this.db
       .doc<User>(`${this.dbPath}/${uid}`)
       .valueChanges()
@@ -58,9 +58,9 @@ export class UserDataService {
           }
         })
       );
-  }
+  } */
   // Function to check if a user is an organizer
-  isOrganizer(uid: string): Observable<boolean> {
+  /* isOrganizer(uid: string): Observable<boolean> {
     return this.db
       .doc<User>(`${this.dbPath}/${uid}`)
       .valueChanges()
@@ -73,7 +73,23 @@ export class UserDataService {
           }
         })
       );
+  } */
+
+  getRole(uid: string): Observable<string> {
+    return this.db
+      .doc<User>(`${this.dbPath}/${uid}`)
+      .valueChanges()
+      .pipe(
+        map((user) => {
+          if (user && user.role ) {
+            return user.role;
+          } else {
+            return "error user.role or user not exist";
+          }
+        })
+      );
   }
+
   // Function to check if a user is have the title u check
   isTitle(uid: string, title: string): Observable<boolean> {
     return this.db

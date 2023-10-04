@@ -234,17 +234,12 @@
         tabindex="0"
         class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
       >
-        <ol *ngIf="isAdmin"  >
+        <ol *ngIf="role==='admin'"  >
           <li><a href="/admin" translate>Admin</a></li>
 
         </ol>
-        <ol *ngIf="isOrganizer"  >
-
+        <ol *ngIf="role==='admin'||role==='organizer'"  >
           <li><a href="/test" translate>Test</a></li>
-
-        </ol>
-        <ol *ngIf="isOrganizer||isAdmin"  >
-
           <div class="divider p-0 m-0"></div>
         </ol>
         <li><a href="/profile" translate>navbar.profile</a></li>
