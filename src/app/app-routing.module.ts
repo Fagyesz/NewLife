@@ -39,7 +39,7 @@ const routes: Routes = [
   { path: 'dash', component: DashComponent },
   { path: 'test', component: TestComponent },
   { path: 'event-test', component: EventListComponent },
-  { path: 'event-add', component: EventCreateComponent },
+  { path: 'event-create', component: EventCreateComponent },
   { path: '404', component: ErrorComponent },
   { path: '**', component: ErrorComponent },
 ];
