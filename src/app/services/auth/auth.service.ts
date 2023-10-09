@@ -125,9 +125,10 @@ export class AuthService {
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
       role:'guest',
-      title:'',
-      description:'',
+      title:null,
+      description:null,
       active:true,
+      language:null,
     };
     return userRef.set(userData, {
       merge: true,

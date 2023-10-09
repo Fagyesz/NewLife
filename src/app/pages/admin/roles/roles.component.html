@@ -249,18 +249,14 @@
                   class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400"
                 >
                   {{
-                    user.roles.admin
-                      ? "admin"
-                      : user.roles.organizer
-                      ? "organizer"
-                      : "guest"
+                    user.role
                   }}
                 </td>
 
                 <td
                   class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white"
                 >
-                  {{ user.country ? user.country : "country" }}
+                  {{ user.language ? user.language : "default" }}
                 </td>
                 <td
                   class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white"

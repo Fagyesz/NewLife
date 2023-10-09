@@ -1,5 +1,6 @@
 export const environment = {
     DefaultLang:"hu",
+    DefaultPhotoUrl:"//lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/photo.jpg",
     production: false,
     apiKey: 'AIzaSyARX5uDclRE65EMGtH1LUmfQ11V_wYQj1k',
 

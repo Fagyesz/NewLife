@@ -37,11 +37,11 @@
     </h1>
    
 
-    <p class="p-6 text-gray-500">{{description ? description:'Error desc missing'}}</p>
+    <p class="p-6 text-gray-500">{{title?title:'Error title missing'}}</p>
   </div>
   <div class="p-6 flex flex-col justify-center">
     <p class="text-gray-600 text-center font-light lg:px-16">
-      {{title?title:'Error title missing'}}
+      {{description ? description:'Error desc missing'}}
     </p>
     
   </div>

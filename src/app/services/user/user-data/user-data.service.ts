@@ -44,77 +44,33 @@ export class UserDataService {
       ref.where('roles.organizer', '==', true)
     );
   }
-  // Function to check if a user is an admin
-  /* isAdmin(uid: string): Observable<boolean> {
-    return this.db
-      .doc<User>(`${this.dbPath}/${uid}`)
-      .valueChanges()
-      .pipe(
-        map((user) => {
-          if (user && user.roles && user.roles.admin === true) {
-            return true;
-          } else {
-            return false;
-          }
-        })
-      );
-  } */
-  // Function to check if a user is an organizer
-  /* isOrganizer(uid: string): Observable<boolean> {
-    return this.db
-      .doc<User>(`${this.dbPath}/${uid}`)
-      .valueChanges()
-      .pipe(
-        map((user) => {
-          if (user && user.roles && user.roles.organizer === true) {
-            return true;
-          } else {
-            return false;
-          }
-        })
-      );
-  } */
 
+  // Function to get users role
   getRole(uid: string): Observable<string> {
     return this.db
       .doc<User>(`${this.dbPath}/${uid}`)
       .valueChanges()
       .pipe(
         map((user) => {
-          if (user && user.role ) {
+          if (user && user.role) {
             return user.role;
           } else {
-            return "error user.role or user not exist";
+            return 'error user.role or user not exist';
           }
         })
       );
   }
 
-  // Function to check if a user is have the title u check
-  isTitle(uid: string, title: string): Observable<boolean> {
-    return this.db
-      .doc<User>(`${this.dbPath}/${uid}`)
-      .valueChanges()
-      .pipe(
-        map((user) => {
-          if (user && user.title === title) {
-            return true;
-          } else {
-            return false;
-          }
-        })
-      );
-  }
   getTitle(uid: string): Observable<string | undefined> {
     return this.db
       .doc<User>(`${this.dbPath}/${uid}`)
       .valueChanges()
       .pipe(
         map((user) => {
-          if (user && user.title !== '') {
+          if (user && user.title !== null) {
             return user.title;
           } else {
-            return '';
+            return 'Error while tryin to get users title';
           }
         })
       );
@@ -125,12 +81,95 @@ export class UserDataService {
       .valueChanges()
       .pipe(
         map((user) => {
-          if (user && user.description !== '') {
+          if (user && user.description !== null) {
             return user.description;
           } else {
-            return '';
+            return 'Error while tryin to get user description';
           }
         })
       );
+  }
+  getActive(uid: string): Observable<boolean | undefined> {
+    return this.db
+      .doc<User>(`${this.dbPath}/${uid}`)
+      .valueChanges()
+      .pipe(
+        map((user) => {
+          if (user && user.active !== null) {
+            return user.active;
+          } else {
+            return false; //'Error while tryin to get user description';
+          }
+        })
+      );
+  }
+  getLanguage(uid: string): Observable<string | undefined> {
+    return this.db
+      .doc<User>(`${this.dbPath}/${uid}`)
+      .valueChanges()
+      .pipe(
+        map((user) => {
+          if (user && user.language !== null) {
+            return user.language;
+          } else {
+            return 'Error while tryin to get user Langeuge';
+          }
+        })
+      );
+  }
+
+  setLanguage(uid: string, language: string): Promise<void> {
+    // Update the 'language' field in the user document
+    const userRef: AngularFirestoreDocument<User> = this.db.doc(
+      `${this.dbPath}/${uid}`
+    );
+
+    // Use the update method to only update the 'language' field
+    return userRef.update({ language });
+  }
+  setPhotoUrl(uid: string, photoURL: string) {
+    // Update the 'photoUrl' field in the user document
+    const userRef: AngularFirestoreDocument<User> = this.db.doc(
+      `${this.dbPath}/${uid}`
+    );
+
+    // Use the update method to only update the 'photoUrl' field
+    return userRef.update({ photoURL });
+  }
+  setActive(uid: string, active: boolean) {
+    // Update the 'active' field in the user document
+    const userRef: AngularFirestoreDocument<User> = this.db.doc(
+      `${this.dbPath}/${uid}`
+    );
+
+    // Use the update method to only update the 'active' field
+    return userRef.update({ active });
+  }
+  setTitle(uid: string, title: string) {
+    // Update the 'photoUrl' field in the user document
+    const userRef: AngularFirestoreDocument<User> = this.db.doc(
+      `${this.dbPath}/${uid}`
+    );
+
+    // Use the update method to only update the 'photoUrl' field
+    return userRef.update({ title });
+  }
+  setDescription(uid: string, description: string) {
+    // Update the 'photoUrl' field in the user document
+    const userRef: AngularFirestoreDocument<User> = this.db.doc(
+      `${this.dbPath}/${uid}`
+    );
+
+    // Use the update method to only update the 'photoUrl' field
+    return userRef.update({ description });
+  }
+  setRole(uid: string, role: string) {
+    // Update the 'photoUrl' field in the user document
+    const userRef: AngularFirestoreDocument<User> = this.db.doc(
+      `${this.dbPath}/${uid}`
+    );
+
+    // Use the update method to only update the 'photoUrl' field
+    return userRef.update({ role });
   }
 }
