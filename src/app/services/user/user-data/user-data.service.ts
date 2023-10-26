@@ -1,5 +1,6 @@
 import { Injectable, NgZone, inject, Component } from '@angular/core';
 import { User } from 'src/app/models/user/user';
+import { Role } from 'src/app/models/user/role';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
   AngularFirestore,
@@ -8,6 +9,8 @@ import {
 } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
+import { AuthService } from '../../auth/auth.service';
+import { Lang } from 'src/app/models/user/lang';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +20,7 @@ export class UserDataService {
 
   usersRef: AngularFirestoreCollection<User>;
 
-  constructor(private db: AngularFirestore) {
+  constructor(private db: AngularFirestore, public authService: AuthService) {
     this.usersRef = db.collection(this.dbPath);
   }
 
@@ -118,7 +121,7 @@ export class UserDataService {
       );
   }
 
-  setLanguage(uid: string, language: string): Promise<void> {
+  setLanguage(uid: string, language: Lang): Promise<void> {
     // Update the 'language' field in the user document
     const userRef: AngularFirestoreDocument<User> = this.db.doc(
       `${this.dbPath}/${uid}`
@@ -163,13 +166,49 @@ export class UserDataService {
     // Use the update method to only update the 'photoUrl' field
     return userRef.update({ description });
   }
-  setRole(uid: string, role: string) {
-    // Update the 'photoUrl' field in the user document
+  setRole(uid: string, role: Role) {
+    // Check if the role parameter is an instance of the Role enum
+    if (!Object.values(Role).includes(role as Role)) {
+      console.error('Invalid role');
+      return;
+    }
+
+    // Check if the role is owner
+    if (role === Role.Owner) {
+      console.error('You cannot set owner role');
+      return;
+    }
+
     const userRef: AngularFirestoreDocument<User> = this.db.doc(
       `${this.dbPath}/${uid}`
     );
 
-    // Use the update method to only update the 'photoUrl' field
+    // Use the update method to only update the 'role' field
     return userRef.update({ role });
+  }
+  setOwner(email: string, role: Role): void {
+    if (email) {
+      this.authService.getUserByEmail(email).subscribe((user) => {
+        if (user && user.uid) {
+          if (user.role !== role) {
+            if (!Object.values(Role).includes(role as Role)) {
+              console.error('Invalid role');
+              return;
+            }
+            const userRef: AngularFirestoreDocument<User> = this.db.doc(
+              `${this.dbPath}/${user.uid}`
+            );
+
+            // Use the update method to only update the 'role' field
+            console.log('User role updated to owner');
+            return userRef.update({ role });
+          } else console.error('User already has this role');
+        }
+        else
+          console.error('User not found');
+        return;
+      });
+    }
+    return;
   }
 }

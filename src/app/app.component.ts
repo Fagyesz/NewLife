@@ -5,6 +5,7 @@ import { environment } from 'src/environment/environment';
 import { initFlowbite } from 'flowbite';
 import { UserDataService } from './services/user/user-data/user-data.service';
 import { AuthService } from './services/auth/auth.service';
+import { Lang } from './models/user/lang';
 
 @Component({
   selector: 'app-root',
@@ -24,8 +25,8 @@ export class AppComponent {
     public userDataService: UserDataService
   ) {
     translate.setDefaultLang(this.defaultLang); // Set default language
+    
   }
-
 
   ngOnInit() {
     initFlowbite();
@@ -62,7 +63,7 @@ export class AppComponent {
       console.error('User UID is null.');
     }
   }
-  onLanguageChange(newLanguage: string) {
+  onLanguageChange(newLanguage: Lang) {
     if (this.uid !== null) {
       this.userDataService
         .setLanguage(this.uid, newLanguage)
@@ -77,4 +78,5 @@ export class AppComponent {
       console.error('User UID is null. Unable to update language.');
     }
   }
+  
 }

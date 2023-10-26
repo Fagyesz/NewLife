@@ -234,11 +234,11 @@
         tabindex="0"
         class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
       >
-        <ol *ngIf="role==='admin'"  >
+        <ol *ngIf="role==='admin'||role==='owner'"  >
           <li><a href="/admin" translate>Admin</a></li>
 
         </ol>
-        <ol *ngIf="role==='admin'||role==='organizer'"  >
+        <ol *ngIf="role==='admin'||role==='organizer'||role==='owner'"  >
           <li><a href="/test" translate>Test</a></li>
           <div class="divider p-0 m-0"></div>
         </ol>
@@ -251,6 +251,8 @@
     </div>
   </div>
 </div>
+
+
 
 <!-- <div class="avatar">
   <div class="w-24 mask mask-squircle">

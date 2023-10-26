@@ -102,29 +102,71 @@
               />
             </div>
           </form>
-          <div class="flex pl-0 mt-3 space-x-1 sm:pl-2 sm:mt-0">
-            <form
-              (ngModel)="searchUsersByRole()"
-              (change)="searchUsersByRole()"
-              class="lg:pr-3"
-              action="#"
-              method="GET"
-            >
-              <select
-              [(ngModel)]="selectedRole"
-                title="role"
-                class="select select-bordered max-w-xs bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              >
-                <option disabled selected [ngValue]="null">Role</option>
-                <option [ngValue]="'admin'">Admin</option>
-                <option [ngValue]="'organizer'">Organizer</option>
-                <option [ngValue]="'staff'">Staff</option>
-                <option [ngValue]="null">Guest</option>
-              </select>
-            </form>
-          </div>
+          <div class="flex pl-0 mt-3 space-x-1 sm:pl-2 sm:mt-0"></div>
         </div>
         <div class="flex items-center ml-auto space-x-2 sm:space-x-3">
+          <button
+            type="button"
+            (click)="switchEditable()"
+            class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-warning-700 hover:bg-warning-800 focus:ring-4 focus:ring-warning-300 dark:bg-warning-600 dark:hover:bg-warning-700 dark:focus:ring-warning-800"
+          >
+            <svg
+              class="w-4 h-4 mr-2"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
+              ></path>
+              <path
+                fill-rule="evenodd"
+                d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            Edit users
+          </button>
+
+          <!-- deactivate button -->
+          <button
+            type="button"
+            onclick="my_modal_1.showModal()"
+            class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900"
+          >
+            <svg
+              class="w-4 h-4 mr-2"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            Deactivate user
+          </button>
+          <!-- activate button -->
+          <button
+            type="button"
+            class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-primary-600 rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900"
+          >
+            <svg
+              class="w-4 h-4 mr-2"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            Activate user
+          </button>
           <a
             href="#"
             class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700"
@@ -248,9 +290,20 @@
                 <td
                   class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400"
                 >
-                  {{
-                    user.role
-                  }}
+                  <select
+                    [(ngModel)]="user.role"
+                    title="role"
+                    class="select select-bordered max-w-xs bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    [disabled]="!isEditable"
+                    (ngModelChange)="setUserRole(user.uid, user.role)"
+                  >
+                    <option disabled selected [ngValue]="null">Role</option>
+                    <option [ngValue]="'owner'" disabled>Owner</option>
+                    <option [ngValue]="'admin'">Admin</option>
+                    <option [ngValue]="'organizer'">Organizer</option>
+                    <option [ngValue]="'staff'">Staff</option>
+                    <option [ngValue]="'guest'">Guest</option>
+                  </select>
                 </td>
 
                 <td
@@ -270,50 +323,7 @@
                     user.emailVerified ? user.emailVerified : "emailVerified"
                   }}
                 </td>
-                <td class="p-4 space-x-2 whitespace-nowrap">
-                  <button
-                    type="button"
-                    onclick="my_modal_5.showModal()"
-                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                  >
-                    <svg
-                      class="w-4 h-4 mr-2"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
-                      ></path>
-                      <path
-                        fill-rule="evenodd"
-                        d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                    Edit user
-                  </button>
-
-                  <button
-                    type="button"
-                    onclick="my_modal_1.showModal()"
-                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900"
-                  >
-                    <svg
-                      class="w-4 h-4 mr-2"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                    Delete user
-                  </button>
-                </td>
+                <td class="p-4 space-x-2 whitespace-nowrap"></td>
               </tr>
             </tbody>
           </table>
@@ -516,7 +526,7 @@
         <div class="modal-action">
           <button
             class="h-8 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-700 dark:hover:text-white"
-            data-modal-toggle="delete-user-modal"
+            data-modal-toggle="deactivate-user-modal"
           >
             <svg
               class="w-5 h-5"
@@ -550,10 +560,10 @@
           ></path>
         </svg>
         <h3 class="mt-5 mb-6 text-lg text-gray-500 dark:text-gray-400">
-          Are you sure you want to delete this user?
+          Are you sure you want to deactivate this user?
         </h3>
         <a
-          href="#"
+          (onclick)="userDeactivate()"
           class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-base inline-flex items-center px-3 py-2.5 text-center mr-2 dark:focus:ring-red-800"
         >
           Yes, I'm sure

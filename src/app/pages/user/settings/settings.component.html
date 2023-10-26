@@ -138,9 +138,9 @@
           [(ngModel)]="selectedLanguage"
           (ngModelChange)="onLanguageChange($event)"
         >
-          <option value="en">English</option>
-          <option value="hu">Hungarian</option>
-          <option value="ro" disabled>Romanian</option>
+          <option [ngValue]="'en'">English</option>
+          <option [ngValue]="'hu'">Hungarian</option>
+          <option [ngValue]="'ro'" disabled>Romanian</option>
           <!-- Disable the "Romanian" option -->
         </select>
       </div>

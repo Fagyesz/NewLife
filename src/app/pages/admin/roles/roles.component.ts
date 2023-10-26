@@ -3,6 +3,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { User } from 'src/app/models/user/user';
+import { Role } from 'src/app/models/user/role';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserDataService } from 'src/app/services/user/user-data/user-data.service';
 import { NavService } from 'src/app/services/nav/nav.service';
@@ -19,6 +20,7 @@ export class RolesComponent implements OnInit {
   searchQuery: string = '';
   users?: any;
   selectedRole: string | null = null;
+  isEditable: boolean = false;
 
   openModal() {
     this.navService.openModal();
@@ -37,8 +39,7 @@ export class RolesComponent implements OnInit {
     private navService: NavService
   ) {}
   ngOnInit(): void {
-    this.retrieveUsers(); 
-    
+    this.retrieveUsers();
   }
 
   retrieveUsers(): void {
@@ -59,23 +60,26 @@ export class RolesComponent implements OnInit {
         console.log(this.users);
       });
   }
-  searchUsersByRole() {
+  /*   not used right now
+
+   searchUsersByRole() {
     this.filteredUsers = this.users.filter(
       (data: { roles: { admin: boolean; organizer: boolean } }) => {
         if (
           (this.selectedRole === 'admin' && data.roles.admin === true) ||
-          (this.selectedRole === 'organizer' && data.roles.organizer === true) ||
+          (this.selectedRole === 'organizer' &&
+            data.roles.organizer === true) ||
           (this.selectedRole === 'staff' &&
             (data.roles.admin || data.roles.organizer))
         ) {
-          console.log("admin:", data.roles.admin === true);
+          console.log('admin:', data.roles.admin === true);
           return true;
         }
-        console.log("admin:", data.roles.admin === false);
+        console.log('admin:', data.roles.admin === false);
         return false;
       }
     );
-  }
+  } */
 
   // Function to filter users based on name
   searchUsersByName() {
@@ -88,5 +92,24 @@ export class RolesComponent implements OnInit {
         .toLowerCase()
         .includes(this.searchQuery.toLowerCase());
     });
+  }
+  userDeactivate(): void {
+    if (this.authService.getUserUid()) {
+      this.userDataService.setActive(this.authService.getUserUid()!, false);
+    }
+  }
+  userActivate(): void {
+    if (this.authService.getUserUid()) {
+      this.userDataService.setActive(this.authService.getUserUid()!, true);
+    }
+  }
+  switchEditable() {
+    this.isEditable = !this.isEditable;
+    console.log(this.isEditable);
+  }
+  setUserRole(uid: string, role: Role) {
+    if (this.authService.getUserUid() === uid) {
+      this.userDataService.setRole(uid, role);
+    }
   }
 }

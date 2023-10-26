@@ -14,6 +14,7 @@ import { Observable, map } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
+ 
   userData: any; // Save logged in user data
   authState: Observable<User | null> | undefined;
   loggedIn: boolean = false;
@@ -166,6 +167,20 @@ export class AuthService {
     } else {
       return null;
     }
+  }
+  getUserByEmail(email: string): Observable<User | undefined> {
+    return this.afs
+      .collection<User>('users', (ref) => ref.where('email', '==', email))
+      .valueChanges()
+      .pipe(
+        map((users) => {
+          if (users.length > 0) {
+            return users[0];
+          } else {
+            return undefined;
+          }
+        })
+      );
   }
 
 }

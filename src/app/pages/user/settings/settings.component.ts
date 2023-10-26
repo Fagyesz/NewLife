@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Lang } from 'src/app/models/user/lang';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserDataService } from 'src/app/services/user/user-data/user-data.service';
 import { environment } from 'src/environment/environment';
@@ -9,7 +10,7 @@ import { environment } from 'src/environment/environment';
   styleUrls: ['./settings.component.scss'],
 })
 export class SettingsComponent implements OnInit {
-  selectedLanguage: string | null = null;
+  selectedLanguage: Lang | null = null;
   uid: string | null = null;
   role: string | null = null;
   title: string | null = null;
@@ -23,11 +24,14 @@ export class SettingsComponent implements OnInit {
     if (this.userDataService.getLanguage !== null && this.uid !== null) {
       this.userDataService.getLanguage(this.uid).subscribe((language) => {
         if (language !== undefined) {
-          this.selectedLanguage = language;
+          this.selectedLanguage = language as Lang;
         } else {
           // Handle the case where the language is undefined
         }
       });
+
+
+
     } else {
       // Handle the case where the language is null
     }
@@ -37,8 +41,12 @@ export class SettingsComponent implements OnInit {
     public authService: AuthService,
     public userDataService: UserDataService
   ) {}
-  onLanguageChange(newLanguage: string) {
+  onLanguageChange(newLanguage: Lang) {
     // Check if the UID is available and not null
+    if (!(Object.values(newLanguage).includes(newLanguage as Lang))) {
+      console.error('Invalid Language');
+      return;
+    }
     if (this.uid !== null) {
       this.userDataService
         .setLanguage(this.uid, newLanguage)

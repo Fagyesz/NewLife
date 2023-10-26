@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Role } from 'src/app/models/user/role';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserDataService } from 'src/app/services/user/user-data/user-data.service';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -30,5 +32,8 @@ export class ProfileComponent implements OnInit {
       console.log("desc: ",description);
     });
     console.log(userUid);
+  }
+  setOwner(){
+    this.userdata.setOwner("vinczef.o@gmail.com",Role.Owner);
   }
 }
