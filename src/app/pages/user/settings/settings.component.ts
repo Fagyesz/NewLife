@@ -41,21 +41,36 @@ export class SettingsComponent implements OnInit {
     public authService: AuthService,
     public userDataService: UserDataService
   ) {}
-  onLanguageChange(newLanguage: Lang) {
+  onLanguageChange(newLanguage: string) {
     // Check if the UID is available and not null
-    if (!(Object.values(newLanguage).includes(newLanguage as Lang))) {
-      console.error('Invalid Language');
-      return;
+    switch (newLanguage) {
+      case 'en':
+        this.selectedLanguage = Lang.English; 
+        break;
+      case 'hu':
+        this.selectedLanguage = Lang.Hungarian;
+        break;
+      case 'ro':
+        this.selectedLanguage = Lang.Romanian;
+        break;
+    
+      default:
+        console.error('Language not found.');
+        break;
     }
     if (this.uid !== null) {
-      this.userDataService
-        .setLanguage(this.uid, newLanguage)
-        .then(() => {
-          console.log(`User's language updated to ${newLanguage}`);
-        })
-        .catch((error) => {
-          console.error('Error updating user language:', error);
-        });
+      if (this.selectedLanguage !== null) {
+        this.userDataService
+          .setLanguage(this.uid, this.selectedLanguage)
+          .then(() => {
+            console.log(`User's language updated to ${this.selectedLanguage}`);
+          })
+          .catch((error) => {
+            console.error('Error updating user language:', error);
+          });
+      } else {
+        console.error('Selected language is null. Unable to update language.');
+      }
     } else {
       console.error('User UID is null. Unable to update language.');
     }
