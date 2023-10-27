@@ -24,6 +24,9 @@ module.exports = {
     "./node_modules/tw-elements/dist/js/**/*.js"
   ],
     extend: {
+      colors:{
+        'input-gray':'rgb(209, 213, 219)'
+      }
 
     },
   

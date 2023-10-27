@@ -155,6 +155,9 @@ export class AuthService {
   getUserTitle() {
     return this.userData.title;
   }
+  getUserName() {
+    return this.userData.displayName;
+  }
   get isLoggedIn$(): Observable<boolean> {
     return this.afAuth.authState.pipe(
       map((user) => !!user && user.emailVerified !== false)

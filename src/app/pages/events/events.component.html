@@ -1,161 +1,38 @@
 <div class="py-0 sm:py-0">
   <div class="mx-auto max-w-7xl lg:px-8">
-    <div class="mx-auto max-w-2xl lg:mx-0">
-      <h2
-        class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
-        translate
-      >
-        events.title
-      </h2>
-      <p class="mt-2 text-lg leading-8 text-gray-600" translate>
-        events.description
-      </p>
-    </div>
-    <div
-      class="mx-auto mt-10 grid max-w-2xl gap-x-8 gap-y-16 border-t border-gray-200 pt-5 sm:mt-16 sm:pt-10 lg:mx-0 lg:max-w-none "
-    >
-     
-        <app-event-list class="flex w-full"></app-event-list>
-        
-      </div>
-    </div>
-    <button class="btn mt-10"
-     ><a routerLink="/event-create"> Add Customer</a></button>
-  </div>
-
-
-
-  <!-- Add event modal -->
-  <dialog  id="my_modal_0" class="modal modal-bottom sm:modal-middle">
-    <form method="dialog" class="modal-box">
-      <!-- Modal content -->
-
-      <!-- Modal header -->
-      <div
-        class="flex items-start justify-between border-b rounded-t dark:border-gray-700"
-      >
-        <h3 class="text-xl font-semibold dark:text-white">Add Event</h3>
-        <div class="modal-action">
-          <button
-            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-700 dark:hover:text-white"
+    <div class="col-span-full xl:col-auto">
+      <div class="grid grid-cols-6 gap-6">
+        <div class="col-span-6 sm:col-span-3">
+          <h2
+            class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
+            translate
           >
-            <!-- if there is a button in form, it will close the modal -->
-
-            <svg
-              class="w-5 h-5"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          </button>
+            events.title
+          </h2>
         </div>
-      </div>
-      <!-- Modal body -->
-      <div class="p-6 space-y-6 pb-0">
-        <form action="#">
-          <div class="grid grid-cols-6 gap-6">
-            <div class="col-span-6 sm:col-span-6">
-              <label
-                for="title"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Title</label
-              >
-              <input
-                type="text"
-                name="title"
-                id="title"
-                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="Title"
-                required
-              />
-            </div>
-            <div class="col-span-6 sm:col-span-6">
-              <label
-                for="description"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Description</label
-              >
-              <textarea class="textarea textarea-bordered w-full " placeholder="Bio"></textarea>
-            </div>
-            <div class="col-span-6 sm:col-span-3">
-              <label
-                for=" start_time"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Date</label
-              >
-              
-              <div
-              class="relative mb-3"
-              id="datepicker-disable-past"
-              data-te-input-wrapper-init>
-              <input
-                type="text"
-                class=" peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                placeholder="Select a date" />
-              <label
-                for="floatingInput"
-                class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
-                >Select a date</label
-              >
-              
-            </div>
-
-              
-            </div>
-            <div class="col-span-6 sm:col-span-3">
-              <label
-                for="position"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Position</label
-              >
-              <input
-                type="text"
-                name="position"
-                id="position"
-                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                placeholder="e.g. React developer"
-                required
-              />
-            </div>
-
-            <div class="col-span-6 pb-3">
-              <label
-                for="last-name"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >Roles</label
-              >
-              <select
-                class="select select-bordered max-w-xs shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-              >
-                <option disabled selected>Select role</option>
-                <option>Admin</option>
-                <option>Organizer</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Modal footer -->
-          <div
-            class="items-center pt-6 border-t border-gray-200 rounded-b dark:border-gray-700"
-          >
-            <button
+        <div class="col-span-6 sm:col-span-3">
+          <button
               class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               type="submit"
+              [routerLink]="['/event-create']"
             >
-              Save
+              Create Event
             </button>
-          </div>
-        </form>
+        </div>
+        <div class="col-span-6 sm:col-span-6">
+          <p
+            class="mt-2 text-lg leading-8 text-gray-600 flex mb-2 font-medium dark:text-white"
+            translate
+          >
+            events.description
+          </p>
+        </div>
       </div>
-    </form>
-    <form method="dialog" class="modal-backdrop">
-      <button>close</button>
-    </form>
-  </dialog>
-
+    </div>
+    <div
+      class="mx-auto mt-10 grid max-w-2xl gap-x-8 gap-y-16 border-t border-gray-200 pt-5 sm:mt-16 sm:pt-10 lg:mx-0 lg:max-w-none"
+    >
+      <app-event-list class="flex w-full"></app-event-list>
+    </div>
+  </div>
+</div>

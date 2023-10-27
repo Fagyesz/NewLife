@@ -6,15 +6,14 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-event-list',
   templateUrl: './event-list.component.html',
-  styleUrls: ['./event-list.component.scss']
+  styleUrls: ['./event-list.component.scss'],
 })
 export class EventListComponent implements OnInit {
-
   events?: Event[];
   currentEvent?: Event;
   currentIndex = -1;
   title = '';
-  constructor(private eventService: EventService) { }
+  constructor(private eventService: EventService) {}
   ngOnInit(): void {
     this.retrieveEvents();
   }
@@ -25,19 +24,29 @@ export class EventListComponent implements OnInit {
   }
 
   retrieveEvents(): void {
-    this.eventService.getAll().snapshotChanges().pipe(
-      map(changes =>
-        changes.map(c =>
-          ({ id: c.payload.doc.id, ...c.payload.doc.data() })
+    this.eventService
+      .getAll()
+      .snapshotChanges()
+      .pipe(
+        map((changes) =>
+          changes.map((c) => ({
+            id: c.payload.doc.id,
+            ...c.payload.doc.data(),
+          }))
         )
       )
-    ).subscribe(data => {
-      this.events = data;
-    });
+      .subscribe((data) => {
+        this.events = data;
+      });
   }
 
   setActiveEvent(event: Event, index: number): void {
     this.currentEvent = event;
     this.currentIndex = index;
+  }
+  CardInfo(id: string | undefined): void {
+    if (id !== undefined) {
+      console.log(id);
+    }
   }
 }

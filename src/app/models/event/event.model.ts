@@ -1,9 +1,11 @@
+import { Time } from "@angular/common";
+
 export class Event {
     id?: string;
     title?: string;
     description?: string|null;
-    start_time?:Date;
-    end_time?:Date;
+    date?:Date;
+    time?:Time;
     location?: string;
     organizer_id?:Number;
     ticket_price?:Number;
