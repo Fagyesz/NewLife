@@ -32,7 +32,7 @@ export class EventDetailsComponent implements OnInit {
     const datepickerDisablePast = document.getElementById(
       'datepicker-disable-past'
     );
-    
+      
     this.route.params.subscribe((params) => {
       const eventId = params['id']; // 'id' should match the parameter in the route
       this.retrieveEvents(eventId);

@@ -8,8 +8,8 @@ export class Event {
     time?:Time;
     location?: string;
     organizer_id?:Number;
-    ticket_price?:Number;
-    tickets_number?:Number;
+    ticket_price?:Number|null;
+    tickets_number?:Number|null;
     event_image?:Location|null;
     published?:boolean;
     active?:boolean;

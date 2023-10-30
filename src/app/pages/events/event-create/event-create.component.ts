@@ -56,12 +56,12 @@ export class EventCreateComponent implements OnInit {
         return console.error('Time is required!');
       }
       if(this.event.ticket_price==null||this.event.ticket_price==undefined){
-        this.event.ticket_price=0;
+        this.event.ticket_price=null;
         this.toast.warning('Ticket Price is Free !');
       
       }
       if(this.event.tickets_number==null||this.event.tickets_number==undefined){
-        this.event.tickets_number=1000000;
+        this.event.tickets_number=null;
         this.toast.warning('Tickets Available is unlimited!');
        
       }
