@@ -6,6 +6,7 @@ import {
   OnInit,
   OnDestroy,
 } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Event } from 'src/app/models/event/event.model';
 import { EventService } from 'src/app/services/event/event.service';
@@ -20,7 +21,7 @@ export class EventsComponent implements OnInit {
   events: Event[] = [];
   currentDate = new Date();
   hideModal = false;
-  constructor(public eventService: EventService) {}
+  constructor(public eventService: EventService,private router: Router) {}
 
   ngOnInit() {
     /*  this.eventService.getAll().subscribe((events) => {
@@ -34,11 +35,13 @@ export class EventsComponent implements OnInit {
       disablePast: true,
     });
   }
-  addEvent() {}
 
   addOneDay(date = new Date()) {
     date.setDate(date.getDate() + 1);
 
     return date;
+  }
+  navigateToEventDetail(eventId: number) {
+    this.router.navigate(['/event', eventId]);
   }
 }

@@ -46,7 +46,7 @@ import { TranslationModule } from './translation.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 /* Toaster */
-import { ToastrModule } from 'ngx-toastr';
+import { HotToastModule } from '@ngneat/hot-toast';
 
 /* ng-bootstrap */
 import { CarouselsComponent } from './components/carousels/carousels.component';
@@ -92,9 +92,9 @@ import { EventDetailsComponent } from './pages/events/event-details/event-detail
 import { NavService } from './services/nav/nav.service';
 import { CountdownComponent } from './components/countdown/countdown.component';
 import { MatNativeDateModule } from '@angular/material/core';
-import {MatDatepickerModule} from '@angular/material/datepicker'; 
-import {MatFormFieldModule} from '@angular/material/form-field';
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
 
 
 @NgModule({
@@ -138,10 +138,10 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     EventCreateComponent,
     EventDetailsComponent,
     CountdownComponent,
-
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -151,7 +151,6 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatButtonModule,
     TranslationModule,
     NgbModule,
-    ToastrModule.forRoot(),
     NgbCarouselModule,
     FormsModule,
     NgFor,
@@ -173,7 +172,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatNativeDateModule,
     MatDatepickerModule,
     MatFormFieldModule,
-    
+    HotToastModule.forRoot(),
   ],
   providers: [AuthService, NavService],
   bootstrap: [AppComponent],

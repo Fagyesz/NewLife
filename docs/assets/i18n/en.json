@@ -43,6 +43,10 @@
   "contact.agreement": "By selecting this, you agree to our ",
   "contact.ppolicy": "privacy policy.",
 
+  "home.hero.title": "Home title",
+  "home.hero.donation.title": "Help so we can help!",
+  "home.hero.donation": "Donation",
+
   "ministries.title": "Our Team",
   "ministries.description": "Explore the whole collection of open-source web components and elements built with the utility classes from Tailwind"
 }

@@ -1,0 +1,47 @@
+@startuml
+skinparam actorStyle Hollow
+left to right direction
+
+actor Guest as Guest
+actor User as User
+actor Organizer as Organizer
+actor Admin as Admin
+actor Owner as Owner
+
+rectangle "Authentication" {
+  Guest -- (Register)
+  Guest -- (Login)
+}
+
+rectangle "Event Management" {
+  User --> (View Events)
+  User --> (Add Event to Google Calendar)
+
+  Organizer --> (View Events)
+  Organizer --> (Create Event)
+  rectangle "Own events" {
+  Organizer --> (Edit Event)
+  Organizer --> (Delete Event)
+  }
+
+
+  Admin --> (Manage Events)
+
+  
+
+  Owner --> (Manage Events)
+  (Login) --> User
+  (Login) --> Organizer 
+  (Register) --> User 
+
+ 
+}
+
+rectangle "Role Management" {
+  Owner --> (Create Role)
+  Owner --> (Edit Role)
+  Owner --> (Delete Role)
+  Owner --> (Assign Role)
+}
+
+@enduml

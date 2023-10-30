@@ -21,6 +21,10 @@ export class EventService {
     return this.eventsRef;
   }
 
+  getEventbyId(id: string): any {
+    return this.eventsRef.doc(id).get();
+  }
+
   create(event: Event): any {
     if (this.eventsRef) {
       return this.eventsRef.add({ ...event });

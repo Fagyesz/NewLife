@@ -1,67 +1,95 @@
-import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnChanges,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { EventService } from 'src/app/services/event/event.service';
 import { Event } from 'src/app/models//event/event.model';
-import {  AuthService} from "src/app/services/auth/auth.service";
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs/operators';
+import { Timepicker, Datepicker, Input, initTE } from 'tw-elements';
 
 @Component({
   selector: 'app-event-details',
   templateUrl: './event-details.component.html',
-  styleUrls: ['./event-details.component.scss']
+  styleUrls: ['./event-details.component.scss'],
 })
 export class EventDetailsComponent implements OnInit {
-
-  @Input() event?: Event;
+  events?: Event[];
+  event?: Event;
   @Output() refreshList: EventEmitter<any> = new EventEmitter();
-  currentEvent: Event = {
-    title: '',
-    description: '',
-    published: false
-  };
-  message = '';
 
-  constructor(private eventService: EventService) { }
+  constructor(
+    private eventService: EventService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.message = '';
+    initTE({ Datepicker, Input, Timepicker });
+    const datepickerDisablePast = document.getElementById(
+      'datepicker-disable-past'
+    );
+    
+    this.route.params.subscribe((params) => {
+      const eventId = params['id']; // 'id' should match the parameter in the route
+      this.retrieveEvents(eventId);
+    });
+  }
+  retrieveEvents(eventId: string): void {
+    this.eventService
+      .getAll()
+      .snapshotChanges()
+      .pipe(
+        map((changes) =>
+          changes.map((c) => ({
+            id: c.payload.doc.id,
+            ...c.payload.doc.data(),
+          }))
+        )
+      )
+      .subscribe((data) => {
+        this.events = data;
+        this.event = this.getEventFromEvents(eventId);
+      });
   }
 
-  ngOnChanges(): void {
-    this.message = '';
-    this.currentEvent = { ...this.event };
-  }
-
-  updatePublished(status: boolean): void {
-    if (this.currentEvent.id) {
-      this.eventService.update(this.currentEvent.id, { published: status })
-      .then(() => {
-        this.currentEvent.published = status;
-        this.message = 'The status was updated successfully!';
-      })
-      .catch(err => console.log(err));
+  getEventFromEvents(eventId: string): Event | undefined {
+    if (this.events) {
+      return this.events.find((event) => event.id === eventId);
+    } else {
+      return undefined;
     }
   }
-
   updateEvent(): void {
-    const data = {
-      title: this.currentEvent.title,
-      description: this.currentEvent.description
-    };
-
-    if (this.currentEvent.id) {
-      this.eventService.update(this.currentEvent.id, data)
-        .then(() => this.message = 'The event was updated successfully!')
-        .catch(err => console.log(err));
+    if (this.event && this.event.id) {
+      const eventId = this.event.id;
+      if (eventId) {
+        this.eventService.update(eventId, this.event).then(() => {
+          console.log('Updated event with ID: ' + eventId);
+        });
+      } else {
+        console.error('Event ID is null or undefined');
+      }
+    } else {
+      console.error('Event is null or undefined');
     }
   }
-
   deleteEvent(): void {
-    if (this.currentEvent.id) {
-      this.eventService.delete(this.currentEvent.id)
-        .then(() => {
+    if (this.event) {
+      const eventId = this.event.id;
+      if (eventId) {
+        this.eventService.delete(eventId).then(() => {
+          console.log('Deleted event with ID: ' + eventId);
           this.refreshList.emit();
-          this.message = 'The event was updated successfully!';
-        })
-        .catch(err => console.log(err));
+        });
+      } else {
+        console.error('Event ID is null or undefined');
+      }
+    } else {
+      console.error('Event is null or undefined');
     }
   }
 }

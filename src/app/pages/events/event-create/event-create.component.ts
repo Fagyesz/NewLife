@@ -3,7 +3,7 @@ import { EventService } from 'src/app/services/event/event.service';
 import { Event } from 'src/app/models/event/event.model';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import {Timepicker, Datepicker, Input, initTE } from 'tw-elements';
-import { ToastrService } from 'ngx-toastr';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Component({
   selector: 'app-event-create',
@@ -19,7 +19,8 @@ export class EventCreateComponent implements OnInit {
   constructor(
     private eventService: EventService,
     public authService: AuthService,
-    private toastr: ToastrService
+    private toast: HotToastService
+
   ) {}
 
   ngOnInit(): void { initTE({ Datepicker, Input,Timepicker });
@@ -35,39 +36,44 @@ export class EventCreateComponent implements OnInit {
   saveEvent(): void {
     if (this.authService.getCurrentUser()) {
       if(this.event.title==null||this.event.title==undefined||this.event.title==''){
-        this.toastr.error('Title is required!');
+        this.toast.error('Title is required!');
         return console.error('Title is required!');}
       if(this.event.description==null||this.event.description==undefined||this.event.description==''){
-         this.toastr.error('Description is required!');
+         this.toast.error('Description is required!');
         return console.error('Description is required!');
       }
       if(this.event.location==null||this.event.location==undefined||this.event.location==''){
-        this.toastr.error('Location is required!');
-        return console.error('Location is required!');
+        this.event.location='Gyöngyös';
+        this.toast.warning('Location is Gyöngyös!');
+        
       }
       if(this.event.date==null||this.event.date==undefined){
-        this.toastr.error('Date is required!');
+        this.toast.error('Date is required!');
         return console.error('Date is required!');
       }
       if(this.event.time==null||this.event.time==undefined){
-        this.toastr.error('Time is required!');
+        this.toast.error('Time is required!');
         return console.error('Time is required!');
       }
       if(this.event.ticket_price==null||this.event.ticket_price==undefined){
-        this.toastr.error('Ticket Price is required!');
-        return console.error('Ticket Price is required!');
+        this.event.ticket_price=0;
+        this.toast.warning('Ticket Price is Free !');
+      
       }
-      if(this.event.tickets_available==null||this.event.tickets_available==undefined){
-        this.toastr.error('Tickets Available is required!');
-        return console.error('Tickets Available is required!');
+      if(this.event.tickets_number==null||this.event.tickets_number==undefined){
+        this.event.tickets_number=1000000;
+        this.toast.warning('Tickets Available is unlimited!');
+       
       }
 
       this.event.organizer_id = this.authService.getCurrentUser().uid;
       this.eventService.create(this.event).then(() => {
+        this.toast.success('Created new item successfully!');
         console.log('Created new item successfully!');
         this.submitted = true;
       });
     } else {
+      this.toast.error('Not logged in!');
       console.log('Not logged in!');
     }
   }

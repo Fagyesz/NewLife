@@ -9,7 +9,7 @@ export class Event {
     location?: string;
     organizer_id?:Number;
     ticket_price?:Number;
-    tickets_available?:Boolean;
+    tickets_number?:Number;
     event_image?:Location|null;
     published?:boolean;
     active?:boolean;

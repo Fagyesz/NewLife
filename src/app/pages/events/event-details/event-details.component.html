@@ -1,59 +1,185 @@
-<div *ngIf="currentEvent" class="edit-form">
-    <h4>Tutorial</h4>
-    <form>
-      <div class="form-group">
-        <label for="title">Title</label>
+<div class="submit-form" *ngIf="event">
+  <form class="modal-box">
+    <div
+      class="flex items-start justify-between border-b rounded-t dark:border-gray-700"
+    >
+      <h3 class="text-xl font-semibold dark:text-white">Edit Event</h3>
+      <div class="modal-action">
+        <button
+          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-700 dark:hover:text-white"
+        >
+          <svg
+            class="w-5 h-5"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="p-6 space-y-6 pb-0">
+      <div class="grid grid-cols-6 gap-6">
+        <div class="col-span-6 sm:col-span-6">
+          <label
+            for="title"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Title</label
+          >
+          <input
+            type="text"
+            name="title"
+            id="title"
+            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+            placeholder="Title"
+            [(ngModel)]="event.title"
+            required
+          />
+        </div>
+        <!-- Other form fields for event properties like date, time, location, etc. -->
+      </div>
+      <div class="col-span-6 sm:col-span-3">
+        <label
+          for=" start_time"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Event Start at</label
+        >
+
+        <div
+          class="relative mb-3 bg-gray-50"
+          id="datepicker-disable-past"
+          data-te-input-wrapper-init
+        >
+          <input
+            type="text"
+            class="peer block min-h-[auto] w-full border-0 rounded bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+            placeholder="Select a date"
+            data-te-datepicker-toggle-ref
+            data-te-datepicker-toggle-button-ref
+            name="date"
+            [(ngModel)]="event.date"
+          />
+          <label
+            for="floatingInput"
+            class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+            >Select a date</label
+          >
+        </div>
+      </div>
+
+      <div class="col-span-6 sm:col-span-3">
+        <label
+          for="position"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Date to</label
+        >
+
+        <div
+          class="relative bg-gray-50"
+          id="timepicker-default-time-string-24h"
+          data-te-format24="true"
+          data-te-with-icon="false"
+          data-te-timepicker-init
+          data-te-input-wrapper-init
+        >
+          <input
+            type="text"
+            class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
+            id="form10"
+            data-te-toggle="timepicker"
+            name="time"
+            [(ngModel)]="event.time"
+          />
+          <label
+            for="form10"
+            class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
+            >With string 24h</label
+          >
+        </div>
+      </div>
+      <div class="col-span-6 sm:col-span-3">
+        <label
+          for="position"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Organizer</label
+        >
         <input
           type="text"
-          class="form-control"
-          id="title"
-          [(ngModel)]="currentEvent.title"
-          name="title"
+          name="organizer"
+          id="organizer"
+          class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          placeholder="You"
+          [(ngModel)]="event.organizer_id "
+          required
         />
       </div>
-      <div class="form-group">
-        <label for="description">Description</label>
+
+      <div class="col-span-6 sm:col-span-3">
+        <label
+          for="location"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Location</label
+        >
         <input
           type="text"
-          class="form-control"
-          id="description"
-          [(ngModel)]="currentEvent.description"
-          name="description"
+          id="location"
+          name="location"
+          class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          placeholder="Gyöngyös"
+          [(ngModel)]="event.location"
+          required
         />
       </div>
-  
-      <div class="form-group">
-        <label><strong>Status:</strong></label>
-        {{ currentEvent.published ? "Published" : "Pending" }}
+
+      <div class="col-span-6 sm:col-span-3">
+        <label
+          for="position"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Ticket price</label
+        >
+        <input
+          type="text"
+          name="ticket_price"
+          id="ticket_price"
+          class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          placeholder="Free"
+          [(ngModel)]="event.ticket_price"
+          required
+        />
       </div>
-    </form>
-  
-    <button
-      class="badge badge-primary mr-2"
-      *ngIf="currentEvent.published"
-      (click)="updatePublished(false)"
-    >
-      UnPublish
-    </button>
-    <button
-      *ngIf="!currentEvent.published"
-      class="badge badge-primary mr-2"
-      (click)="updatePublished(true)"
-    >
-      Publish
-    </button>
-  
-    <button class="badge badge-danger mr-2" (click)="deleteEvent()">
-      Delete
-    </button>
-  
-    <button type="submit" class="badge badge-success" (click)="updateEvent()">
-      Update
-    </button>
-    <p>{{ message }}</p>
-  </div>
-  
-  <div *ngIf="!currentEvent">
-    <br />
-    <p>Cannot access this Tutorial...</p>
-  </div>
+      <div class="col-span-6 sm:col-span-3">
+        <label
+          for="position"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Tickets available</label
+        >
+        <input
+          type="text"
+          name="tickets_available"
+          id="tickets_available"
+          class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          placeholder="Unlimited"
+          [(ngModel)]="event.tickets_number"
+          required
+        />
+      </div>
+
+      <div
+        class="items-center mt-6 pt-6 border-t border-gray-200 rounded-b dark:border-gray-700"
+      >
+        <button
+          class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+          type="button"
+          (click)="updateEvent()"
+        >
+          Save Event
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
