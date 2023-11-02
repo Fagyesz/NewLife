@@ -1,7 +1,6 @@
 import {
   Component,
   OnInit,
-  OnChanges,
   Output,
   EventEmitter,
 } from '@angular/core';
@@ -11,6 +10,7 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Timepicker, Datepicker, Input, initTE } from 'tw-elements';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Component({
   selector: 'app-event-details',
@@ -24,7 +24,8 @@ export class EventDetailsComponent implements OnInit {
 
   constructor(
     private eventService: EventService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toast: HotToastService
   ) {}
 
   ngOnInit(): void {
@@ -32,7 +33,9 @@ export class EventDetailsComponent implements OnInit {
     const datepickerDisablePast = document.getElementById(
       'datepicker-disable-past'
     );
-      
+    new Datepicker(datepickerDisablePast, {
+      disablePast: true,
+    });
     this.route.params.subscribe((params) => {
       const eventId = params['id']; // 'id' should match the parameter in the route
       this.retrieveEvents(eventId);

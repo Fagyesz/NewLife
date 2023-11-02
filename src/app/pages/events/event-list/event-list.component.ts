@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EventService } from 'src/app/services/event/event.service';
 import { Event } from 'src/app/models//event/event.model';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-event-list',
@@ -13,7 +14,7 @@ export class EventListComponent implements OnInit {
   currentEvent?: Event;
   currentIndex = -1;
   title = '';
-  constructor(private eventService: EventService) {}
+  constructor(private eventService: EventService, private router: Router) {}
   ngOnInit(): void {
     this.retrieveEvents();
   }
@@ -48,6 +49,7 @@ export class EventListComponent implements OnInit {
   CardInfo(id: string | undefined): void {
     if (id !== undefined) {
       console.log(id);
+      this.router.navigate(['/event', id]); // Add this line to navigate to the event-details page with the specified id
     }
   }
 }
