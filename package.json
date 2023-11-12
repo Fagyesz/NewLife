@@ -10,7 +10,7 @@
     "test": "ng test",
     "prod": "npm run build-prod &&npm run cname  && npm run 404",
     "build-prod": "ng build --configuration production",
-    "cname": "echo pezz.hu >docs\\CNAME"
+    "cname": "echo p44brj.hu >docs\\CNAME"
   },
   "private": true,
   "dependencies": {

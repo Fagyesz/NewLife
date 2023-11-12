@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
-} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { EventService } from 'src/app/services/event/event.service';
 import { Event } from 'src/app/models//event/event.model';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -33,9 +28,15 @@ export class EventDetailsComponent implements OnInit {
     const datepickerDisablePast = document.getElementById(
       'datepicker-disable-past'
     );
-    new Datepicker(datepickerDisablePast, {
-      disablePast: true,
-    });
+    if (!datepickerDisablePast) {
+      this.toast.error('Datepicker not found');
+
+    } else {
+      new Datepicker(datepickerDisablePast, {
+        disablePast: true,
+      });
+    }
+
     this.route.params.subscribe((params) => {
       const eventId = params['id']; // 'id' should match the parameter in the route
       this.retrieveEvents(eventId);
