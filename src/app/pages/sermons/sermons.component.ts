@@ -15,7 +15,7 @@ export class SermonsComponent {
   public safeUrl: SafeResourceUrl = '';
   public notSafeUrl: SafeResourceUrl = '';
   public Title: string | null = null;
-  public channelId: string = environment.channelId;
+  public channelId: string = environment.youtube.channelId;
   public day = new Date().getDay();
   public hour = new Date().getHours();
   public minutes = new Date().getMinutes();
@@ -29,7 +29,7 @@ export class SermonsComponent {
 
   ngOnInit() {
     /* const channelId = 'UCSJ4gkVC6NrvII8umztf0Ow'; */ // Replace with the desired YouTube channel ID
-    
+
     this.notSafeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
       'https://www.youtube.com/embed/gh0TkRJanQ8'
     );
@@ -51,16 +51,16 @@ export class SermonsComponent {
 
     function getVideoId() {
       const url = 'https://www.youtube.com/embed/live_stream?channel=UCMvAap1Jacyg-4bqYKDlmtw';
-    
+
 
       // Extract the video ID using regular expressions
       const videoIdMatches = url.match(
         /(?:\/|v=|v%3D|embed\/|youtu.be\/|\/embed\/|\/v\/|youtube.com\/user\/[^#]*#([^\/]*?\/)*)?([^#\&\?]*).*/
       );
       if (videoIdMatches && videoIdMatches.length >= 2) {
-        
+
         return /* VideoId = */ videoIdMatches[2];
-        
+
       }
       console.error(Error);
       return null;
@@ -97,8 +97,8 @@ export class SermonsComponent {
     this.Youtube.getOngoingLiveVideoId(channelId).subscribe(
       (result) => {
         this.VideoId = result;
-        
-        this.safeUrl=this.sanitizer.bypassSecurityTrustResourceUrl("https://www.youtube.com/embed/"+result);  
+
+        this.safeUrl=this.sanitizer.bypassSecurityTrustResourceUrl("https://www.youtube.com/embed/"+result);
         console.log('Has ongoing live videos id:', this.VideoId);
         console.log('safeurl', this.safeUrl);
       },
@@ -109,7 +109,7 @@ export class SermonsComponent {
     this.Youtube.getOngoingLiveVideoTitle(channelId).subscribe(
       (result) => {
         this.Title = result;
-      
+
       },
       (error) => {
         console.error(error);

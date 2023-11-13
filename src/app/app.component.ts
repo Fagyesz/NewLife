@@ -15,7 +15,7 @@ import { Lang } from './models/user/lang';
 export class AppComponent {
   isLoading: boolean = false;
   loggedIn: boolean = false;
-  defaultLang: string = 'en';
+  defaultLang: string = 'hu';
   userLanguage: string = this.defaultLang;
   uid: string | null = null;
 
@@ -25,7 +25,7 @@ export class AppComponent {
     public userDataService: UserDataService
   ) {
     translate.setDefaultLang(this.defaultLang); // Set default language
-    
+
   }
 
   ngOnInit() {
@@ -78,5 +78,5 @@ export class AppComponent {
       console.error('User UID is null. Unable to update language.');
     }
   }
-  
+
 }

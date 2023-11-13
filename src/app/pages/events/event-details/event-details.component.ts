@@ -29,7 +29,7 @@ export class EventDetailsComponent implements OnInit {
       'datepicker-disable-past'
     );
     if (!datepickerDisablePast) {
-      this.toast.error('Datepicker not found');
+      //this.toast.error('Datepicker not found');
 
     } else {
       new Datepicker(datepickerDisablePast, {

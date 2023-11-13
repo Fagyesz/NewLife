@@ -95,6 +95,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
+import { EventToCalendarComponent } from './pages/events/event-to-calendar/event-to-calendar/event-to-calendar.component';
 
 
 @NgModule({
@@ -138,6 +139,7 @@ import { CommonModule } from '@angular/common';
     EventCreateComponent,
     EventDetailsComponent,
     CountdownComponent,
+    EventToCalendarComponent,
   ],
   imports: [
     BrowserModule,

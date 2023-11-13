@@ -15,7 +15,7 @@ export class EventCreateComponent implements OnInit {
   submitted = false;
   published = false;
   userName: string | null = null;
-
+  toastText:string|null=null;
   constructor(
     private eventService: EventService,
     public authService: AuthService,
@@ -57,7 +57,8 @@ export class EventCreateComponent implements OnInit {
         this.event.location == ''
       ) {
         this.event.location = 'Gyöngyös';
-        this.toast.warning('Location is Gyöngyös!');
+        //this.toast.warning('Location is Gyöngyös!');
+        this.toastText+='Location is Gyöngyös!';
       }
       if (this.event.date == null || this.event.date == undefined) {
         this.toast.error('Date is required!');
@@ -72,14 +73,16 @@ export class EventCreateComponent implements OnInit {
         this.event.ticket_price == undefined
       ) {
         this.event.ticket_price = null;
-        this.toast.warning('Ticket Price is Free !');
+        //this.toast.warning('Ticket Price is Free !');
+        if(this.toastText)this.toastText+='\n Ticket Price is Free !';
       }
       if (
         this.event.tickets_number == null ||
         this.event.tickets_number == undefined
       ) {
         this.event.tickets_number = null;
-        this.toast.warning('Tickets Available is unlimited!');
+        //this.toast.warning('Tickets Available is unlimited!');
+        if(this.toastText)this.toastText+='\n Tickets Available is unlimited!';
       }
 
       this.event.organizer_id = this.authService.getCurrentUser().uid;

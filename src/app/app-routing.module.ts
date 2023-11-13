@@ -19,6 +19,7 @@ import { AdminComponent } from './pages/admin/admin.component';
 import { EventListComponent } from './pages/events/event-list/event-list.component';
 import { EventCreateComponent } from './pages/events/event-create/event-create.component';
 import { EventDetailsComponent } from './pages/events/event-details/event-details.component';
+import { EventToCalendarComponent } from './pages/events/event-to-calendar/event-to-calendar/event-to-calendar.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -41,7 +42,8 @@ const routes: Routes = [
   { path: 'test', component: TestComponent },
   { path: 'event-test', component: EventListComponent },
   { path: 'event-create', component: EventCreateComponent },
-  { path: 'event/:id', component: EventDetailsComponent},
+  { path: 'event/:id', component: EventDetailsComponent },
+  { path: 'eventcalendar', component: EventToCalendarComponent },
   { path: '404', component: ErrorComponent },
   { path: '**', component: ErrorComponent },
 ];
