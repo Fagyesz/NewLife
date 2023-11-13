@@ -98,6 +98,7 @@ import { CommonModule } from '@angular/common';
 import { EventToCalendarComponent } from './pages/events/event-to-calendar/event-to-calendar/event-to-calendar.component';
 
 
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @NgModule({
   declarations: [
@@ -144,6 +145,7 @@ import { EventToCalendarComponent } from './pages/events/event-to-calendar/event
   ],
   imports: [
     BrowserModule,
+    GoogleMapsModule,
     CommonModule,
     AppRoutingModule,
     BrowserAnimationsModule,

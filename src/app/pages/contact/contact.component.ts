@@ -1,49 +1,33 @@
 
-import { environment } from 'src/environment/environment';
-import { MapService } from 'src/app/services/map/map.service';
-import { Component, AfterViewInit, Renderer2, Inject } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+
+
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss']
 })
-export class ContactComponent implements AfterViewInit {
+export class ContactComponent  {
+  ngOnInit() {
 
-  constructor(private googleMapsService: MapService,private renderer: Renderer2,
-    @Inject(DOCUMENT) private document: Document) { }
-  // Set your Google Maps API Key
-  apiKey = environment.google.apiKey;
-
-  ngAfterViewInit() {
-    this.loadGoogleMapsScript();
-  }
-  private loadGoogleMapsScript() {
-    const script = this.renderer.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${environment.google.apiKey}&libraries=places`;
-    script.defer = true;
-    script.async = true;
-
-    script.onload = () => {
-      // The Google Maps API script has loaded, you can now initialize the map.
-      this.initializeGoogleMap();
-    };
-
-    script.onerror = () => {
-      console.error('Error loading Google Maps API script.');
-    };
-
-    this.renderer.appendChild(this.document.body, script);
+    this.initMap();
   }
 
-  private initializeGoogleMap() {
-    // Initialize Google Map here, using the 'google' global object.
+
+  initMap(): void {
+    /* const gyongyos = { lat: 47.793304, lng: 19.932309 }; // Coordinates for Gyöngyös */
+    const gyongyos = { lat: 47.783267490393875, lng: 19.927359962637976 };
     const map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
-      // Map options
+      zoom: 16,
+      center: gyongyos,
     });
 
     new google.maps.Marker({
-      // Marker options
+      position: gyongyos,
+      map: map,
     });
   }
 }
