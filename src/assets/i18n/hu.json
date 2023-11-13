@@ -21,7 +21,7 @@
   "register.invalid.password":"A jelszónak legalább 8 karakter hosszúnak kell lennie",
   "register.invalid.password2":"és legalább egy betűt és egy számjegyet kell tartalmaznia",
   "register.invalid.passwordConfirm":"A jelszavak nem egyeznek meg",
-  
+
 
 
 
@@ -32,15 +32,14 @@
   "navbar.ministries": "Szolgálataink",
   "navbar.sermons": "Istentisztelet",
   "navbar.login": "Bejelentkezés",
-  "navbar.login": "Bejelentkezés",
   "navbar.logout": "Kijelentkezés",
   "navbar.profile": "Profil",
   "navbar.accountsettings": "Felhasználói beállítások",
   "nabar.logo": "Új Élet Baptista Gyülekezet",
   "navbar.singup":"Regisztráció",
 
-  "contact.title": "Cím",
-  "contact.description": "Aute magna irure deserunt veniam aliqua magna enim voluptate.",
+  "contact.title": "Vedd fel velünk a kapcsolatot!",
+  "contact.description": "Gyöngyös, Páter Kiss Szaléz u. 14, 3200 Hungary",
   "contact.name": "Név",
   "contact.email": "Email",
   "contact.phone": "Telefonszám",
@@ -49,15 +48,35 @@
   "contact.agreement": "Ezt kiválasztva elfogadod az",
   "contact.ppolicy": "Adatvédelmi irányelveket",
 
-  "home.hero.title": "Főoldal címe",
-  "home.hero.donation.title": "Segíts hogy segíthessünk",
+  "home.hero.title": "Örülünk neked!",
+  "home.hero.description":"Szeretnénk, ha ez a gyülekezet egy olyan hely lenne, ahol az emberek megismernék Krisztust és hitükben növekednének!  ",
+
+  "home.hero.donation.title": "Segíts hogy Segítsünk!",
+
+
+  "home.content1.title":"HARVEST dicsőítő est",
+  "home.content1.description":"Imádd velünk Istent szabadon! A Harvest dicsőítő est az a hely ahol az Isten magasztalása történik. Isten erre a célra teremtette az embert, hogy szabad döntéséből imádja Őt!",
   "home.hero.donation": "Támogatás",
+  "home.content.list1.title": "Biblia",
+  "home.content.list1.description": "– Isten szavát hírdetése megszorítások nélkül. A ige expozicionális és alkalmazott hirdetése",
+  "home.content.list2.title": "Szolgálat",
+  "home.content.list2.description": "– Tudatosan szolgálunk a kívülállók részére és a gyülekezetben",
+  "home.content.list3.title": "Evangélizáció",
+  "home.content.list3.description": "– Bátran vallást teszünk Krisztus evangéliumáról amit a Biblián keresztül ismertet meg velünk",
+  "home.content.list4.title": "Szaporodás",
+  "home.content.list4.description": "– Tanítványozunk és tanítvényokat képzünk, akik ők is alkalmasak lesznek más tanítványok képzésére",
 
   "ministries.title": "A mi csapatunk",
   "ministries.description": "Fedezze fel az összes nyílt forráskódú webkomponens és elem gyűjteményét, amelyek a Tailwind hasznos osztályokkal vannak kialakítva.",
 
   "about.title": "Rólunk",
   "about.description": "Minden amit tudnod kell rólunk",
+  "about.content1.title":"Kik vagyunk",
+  "about.content1.description":"Krisztus tanítványai, akik életüket arra szentelték, hogy a tanítványságban megerősödjenek és másokat is tanítványozzanak.",
+  "about.content2.title":"Hitvallásunk",
+  "about.content2.description":"Hitvallásunk alapja az apostoli tanítás, aminek az alapelvei a Biblia könyveiben gyökereznek. Részletesebb leírást ezekről az alapelvekről ITT",
+  "about.content3.title":"A csapat!",
+  "about.content3.description":"Lelkipásztor: \nPrezsbiter: \nPénztáros: \nDicsőítő  \nvezető:",
 
   "events.title": "Eseményeink",
   "events.description": "Minden amit tudnod kell Az eseményeinkről",

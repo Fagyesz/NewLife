@@ -15,7 +15,8 @@ export class EventCreateComponent implements OnInit {
   submitted = false;
   published = false;
   userName: string | null = null;
-  toastText:string|null=null;
+  toastText:string="";
+
   constructor(
     private eventService: EventService,
     public authService: AuthService,
@@ -74,7 +75,7 @@ export class EventCreateComponent implements OnInit {
       ) {
         this.event.ticket_price = null;
         //this.toast.warning('Ticket Price is Free !');
-        if(this.toastText)this.toastText+='\n Ticket Price is Free !';
+        if(this.toastText)this.toastText+=' Ticket Price is Free !';
       }
       if (
         this.event.tickets_number == null ||
@@ -82,14 +83,16 @@ export class EventCreateComponent implements OnInit {
       ) {
         this.event.tickets_number = null;
         //this.toast.warning('Tickets Available is unlimited!');
-        if(this.toastText)this.toastText+='\n Tickets Available is unlimited!';
+        if(this.toastText)this.toastText+=' Tickets Available is unlimited!';
       }
 
       this.event.organizer_id = this.authService.getCurrentUser().uid;
       this.eventService.create(this.event).then(() => {
         this.toast.success('Created new item successfully!');
+        if(this.toastText)this.toast.warning(this.toastText);
         console.log('Created new item successfully!');
         this.submitted = true;
+        this.toastText="";
       });
     } else {
       this.toast.error('Not logged in!');

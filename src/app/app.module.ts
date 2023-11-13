@@ -98,6 +98,7 @@ import { CommonModule } from '@angular/common';
 import { EventToCalendarComponent } from './pages/events/event-to-calendar/event-to-calendar/event-to-calendar.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
