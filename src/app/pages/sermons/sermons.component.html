@@ -1,6 +1,6 @@
 
 
-<div class="flex flex-col items-center w-screen">
+<div class="flex flex-col items-center w-screen mb-10 min-h-screen">
   <app-countdown class="m-5 p-5 mt-0 border border-dashed"></app-countdown>
   <h1 class="text-2xl font-bold mb-8">A Live Stream Címe</h1>
   <div class="w-9/12">
@@ -25,10 +25,10 @@
       </ng-template>
       <ng-template *ngIf="streamState == 0">
         <div><p>Stream offline</p></div>
-        
+
       </ng-template>
     </div>
-    
+
     <div class="comment-section">
       <!-- Comment section content goes here -->
     </div>

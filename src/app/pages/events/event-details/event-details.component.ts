@@ -6,6 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Timepicker, Datepicker, Input, initTE } from 'tw-elements';
 import { HotToastService } from '@ngneat/hot-toast';
+import { UserDataService } from 'src/app/services/user/user-data/user-data.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-event-details',
@@ -13,6 +15,10 @@ import { HotToastService } from '@ngneat/hot-toast';
   styleUrls: ['./event-details.component.scss'],
 })
 export class EventDetailsComponent implements OnInit {
+
+  addToCalendar() {
+    throw new Error('Method not implemented.');
+  }
   events?: Event[];
   event?: Event;
   @Output() refreshList: EventEmitter<any> = new EventEmitter();
@@ -20,7 +26,9 @@ export class EventDetailsComponent implements OnInit {
   constructor(
     private eventService: EventService,
     private route: ActivatedRoute,
-    private toast: HotToastService
+    private toast: HotToastService,
+    private userdataservice: UserDataService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -30,7 +38,6 @@ export class EventDetailsComponent implements OnInit {
     );
     if (!datepickerDisablePast) {
       //this.toast.error('Datepicker not found');
-
     } else {
       new Datepicker(datepickerDisablePast, {
         disablePast: true,
@@ -94,6 +101,19 @@ export class EventDetailsComponent implements OnInit {
       }
     } else {
       console.error('Event is null or undefined');
+    }
+  }
+  isStaff(): Observable<boolean> {
+    if (this.authService.getCurrentUser().uid) {
+      console.log(
+        this.userdataservice.isStaff(this.authService.getCurrentUser().uid)
+      );
+      return this.userdataservice.isStaff(
+        this.authService.getCurrentUser().uid
+      );
+    }
+    else{
+      return new Observable<boolean>();
     }
   }
 }

@@ -1,14 +1,19 @@
-<form class="bg-white shadow-lg border p-8 m-8 rounded-lg lg:w-full " *ngIf="event">
+<div class="min-h-screen  bg-white">
+<form
+  class="bg-white shadow-lg border p-8 m-8 rounded-lg lg:w-full"
+  *ngIf="event"
+>
   <div
-    class="flex items-start justify-between border-b rounded-t dark:border-gray-700"
+    class="flex items-start justify-center border-b rounded-t dark:border-gray-700"
   >
-    <h3 class="text-xl font-semibold dark:text-white">Edit Event</h3>
-    <div class="modal-action">
-      <button
-        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-700 dark:hover:text-white"
-      ></button>
+  <div class="user" >
+    <h3 class="text-xl font-semibold dark:text-white">{{ event.title }} </h3>
+  </div>
+    <div class="staff" *ngIf="isStaff()">
+      <h3 class="text-xl font-semibold dark:text-white">--Edit Event</h3>
     </div>
   </div>
+
   <div class="p-6 pt-3 space-y-6 pb-0">
     <div class="grid grid-cols-6 gap-6">
       <div class="col-span-6 sm:col-span-6">
@@ -36,25 +41,22 @@
         >Event Start at</label
       >
 
-      <div
-        class="relative mb-3 bg-gray-50"
-        id="datepicker-disable-past"
-        data-te-input-wrapper-init
-      >
+      <div class="relative mb-3 bg-gray-50">
+        <!--id="datepicker-disable-past" data-te-input-wrapper-init -->
         <input
           type="text"
           class="peer block min-h-[auto] w-full border-0 rounded bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
           placeholder="Select a date"
-          data-te-datepicker-toggle-ref
-          data-te-datepicker-toggle-button-ref
           name="date"
           [(ngModel)]="event.date"
-        />
-        <label
+          disabled
+        /><!--           data-te-datepicker-toggle-ref
+          data-te-datepicker-toggle-button-ref -->
+        <!-- <label
           for="floatingInput"
           class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
           >Select a date</label
-        >
+        > -->
       </div>
     </div>
 
@@ -62,17 +64,13 @@
       <label
         for="position"
         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        >Date to</label
+        >Date</label
       >
 
-      <div
-        class="relative bg-gray-50"
-        id="timepicker-default-time-string-24h"
-        data-te-format24="true"
-        data-te-with-icon="false"
-        data-te-timepicker-init
-        data-te-input-wrapper-init
-      >
+      <div class="relative bg-gray-50">
+        <!-- id="timepicker-default-time-string-24h"       data-te-format24="true"
+        data-te-with-icon="false"         data-te-timepicker-init
+        data-te-input-wrapper-init -->
         <input
           type="text"
           class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 peer-focus:text-primary data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 dark:peer-focus:text-primary [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
@@ -80,12 +78,13 @@
           data-te-toggle="timepicker"
           name="time"
           [(ngModel)]="event.time"
+          disabled
         />
-        <label
+        <!-- <label
           for="form10"
           class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
-          >With string 24h</label
-        >
+          >Time</label
+        > -->
       </div>
     </div>
     <div class="col-span-6 sm:col-span-3">
@@ -156,15 +155,30 @@
     </div>
 
     <div
-      class="items-center mt-6 pt-6 border-t border-gray-200 rounded-b dark:border-gray-700"
+      class="flex items-center justify-between mt-6 pt-6 border-t border-gray-200 rounded-b dark:border-gray-700"
     >
-      <button
-        class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-        type="button"
-        (click)="updateEvent()"
-      >
-        Save Event
-      </button>
+      <div>
+        <button
+          class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+          type="button"
+          (click)="updateEvent()"
+        >
+          Save Event
+        </button>
+      </div>
+      <div>
+        <button
+          class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+          type="button"
+          (click)="addToCalendar()"
+        >
+          Add to Calendar
+        </button>
+      </div>
     </div>
+    <div
+      class="items-center mt-6 pt-6 border-t border-gray-200 rounded-b dark:border-gray-700"
+    ></div>
   </div>
 </form>
+</div>

@@ -63,6 +63,26 @@ export class UserDataService {
         })
       );
   }
+  isStaff(uid: string): Observable<boolean> {
+    return this.db
+      .doc<User>(`${this.dbPath}/${uid}`)
+      .valueChanges()
+      .pipe(
+        map((user) => {
+          if (user && user.role) {
+            //if user.role .lowercase organizer admin or owner
+            if (user.role.toLowerCase() === 'organizer'||user.role.toLowerCase() === 'admin'||user.role.toLowerCase() === 'owner') {
+              return true;
+
+            }
+
+          }
+          return false; // return false outside of the if statement
+      }),
+      // Add the following line to handle the undefined case
+      map((value) => value ?? false)
+    );
+  }
 
   getTitle(uid: string): Observable<string | undefined> {
     return this.db

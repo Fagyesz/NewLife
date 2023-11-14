@@ -4,6 +4,7 @@ import { Event } from 'src/app/models/event/event.model';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Timepicker, Datepicker, Input, initTE } from 'tw-elements';
 import { HotToastService } from '@ngneat/hot-toast';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-event-create',
@@ -20,7 +21,8 @@ export class EventCreateComponent implements OnInit {
   constructor(
     private eventService: EventService,
     public authService: AuthService,
-    private toast: HotToastService
+    private toast: HotToastService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -93,6 +95,7 @@ export class EventCreateComponent implements OnInit {
         console.log('Created new item successfully!');
         this.submitted = true;
         this.toastText="";
+        this.redirectTo('/events');
       });
     } else {
       this.toast.error('Not logged in!');
@@ -110,4 +113,9 @@ export class EventCreateComponent implements OnInit {
     }
     return null;
   }
+  redirectTo(path: string): void {
+    this.router.navigate([path]);
+  }
 }
+
+
