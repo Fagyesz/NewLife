@@ -172,6 +172,7 @@ export class EventDetailsComponent implements OnInit {
       if (eventId) {
         this.eventService.update(eventId, this.event).then(() => {
           console.log('Updated event with ID: ' + eventId);
+          this.toast.success('Esemény frissült' );
         });
       } else {
         console.error('Event ID is null or undefined');

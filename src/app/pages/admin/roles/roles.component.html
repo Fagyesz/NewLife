@@ -1,4 +1,4 @@
-<div class="border">
+<div class="border min-h-screen">
   <div
     class="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5 dark:bg-gray-800 dark:border-gray-700"
     authService.userData
@@ -167,24 +167,7 @@
             </svg>
             Activate user
           </button>
-          <a
-            href="#"
-            class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700"
-          >
-            <svg
-              class="w-5 h-5 mr-2 -ml-1"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm5 6a1 1 0 10-2 0v3.586l-1.293-1.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V8z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-            Export
-          </a>
+
         </div>
       </div>
     </div>
@@ -226,26 +209,16 @@
                   scope="col"
                   class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
                 >
-                  Country
+                Language
                 </th>
-                <th
-                  scope="col"
-                  class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
-                >
-                  Position
-                </th>
+
                 <th
                   scope="col"
                   class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
                 >
                   emailVerified
                 </th>
-                <th
-                  scope="col"
-                  class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"
-                >
-                  Actions
-                </th>
+
               </tr>
             </thead>
             <tbody
@@ -314,16 +287,12 @@
                 <td
                   class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white"
                 >
-                  {{ user.position ? user.position : "position" }}
+                {{
+                  user.emailVerified ? user.emailVerified : "emailVerified"
+                }}
                 </td>
-                <td
-                  class="p-4 text-base font-normal text-gray-900 whitespace-nowrap dark:text-white text-center"
-                >
-                  {{
-                    user.emailVerified ? user.emailVerified : "emailVerified"
-                  }}
-                </td>
-                <td class="p-4 space-x-2 whitespace-nowrap"></td>
+
+
               </tr>
             </tbody>
           </table>
