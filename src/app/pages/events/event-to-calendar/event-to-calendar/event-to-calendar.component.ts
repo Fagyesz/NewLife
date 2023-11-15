@@ -27,14 +27,14 @@ export class EventToCalendarComponent {
       },
     };
 
-    this.googleCalendarService.addEvent(accessToken, event)
+    /* this.googleCalendarService.addEvent(accessToken, event)
       .then((response) => {
         console.log('Event added:', response);
         // Handle success, update UI, etc.
       })
       .catch((error) => {
         // Handle error, show error message to the user, etc.
-      });
+      }); */
   }
 }
 

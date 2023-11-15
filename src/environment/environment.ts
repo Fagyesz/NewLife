@@ -24,7 +24,7 @@ export const environment = {
         trackingId: 'UA-197920982-1',
       },
       clientID:"708224628364-d3bnrubajdej50frngpgaf1nmjio6b9l.apps.googleusercontent.com",
-      apiKey:"AIzaSyDMEj6YDMKz9lh73UYWrR5PHUjDmu6-UzY"
+      apiKey:"AIzaSyDMEj6YDMKz9lh73UYWrR5PHUjDmu6-UzY",
 
     },
     youtube: {

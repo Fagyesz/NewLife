@@ -1,0 +1,23 @@
+
+<div class="row">
+  <div class="col-8">
+    <label>
+      <input
+        type="file"
+        class="file-input w-3/5 max-w-xs "
+        (change)="selectFile($event)"
+        accept="image/*"
+      />
+    </label>
+  </div>
+
+  <div class="col-4">
+    <button
+      class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+      [disabled]="!selectedFiles"
+      (click)="upload()"
+    >
+      Upload
+    </button>
+  </div>
+</div>

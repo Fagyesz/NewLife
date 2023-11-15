@@ -3,6 +3,7 @@ import { Lang } from 'src/app/models/user/lang';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { UserDataService } from 'src/app/services/user/user-data/user-data.service';
 import { environment } from 'src/environment/environment';
+import { HotToastService } from '@ngneat/hot-toast';
 
 @Component({
   selector: 'app-settings',
@@ -17,6 +18,7 @@ export class SettingsComponent implements OnInit {
   description: string | null = null;
   active: boolean | null = null;
   defaultPhotoUrl = environment.DefaultPhotoUrl;
+  editable: boolean = false;
 
   ngOnInit(): void {
     this.uid = this.authService.getUserUid();
@@ -29,9 +31,6 @@ export class SettingsComponent implements OnInit {
           // Handle the case where the language is undefined
         }
       });
-
-
-
     } else {
       // Handle the case where the language is null
     }
@@ -39,13 +38,14 @@ export class SettingsComponent implements OnInit {
 
   constructor(
     public authService: AuthService,
-    public userDataService: UserDataService
+    public userDataService: UserDataService,
+    private toast: HotToastService,
   ) {}
   onLanguageChange(newLanguage: string) {
     // Check if the UID is available and not null
     switch (newLanguage) {
       case 'en':
-        this.selectedLanguage = Lang.English; 
+        this.selectedLanguage = Lang.English;
         break;
       case 'hu':
         this.selectedLanguage = Lang.Hungarian;
@@ -53,7 +53,7 @@ export class SettingsComponent implements OnInit {
       case 'ro':
         this.selectedLanguage = Lang.Romanian;
         break;
-    
+
       default:
         console.error('Language not found.');
         break;
@@ -124,4 +124,57 @@ export class SettingsComponent implements OnInit {
       console.error('User UID is null.');
     }
   }
+  saveData() {
+    if (this.uid !== null||this.description!== undefined||this.title!== undefined||this.active!== undefined) {
+      this.updateUserData(this.uid!, this.title!, this.description!, this.active!);
+
+    } else {
+      console.error('User UID is null.');
+    }
+  }
+  updateUserData(
+    uid: string,
+    title: string,
+    description: string,
+    active: boolean
+
+  ) {
+    console.log(uid, title, description, active);
+    if (this.uid !== null) {
+      this.userDataService.setTDA(uid, title, description, active);
+      this.toast.success('Data saved successfully!');
+    } else {
+      console.error('User UID is null.');
+    }
+  }
+  deactivateUser() {
+    if (this.uid !== null) {
+      this.userDataService.setActive(this.uid,false);
+      this.toast.warning('User is deactivated!');
+    } else {
+      console.error('User UID is null.');
+    }
+  }
+  activateUser() {
+    if (this.uid !== null) {
+      this.userDataService.setActive(this.uid,true);
+      this.toast.success('User is activated!');
+
+    } else {
+      console.error('User UID is null.');
+    }
+  }
+  edit() {
+    this.editable = !this.editable;
+
+    if (this.editable) {
+      this.toast.success('You can edit your data now!');
+    }
+    else{
+      this.toast.warning('You can not edit your data anymore!');
+    }
+
+  }
+
+  
 }

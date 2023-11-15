@@ -1,4 +1,4 @@
-<div class="min-h-screen  bg-white">
+<div class="min-h-screen  ">
 <form
   class="bg-white shadow-lg border p-8 m-8 rounded-lg lg:w-full"
   *ngIf="event"
@@ -157,7 +157,7 @@
     <div
       class="flex items-center justify-between mt-6 pt-6 border-t border-gray-200 rounded-b dark:border-gray-700"
     >
-      <div>
+      <div *ngIf="isStaff()">
         <button
           class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
           type="button"
@@ -166,11 +166,11 @@
           Save Event
         </button>
       </div>
-      <div>
+      <div >
         <button
           class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
           type="button"
-          (click)="addToCalendar()"
+          (click)="onAddToCalendar()"
         >
           Add to Calendar
         </button>

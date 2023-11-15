@@ -159,6 +159,16 @@ export class UserDataService {
     // Use the update method to only update the 'photoUrl' field
     return userRef.update({ photoURL });
   }
+
+  setTDA(uid: string, title: string, description: string, active: boolean) {
+    // Update the 'photoUrl' field in the user document
+    const userRef: AngularFirestoreDocument<User> = this.db.doc(
+      `${this.dbPath}/${uid}`
+    );
+
+    // Use the update method to only update the 'photoUrl' field
+    return userRef.update({ title, description, active });
+  }
   setActive(uid: string, active: boolean) {
     // Update the 'active' field in the user document
     const userRef: AngularFirestoreDocument<User> = this.db.doc(

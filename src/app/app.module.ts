@@ -96,9 +96,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { EventToCalendarComponent } from './pages/events/event-to-calendar/event-to-calendar/event-to-calendar.component';
-
-
-import { GoogleMapsModule } from '@angular/google-maps';
+import { UploadPicturesComponent } from './components/fileManagment/upload-pictures/upload-pictures/upload-pictures.component';
 
 @NgModule({
   declarations: [
@@ -109,6 +107,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
     AboutComponent,
     SermonsComponent,
     EventsComponent,
+    UploadPicturesComponent,
     MinistriesComponent,
     ContactComponent,
     HeaderComponent,
@@ -145,7 +144,6 @@ import { GoogleMapsModule } from '@angular/google-maps';
   ],
   imports: [
     BrowserModule,
-    GoogleMapsModule,
     CommonModule,
     AppRoutingModule,
     BrowserAnimationsModule,

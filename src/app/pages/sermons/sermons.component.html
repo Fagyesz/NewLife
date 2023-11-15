@@ -1,11 +1,12 @@
 
 
 <div class="flex flex-col items-center w-screen mb-10 min-h-screen">
+  <h1 class="text-2xl font-bold mb-8">Istentisztelet minden vasárnap 10:00-tól</h1>
   <app-countdown class="m-5 p-5 mt-0 border border-dashed"></app-countdown>
-  <h1 class="text-2xl font-bold mb-8">A Live Stream Címe</h1>
+
   <div class="w-9/12">
     <div class="video-wrapper">
-      <iframe
+      <!-- <iframe
         class="rounded-lg"
           width="560"
           height="515"
@@ -14,12 +15,22 @@
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowfullscreen
+        ></iframe> -->
+        <iframe
+        class="rounded-lg"
+          width="560"
+          height="515"
+          src="https://youtube.com/embed/live_stream?channel=UCZ13TzL1O4nfC30fxua-tSA"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
         ></iframe>
-        <div class="my-5">
+        <!-- <div class="my-5">
 
           <h1 class="text-2xl font-bold mb-4">A Live Megjegyzése</h1>
           <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum</p>
-        </div>
+        </div> -->
       <ng-template *ngIf="streamState == 1">
         <p>Stream starting soon...</p>
       </ng-template>
