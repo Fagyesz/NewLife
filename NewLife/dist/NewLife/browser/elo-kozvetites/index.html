@@ -1,0 +1,769 @@
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="utf-8">
+  <title>NewLife</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="stylesheet" href="styles.css"><link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap" as="style"><style ng-app-id="ng">
+
+.main-content[_ngcontent-ng-c1233144696] {
+  min-height: calc(100vh - 70px);
+  background-color: #f8f9fa;
+  padding: 0;
+}
+/*# sourceMappingURL=/app.css.map */</style><style ng-app-id="ng">
+
+.navbar[_ngcontent-ng-c1582400746] {
+  background:
+    linear-gradient(
+      135deg,
+      #399344 0%,
+      #429aca 100%);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+.navbar[_ngcontent-ng-c1582400746]   .navbar-container[_ngcontent-ng-c1582400746] {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 60px;
+}
+.navbar[_ngcontent-ng-c1582400746]   .navbar-brand[_ngcontent-ng-c1582400746]   .brand-link[_ngcontent-ng-c1582400746] {
+  text-decoration: none;
+  color: #ffffff;
+}
+.navbar[_ngcontent-ng-c1582400746]   .navbar-brand[_ngcontent-ng-c1582400746]   .brand-link[_ngcontent-ng-c1582400746]   .brand-text[_ngcontent-ng-c1582400746] {
+  font-size: 1.2rem;
+  font-weight: 700;
+  display: block;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+.navbar[_ngcontent-ng-c1582400746]   .navbar-brand[_ngcontent-ng-c1582400746]   .brand-link[_ngcontent-ng-c1582400746]   .brand-location[_ngcontent-ng-c1582400746] {
+  font-size: 0.8rem;
+  font-weight: 400;
+  opacity: 0.9;
+  color: #eac338;
+}
+.navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746] {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .navbar-nav[_ngcontent-ng-c1582400746] {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 0.8rem;
+}
+.navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .navbar-nav[_ngcontent-ng-c1582400746]   li[_ngcontent-ng-c1582400746]   a[_ngcontent-ng-c1582400746] {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  position: relative;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+.navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .navbar-nav[_ngcontent-ng-c1582400746]   li[_ngcontent-ng-c1582400746]   a[_ngcontent-ng-c1582400746]:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+.navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .navbar-nav[_ngcontent-ng-c1582400746]   li[_ngcontent-ng-c1582400746]   a.active[_ngcontent-ng-c1582400746] {
+  background-color: #eac338;
+  color: #333333;
+  font-weight: 600;
+}
+.navbar[_ngcontent-ng-c1582400746]   .navbar-toggle[_ngcontent-ng-c1582400746] {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+.navbar[_ngcontent-ng-c1582400746]   .navbar-toggle[_ngcontent-ng-c1582400746]   span[_ngcontent-ng-c1582400746] {
+  width: 25px;
+  height: 3px;
+  background-color: #ffffff;
+  margin: 3px 0;
+  transition: 0.3s;
+  border-radius: 2px;
+}
+.navbar[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .btn-staff[_ngcontent-ng-c1582400746] {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+.navbar[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .btn-staff[_ngcontent-ng-c1582400746]:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+}
+.navbar[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .btn-staff[_ngcontent-ng-c1582400746]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+.navbar[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .user-section[_ngcontent-ng-c1582400746] {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.navbar[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .user-section[_ngcontent-ng-c1582400746]   .user-info[_ngcontent-ng-c1582400746] {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.navbar[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .user-section[_ngcontent-ng-c1582400746]   .user-info[_ngcontent-ng-c1582400746]   .user-name[_ngcontent-ng-c1582400746] {
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+.navbar[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .user-section[_ngcontent-ng-c1582400746]   .user-info[_ngcontent-ng-c1582400746]   .user-role[_ngcontent-ng-c1582400746] {
+  color: #eac338;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.navbar[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .user-section[_ngcontent-ng-c1582400746]   .user-actions[_ngcontent-ng-c1582400746] {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+.navbar[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .user-section[_ngcontent-ng-c1582400746]   .user-actions[_ngcontent-ng-c1582400746]   .btn-admin[_ngcontent-ng-c1582400746] {
+  background: rgba(234, 195, 56, 0.2);
+  color: #eac338;
+  border: 1px solid rgba(234, 195, 56, 0.4);
+  padding: 0.3rem 0.6rem;
+  border-radius: 15px;
+  font-size: 0.75rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+.navbar[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .user-section[_ngcontent-ng-c1582400746]   .user-actions[_ngcontent-ng-c1582400746]   .btn-admin[_ngcontent-ng-c1582400746]:hover {
+  background: rgba(234, 195, 56, 0.3);
+  border-color: rgba(234, 195, 56, 0.6);
+  transform: translateY(-1px);
+}
+.navbar[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .user-section[_ngcontent-ng-c1582400746]   .user-actions[_ngcontent-ng-c1582400746]   .btn-logout[_ngcontent-ng-c1582400746] {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.3rem 0.6rem;
+  border-radius: 15px;
+  font-size: 0.75rem;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+.navbar[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .user-section[_ngcontent-ng-c1582400746]   .user-actions[_ngcontent-ng-c1582400746]   .btn-logout[_ngcontent-ng-c1582400746]:hover {
+  background: rgba(255, 0, 0, 0.2);
+  border-color: rgba(255, 0, 0, 0.4);
+}
+@media (max-width: 1000px) {
+  .navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .navbar-nav[_ngcontent-ng-c1582400746] {
+    gap: 0.5rem;
+  }
+  .navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .navbar-nav[_ngcontent-ng-c1582400746]   li[_ngcontent-ng-c1582400746]   a[_ngcontent-ng-c1582400746] {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.85rem;
+  }
+}
+@media (max-width: 768px) {
+  .navbar[_ngcontent-ng-c1582400746]   .navbar-brand[_ngcontent-ng-c1582400746]   .brand-link[_ngcontent-ng-c1582400746]   .brand-text[_ngcontent-ng-c1582400746] {
+    font-size: 1.1rem;
+  }
+  .navbar[_ngcontent-ng-c1582400746]   .navbar-toggle[_ngcontent-ng-c1582400746] {
+    display: flex;
+  }
+  .navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746] {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background:
+      linear-gradient(
+        135deg,
+        #399344 0%,
+        #429aca 100%);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .navbar[_ngcontent-ng-c1582400746]   .navbar-menu.is-active[_ngcontent-ng-c1582400746] {
+    max-height: 500px;
+  }
+  .navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .navbar-nav[_ngcontent-ng-c1582400746] {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 0.5rem;
+  }
+  .navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .navbar-nav[_ngcontent-ng-c1582400746]   li[_ngcontent-ng-c1582400746]   a[_ngcontent-ng-c1582400746] {
+    display: block;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+  }
+  .navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746] {
+    padding: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin-top: 1rem;
+  }
+  .navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .btn-staff[_ngcontent-ng-c1582400746] {
+    width: 100%;
+    text-align: center;
+  }
+  .navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .user-section[_ngcontent-ng-c1582400746] {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .user-section[_ngcontent-ng-c1582400746]   .user-info[_ngcontent-ng-c1582400746] {
+    align-items: center;
+    text-align: center;
+  }
+  .navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .user-section[_ngcontent-ng-c1582400746]   .user-actions[_ngcontent-ng-c1582400746] {
+    flex-direction: column;
+    width: 100%;
+  }
+  .navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .user-section[_ngcontent-ng-c1582400746]   .user-actions[_ngcontent-ng-c1582400746]   .btn-admin[_ngcontent-ng-c1582400746], 
+   .navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .user-section[_ngcontent-ng-c1582400746]   .user-actions[_ngcontent-ng-c1582400746]   .btn-logout[_ngcontent-ng-c1582400746] {
+    width: 100%;
+    text-align: center;
+  }
+}
+.navbar-toggle.is-active[_ngcontent-ng-c1582400746]   span[_ngcontent-ng-c1582400746]:nth-child(1) {
+  transform: rotate(-45deg) translate(-5px, 6px);
+}
+.navbar-toggle.is-active[_ngcontent-ng-c1582400746]   span[_ngcontent-ng-c1582400746]:nth-child(2) {
+  opacity: 0;
+}
+.navbar-toggle.is-active[_ngcontent-ng-c1582400746]   span[_ngcontent-ng-c1582400746]:nth-child(3) {
+  transform: rotate(45deg) translate(-5px, -6px);
+}
+/*# sourceMappingURL=/navigation.css.map */</style><style ng-app-id="ng">@charset "UTF-8";
+
+
+
+.page-header[_ngcontent-ng-c1337320241] {
+  background:
+    linear-gradient(
+      135deg,
+      #399344 0%,
+      #429aca 100%);
+  color: #ffffff;
+  padding: 4rem 0 3rem;
+  text-align: center;
+}
+.page-header[_ngcontent-ng-c1337320241]   h1[_ngcontent-ng-c1337320241] {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+}
+.page-header[_ngcontent-ng-c1337320241]   p[_ngcontent-ng-c1337320241] {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+.stream-section[_ngcontent-ng-c1337320241] {
+  background-color: #ffffff;
+  padding: 3rem 0;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .stream-status[_ngcontent-ng-c1337320241] {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border-radius: 10px;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .stream-status[_ngcontent-ng-c1337320241]   .status-indicator[_ngcontent-ng-c1337320241] {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .stream-status[_ngcontent-ng-c1337320241]   .status-text[_ngcontent-ng-c1337320241] {
+  font-size: 1.1rem;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .stream-status[_ngcontent-ng-c1337320241]   .next-stream[_ngcontent-ng-c1337320241] {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .stream-status.offline[_ngcontent-ng-c1337320241] {
+  background: rgba(255, 0, 0, 0.1);
+  color: #d32f2f;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .stream-status.offline[_ngcontent-ng-c1337320241]   .status-indicator[_ngcontent-ng-c1337320241] {
+  background: #d32f2f;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .stream-status.live[_ngcontent-ng-c1337320241] {
+  background: rgba(76, 175, 80, 0.1);
+  color: #388e3c;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .stream-status.live[_ngcontent-ng-c1337320241]   .status-indicator[_ngcontent-ng-c1337320241] {
+  background: #388e3c;
+  animation: _ngcontent-ng-c1337320241_pulse 2s infinite;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .video-container[_ngcontent-ng-c1337320241] {
+  margin-bottom: 3rem;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .video-container[_ngcontent-ng-c1337320241]   .video-placeholder[_ngcontent-ng-c1337320241] {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(57, 147, 68, 0.1) 0%,
+      rgba(66, 154, 202, 0.1) 100%);
+  border-radius: 15px;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed rgba(66, 154, 202, 0.3);
+}
+.stream-section[_ngcontent-ng-c1337320241]   .video-container[_ngcontent-ng-c1337320241]   .video-placeholder[_ngcontent-ng-c1337320241]   .placeholder-content[_ngcontent-ng-c1337320241] {
+  text-align: center;
+  padding: 2rem;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .video-container[_ngcontent-ng-c1337320241]   .video-placeholder[_ngcontent-ng-c1337320241]   .placeholder-content[_ngcontent-ng-c1337320241]   .play-icon[_ngcontent-ng-c1337320241] {
+  font-size: 4rem;
+  color: #399344;
+  margin-bottom: 1rem;
+  opacity: 0.7;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .video-container[_ngcontent-ng-c1337320241]   .video-placeholder[_ngcontent-ng-c1337320241]   .placeholder-content[_ngcontent-ng-c1337320241]   h3[_ngcontent-ng-c1337320241] {
+  color: #399344;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .video-container[_ngcontent-ng-c1337320241]   .video-placeholder[_ngcontent-ng-c1337320241]   .placeholder-content[_ngcontent-ng-c1337320241]   p[_ngcontent-ng-c1337320241] {
+  color: #666;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .stream-info[_ngcontent-ng-c1337320241]   .info-grid[_ngcontent-ng-c1337320241] {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .stream-info[_ngcontent-ng-c1337320241]   .info-grid[_ngcontent-ng-c1337320241]   .info-card[_ngcontent-ng-c1337320241] {
+  flex: 0 1 300px;
+  max-width: 350px;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .stream-info[_ngcontent-ng-c1337320241]   .info-card[_ngcontent-ng-c1337320241] {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 15px;
+  border-left: 4px solid #429aca;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .stream-info[_ngcontent-ng-c1337320241]   .info-card[_ngcontent-ng-c1337320241]   h4[_ngcontent-ng-c1337320241] {
+  color: #399344;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .stream-info[_ngcontent-ng-c1337320241]   .info-card[_ngcontent-ng-c1337320241]   p[_ngcontent-ng-c1337320241] {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .stream-info[_ngcontent-ng-c1337320241]   .info-card[_ngcontent-ng-c1337320241]   ul[_ngcontent-ng-c1337320241] {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .stream-info[_ngcontent-ng-c1337320241]   .info-card[_ngcontent-ng-c1337320241]   ul[_ngcontent-ng-c1337320241]   li[_ngcontent-ng-c1337320241] {
+  padding: 0.5rem 0;
+  color: #666;
+  border-bottom: 1px solid rgba(66, 154, 202, 0.1);
+}
+.stream-section[_ngcontent-ng-c1337320241]   .stream-info[_ngcontent-ng-c1337320241]   .info-card[_ngcontent-ng-c1337320241]   ul[_ngcontent-ng-c1337320241]   li[_ngcontent-ng-c1337320241]:last-child {
+  border-bottom: none;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .stream-info[_ngcontent-ng-c1337320241]   .info-card[_ngcontent-ng-c1337320241]   ul[_ngcontent-ng-c1337320241]   li[_ngcontent-ng-c1337320241]:before {
+  content: "\25b6";
+  color: #399344;
+  margin-right: 0.5rem;
+  font-size: 0.8rem;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .countdown-container[_ngcontent-ng-c1337320241] {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(57, 147, 68, 0.05) 0%,
+      rgba(66, 154, 202, 0.05) 100%);
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  margin: 2rem 0;
+  border: 1px solid rgba(66, 154, 202, 0.1);
+}
+.stream-section[_ngcontent-ng-c1337320241]   .countdown-container[_ngcontent-ng-c1337320241]   h3[_ngcontent-ng-c1337320241] {
+  color: #399344;
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .countdown-container[_ngcontent-ng-c1337320241]   .countdown-timer[_ngcontent-ng-c1337320241] {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .countdown-container[_ngcontent-ng-c1337320241]   .countdown-timer[_ngcontent-ng-c1337320241]   .time-unit[_ngcontent-ng-c1337320241] {
+  background: #ffffff;
+  padding: 1rem;
+  border-radius: 10px;
+  min-width: 80px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+.stream-section[_ngcontent-ng-c1337320241]   .countdown-container[_ngcontent-ng-c1337320241]   .countdown-timer[_ngcontent-ng-c1337320241]   .time-unit[_ngcontent-ng-c1337320241]   .number[_ngcontent-ng-c1337320241] {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #429aca;
+  line-height: 1;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .countdown-container[_ngcontent-ng-c1337320241]   .countdown-timer[_ngcontent-ng-c1337320241]   .time-unit[_ngcontent-ng-c1337320241]   .label[_ngcontent-ng-c1337320241] {
+  display: block;
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .notification-section[_ngcontent-ng-c1337320241] {
+  margin: 2rem 0;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .notification-section[_ngcontent-ng-c1337320241]   .notification-card[_ngcontent-ng-c1337320241] {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(234, 195, 56, 0.1) 0%,
+      rgba(57, 147, 68, 0.1) 100%);
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  border: 1px solid rgba(234, 195, 56, 0.2);
+}
+.stream-section[_ngcontent-ng-c1337320241]   .notification-section[_ngcontent-ng-c1337320241]   .notification-card[_ngcontent-ng-c1337320241]   h4[_ngcontent-ng-c1337320241] {
+  color: #399344;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .notification-section[_ngcontent-ng-c1337320241]   .notification-card[_ngcontent-ng-c1337320241]   p[_ngcontent-ng-c1337320241] {
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .notification-section[_ngcontent-ng-c1337320241]   .notification-card[_ngcontent-ng-c1337320241]   .notification-options[_ngcontent-ng-c1337320241] {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .notification-section[_ngcontent-ng-c1337320241]   .notification-card[_ngcontent-ng-c1337320241]   .notification-options[_ngcontent-ng-c1337320241]   .btn-notification[_ngcontent-ng-c1337320241] {
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .notification-section[_ngcontent-ng-c1337320241]   .notification-card[_ngcontent-ng-c1337320241]   .notification-options[_ngcontent-ng-c1337320241]   .btn-notification.youtube[_ngcontent-ng-c1337320241] {
+  background: rgba(255, 0, 0, 0.1);
+  color: #ff0000;
+  border-color: rgba(255, 0, 0, 0.2);
+}
+.stream-section[_ngcontent-ng-c1337320241]   .notification-section[_ngcontent-ng-c1337320241]   .notification-card[_ngcontent-ng-c1337320241]   .notification-options[_ngcontent-ng-c1337320241]   .btn-notification.youtube[_ngcontent-ng-c1337320241]:hover {
+  background: rgba(255, 0, 0, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
+}
+.stream-section[_ngcontent-ng-c1337320241]   .notification-section[_ngcontent-ng-c1337320241]   .notification-card[_ngcontent-ng-c1337320241]   .notification-options[_ngcontent-ng-c1337320241]   .btn-notification.discord[_ngcontent-ng-c1337320241] {
+  background: rgba(114, 137, 218, 0.1);
+  color: #7289da;
+  border-color: rgba(114, 137, 218, 0.2);
+}
+.stream-section[_ngcontent-ng-c1337320241]   .notification-section[_ngcontent-ng-c1337320241]   .notification-card[_ngcontent-ng-c1337320241]   .notification-options[_ngcontent-ng-c1337320241]   .btn-notification.discord[_ngcontent-ng-c1337320241]:hover {
+  background: rgba(114, 137, 218, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(114, 137, 218, 0.3);
+}
+.stream-section[_ngcontent-ng-c1337320241]   .info-card[_ngcontent-ng-c1337320241]   .discord-link[_ngcontent-ng-c1337320241] {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: rgba(114, 137, 218, 0.1);
+  color: #7289da;
+  text-decoration: none;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+.stream-section[_ngcontent-ng-c1337320241]   .info-card[_ngcontent-ng-c1337320241]   .discord-link[_ngcontent-ng-c1337320241]:hover {
+  background: rgba(114, 137, 218, 0.2);
+  transform: translateY(-1px);
+}
+.live-feed[_ngcontent-ng-c1337320241] {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 0, 0, 0.05) 0%,
+      rgba(57, 147, 68, 0.05) 100%);
+  padding: 3rem 0;
+  border-top: 3px solid #ff0000;
+}
+.live-feed[_ngcontent-ng-c1337320241]   .live-stream-embed[_ngcontent-ng-c1337320241] {
+  max-width: 900px;
+  margin: 2rem auto;
+  background: #ffffff;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+.live-feed[_ngcontent-ng-c1337320241]   .live-stream-embed[_ngcontent-ng-c1337320241]   .embed-placeholder[_ngcontent-ng-c1337320241] {
+  padding: 3rem;
+  text-align: center;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 0, 0, 0.1) 0%,
+      rgba(57, 147, 68, 0.1) 100%);
+}
+.live-feed[_ngcontent-ng-c1337320241]   .live-stream-embed[_ngcontent-ng-c1337320241]   .embed-placeholder[_ngcontent-ng-c1337320241]   p[_ngcontent-ng-c1337320241] {
+  color: #666;
+  font-size: 1.1rem;
+}
+.past-streams[_ngcontent-ng-c1337320241] {
+  background-color: #f8f9fa;
+  padding: 3rem 0;
+}
+.past-streams[_ngcontent-ng-c1337320241]   .streams-grid[_ngcontent-ng-c1337320241] {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.past-streams[_ngcontent-ng-c1337320241]   .streams-grid[_ngcontent-ng-c1337320241]   .stream-card[_ngcontent-ng-c1337320241] {
+  flex: 0 1 300px;
+  max-width: 350px;
+}
+.past-streams[_ngcontent-ng-c1337320241]   .stream-card[_ngcontent-ng-c1337320241] {
+  background: #ffffff;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.past-streams[_ngcontent-ng-c1337320241]   .stream-card[_ngcontent-ng-c1337320241]:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+.past-streams[_ngcontent-ng-c1337320241]   .stream-card[_ngcontent-ng-c1337320241]   .stream-thumbnail[_ngcontent-ng-c1337320241] {
+  position: relative;
+  overflow: hidden;
+}
+.past-streams[_ngcontent-ng-c1337320241]   .stream-card[_ngcontent-ng-c1337320241]   .stream-thumbnail[_ngcontent-ng-c1337320241]   img[_ngcontent-ng-c1337320241] {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.past-streams[_ngcontent-ng-c1337320241]   .stream-card[_ngcontent-ng-c1337320241]   .stream-thumbnail[_ngcontent-ng-c1337320241]   .play-overlay[_ngcontent-ng-c1337320241] {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: #ffffff;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  transition: all 0.3s ease;
+}
+.past-streams[_ngcontent-ng-c1337320241]   .stream-card[_ngcontent-ng-c1337320241]   .stream-thumbnail[_ngcontent-ng-c1337320241]   .live-badge[_ngcontent-ng-c1337320241] {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(255, 0, 0, 0.9);
+  color: #ffffff;
+  padding: 0.25rem 0.5rem;
+  border-radius: 5px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  animation: _ngcontent-ng-c1337320241_pulse-red 2s infinite;
+}
+.past-streams[_ngcontent-ng-c1337320241]   .stream-card[_ngcontent-ng-c1337320241]   .stream-thumbnail[_ngcontent-ng-c1337320241]:hover   img[_ngcontent-ng-c1337320241] {
+  transform: scale(1.05);
+}
+.past-streams[_ngcontent-ng-c1337320241]   .stream-card[_ngcontent-ng-c1337320241]   .stream-thumbnail[_ngcontent-ng-c1337320241]:hover   .play-overlay[_ngcontent-ng-c1337320241] {
+  background: rgba(57, 147, 68, 0.9);
+  transform: translate(-50%, -50%) scale(1.1);
+}
+.past-streams[_ngcontent-ng-c1337320241]   .stream-card[_ngcontent-ng-c1337320241]   .stream-content[_ngcontent-ng-c1337320241] {
+  padding: 1.5rem;
+}
+.past-streams[_ngcontent-ng-c1337320241]   .stream-card[_ngcontent-ng-c1337320241]   .stream-content[_ngcontent-ng-c1337320241]   h4[_ngcontent-ng-c1337320241] {
+  color: #399344;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+.past-streams[_ngcontent-ng-c1337320241]   .stream-card[_ngcontent-ng-c1337320241]   .stream-content[_ngcontent-ng-c1337320241]   p[_ngcontent-ng-c1337320241] {
+  color: #666;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+.past-streams[_ngcontent-ng-c1337320241]   .stream-card[_ngcontent-ng-c1337320241]   .stream-content[_ngcontent-ng-c1337320241]   .duration[_ngcontent-ng-c1337320241] {
+  background: #429aca;
+  color: #ffffff;
+  padding: 0.25rem 0.5rem;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+.past-streams[_ngcontent-ng-c1337320241]   .stream-card[_ngcontent-ng-c1337320241]   .stream-content[_ngcontent-ng-c1337320241]   .views[_ngcontent-ng-c1337320241] {
+  background: rgba(234, 195, 56, 0.2);
+  color: #666;
+  padding: 0.25rem 0.5rem;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+.tech-info[_ngcontent-ng-c1337320241] {
+  background-color: #ffffff;
+  padding: 3rem 0;
+}
+.tech-info[_ngcontent-ng-c1337320241]   .tech-content[_ngcontent-ng-c1337320241] {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+.tech-info[_ngcontent-ng-c1337320241]   .tech-content[_ngcontent-ng-c1337320241]   h2[_ngcontent-ng-c1337320241] {
+  margin-bottom: 2rem;
+  color: #399344;
+}
+.tech-info[_ngcontent-ng-c1337320241]   .tech-grid[_ngcontent-ng-c1337320241] {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.tech-info[_ngcontent-ng-c1337320241]   .tech-grid[_ngcontent-ng-c1337320241]   .tech-card[_ngcontent-ng-c1337320241] {
+  flex: 0 1 200px;
+  max-width: 240px;
+}
+.tech-info[_ngcontent-ng-c1337320241]   .tech-card[_ngcontent-ng-c1337320241] {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(57, 147, 68, 0.05) 0%,
+      rgba(66, 154, 202, 0.05) 100%);
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  border: 1px solid rgba(66, 154, 202, 0.1);
+}
+.tech-info[_ngcontent-ng-c1337320241]   .tech-card[_ngcontent-ng-c1337320241]   h4[_ngcontent-ng-c1337320241] {
+  color: #399344;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+.tech-info[_ngcontent-ng-c1337320241]   .tech-card[_ngcontent-ng-c1337320241]   p[_ngcontent-ng-c1337320241] {
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+@keyframes _ngcontent-ng-c1337320241_pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(56, 142, 60, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(56, 142, 60, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(56, 142, 60, 0);
+  }
+}
+@keyframes _ngcontent-ng-c1337320241_pulse-red {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@media (max-width: 768px) {
+  .page-header[_ngcontent-ng-c1337320241] {
+    padding: 3rem 0 2rem;
+  }
+  .page-header[_ngcontent-ng-c1337320241]   h1[_ngcontent-ng-c1337320241] {
+    font-size: 2rem;
+  }
+  .page-header[_ngcontent-ng-c1337320241]   p[_ngcontent-ng-c1337320241] {
+    font-size: 1rem;
+  }
+  .video-container[_ngcontent-ng-c1337320241]   .video-placeholder[_ngcontent-ng-c1337320241] {
+    min-height: 250px;
+  }
+  .video-container[_ngcontent-ng-c1337320241]   .video-placeholder[_ngcontent-ng-c1337320241]   .placeholder-content[_ngcontent-ng-c1337320241] {
+    padding: 1rem;
+  }
+  .video-container[_ngcontent-ng-c1337320241]   .video-placeholder[_ngcontent-ng-c1337320241]   .placeholder-content[_ngcontent-ng-c1337320241]   .play-icon[_ngcontent-ng-c1337320241] {
+    font-size: 3rem;
+  }
+  .video-container[_ngcontent-ng-c1337320241]   .video-placeholder[_ngcontent-ng-c1337320241]   .placeholder-content[_ngcontent-ng-c1337320241]   h3[_ngcontent-ng-c1337320241] {
+    font-size: 1.2rem;
+  }
+  .video-container[_ngcontent-ng-c1337320241]   .video-placeholder[_ngcontent-ng-c1337320241]   .placeholder-content[_ngcontent-ng-c1337320241]   p[_ngcontent-ng-c1337320241] {
+    font-size: 1rem;
+  }
+  .stream-info[_ngcontent-ng-c1337320241]   .info-grid[_ngcontent-ng-c1337320241], 
+   .past-streams[_ngcontent-ng-c1337320241]   .streams-grid[_ngcontent-ng-c1337320241], 
+   .tech-info[_ngcontent-ng-c1337320241]   .tech-grid[_ngcontent-ng-c1337320241] {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .stream-card[_ngcontent-ng-c1337320241]   .stream-content[_ngcontent-ng-c1337320241] {
+    padding: 1rem;
+  }
+}
+/*# sourceMappingURL=/elo-kozvetites.css.map */</style></head>
+<body><!--nghm-->
+  <app-root ng-version="20.0.4" _nghost-ng-c1233144696="" ngh="2" ng-server-context="ssg"><app-navigation _ngcontent-ng-c1233144696="" _nghost-ng-c1582400746="" ngh="0"><nav _ngcontent-ng-c1582400746="" class="navbar"><div _ngcontent-ng-c1582400746="" class="navbar-container"><div _ngcontent-ng-c1582400746="" class="navbar-brand"><a _ngcontent-ng-c1582400746="" routerlink="/" class="brand-link" href="/"><span _ngcontent-ng-c1582400746="" class="brand-text">Új Élet Baptista Gyülekezet</span><span _ngcontent-ng-c1582400746="" class="brand-location">Gyöngyös</span></a></div><div _ngcontent-ng-c1582400746="" class="navbar-menu"><ul _ngcontent-ng-c1582400746="" class="navbar-nav"><li _ngcontent-ng-c1582400746=""><a _ngcontent-ng-c1582400746="" routerlink="/fooldal" routerlinkactive="active" href="/fooldal" class="">Főoldal</a></li><li _ngcontent-ng-c1582400746=""><a _ngcontent-ng-c1582400746="" routerlink="/esemenyek" routerlinkactive="active" href="/esemenyek" class="">Események</a></li><li _ngcontent-ng-c1582400746=""><a _ngcontent-ng-c1582400746="" routerlink="/hirek" routerlinkactive="active" href="/hirek" class="">Hírek</a></li><li _ngcontent-ng-c1582400746=""><a _ngcontent-ng-c1582400746="" routerlink="/elo-kozvetites" routerlinkactive="active" href="/elo-kozvetites" class="active">Élő&nbsp;közvetítés</a></li><li _ngcontent-ng-c1582400746=""><a _ngcontent-ng-c1582400746="" routerlink="/rolunk" routerlinkactive="active" href="/rolunk" class="">Rólunk</a></li><li _ngcontent-ng-c1582400746=""><a _ngcontent-ng-c1582400746="" routerlink="/kapcsolat" routerlinkactive="active" href="/kapcsolat" class="">Kapcsolat</a></li></ul><!--container--></div><div _ngcontent-ng-c1582400746="" class="navbar-toggle"><span _ngcontent-ng-c1582400746=""></span><span _ngcontent-ng-c1582400746=""></span><span _ngcontent-ng-c1582400746=""></span></div></div></nav></app-navigation><main _ngcontent-ng-c1233144696="" class="main-content"><router-outlet _ngcontent-ng-c1233144696=""></router-outlet><app-elo-kozvetites _nghost-ng-c1337320241="" ngh="1"><section _ngcontent-ng-c1337320241="" class="page-header"><div _ngcontent-ng-c1337320241="" class="container"><h1 _ngcontent-ng-c1337320241="">Élő közvetítés</h1><p _ngcontent-ng-c1337320241="">Csatlakozzon online istentiszteleteinkhez</p></div></section><section _ngcontent-ng-c1337320241="" class="section stream-section"><div _ngcontent-ng-c1337320241="" class="container"><div _ngcontent-ng-c1337320241="" class="stream-status offline"><div _ngcontent-ng-c1337320241="" class="status-indicator"></div><span _ngcontent-ng-c1337320241="" class="status-text">Jelenleg nincs élő közvetítés</span><span _ngcontent-ng-c1337320241="" class="next-stream">Következő közvetítés: Vasárnap 10:00</span></div><div _ngcontent-ng-c1337320241="" class="countdown-container"><h3 _ngcontent-ng-c1337320241="">🕐 Következő istentiszteletig:</h3><div _ngcontent-ng-c1337320241="" class="countdown-timer"><div _ngcontent-ng-c1337320241="" class="time-unit"><span _ngcontent-ng-c1337320241="" id="days" class="number">0</span><span _ngcontent-ng-c1337320241="" class="label">nap</span></div><div _ngcontent-ng-c1337320241="" class="time-unit"><span _ngcontent-ng-c1337320241="" id="hours" class="number">0</span><span _ngcontent-ng-c1337320241="" class="label">óra</span></div><div _ngcontent-ng-c1337320241="" class="time-unit"><span _ngcontent-ng-c1337320241="" id="minutes" class="number">0</span><span _ngcontent-ng-c1337320241="" class="label">perc</span></div><div _ngcontent-ng-c1337320241="" class="time-unit"><span _ngcontent-ng-c1337320241="" id="seconds" class="number">0</span><span _ngcontent-ng-c1337320241="" class="label">mp</span></div></div></div><div _ngcontent-ng-c1337320241="" class="notification-section"><div _ngcontent-ng-c1337320241="" class="notification-card"><h4 _ngcontent-ng-c1337320241="">🔔 Értesítések</h4><p _ngcontent-ng-c1337320241="">Szeretne értesítést kapni a közvetítések kezdete előtt?</p><div _ngcontent-ng-c1337320241="" class="notification-options"><a _ngcontent-ng-c1337320241="" href="https://www.youtube.com/@ujeletbaptistagyulekezet?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn btn-notification youtube"> 📺 YouTube feliratkozás </a><a _ngcontent-ng-c1337320241="" href="https://discord.gg/gTDUpApNae" target="_blank" rel="noopener noreferrer" class="btn btn-notification discord"> 💬 Discord csatlakozás </a></div></div></div><div _ngcontent-ng-c1337320241="" class="video-container"><div _ngcontent-ng-c1337320241="" class="video-placeholder"><div _ngcontent-ng-c1337320241="" class="placeholder-content"><div _ngcontent-ng-c1337320241="" class="play-icon">▶</div><h3 _ngcontent-ng-c1337320241="">Vasárnapi istentisztelet élő közvetítése</h3><p _ngcontent-ng-c1337320241="">Csatlakozzon online közösségünkhöz minden vasárnap 10:00 órakor</p><a _ngcontent-ng-c1337320241="" href="https://www.youtube.com/@ujeletbaptistagyulekezet" target="_blank" rel="noopener noreferrer" class="btn btn-primary"> 📺 YouTube csatorna megtekintése </a></div></div></div><div _ngcontent-ng-c1337320241="" class="stream-info"><div _ngcontent-ng-c1337320241="" class="info-grid"><div _ngcontent-ng-c1337320241="" class="info-card"><h4 _ngcontent-ng-c1337320241="">📅 Közvetítési időpontok</h4><ul _ngcontent-ng-c1337320241=""><li _ngcontent-ng-c1337320241="">Vasárnap 10:00 - Istentisztelet</li><li _ngcontent-ng-c1337320241="">Szerda 19:00 - Bibliaóra (alkalmanként)</li><li _ngcontent-ng-c1337320241="">Különleges alkalmak</li></ul></div><div _ngcontent-ng-c1337320241="" class="info-card"><h4 _ngcontent-ng-c1337320241="">📱 Hogyan nézhetem?</h4><p _ngcontent-ng-c1337320241="">YouTube csatornánkon keresztül bármilyen eszközön követheti az istentiszteleteket:</p><ul _ngcontent-ng-c1337320241=""><li _ngcontent-ng-c1337320241="">Számítógépen</li><li _ngcontent-ng-c1337320241="">Okostelefonon</li><li _ngcontent-ng-c1337320241="">Smart TV-n</li><li _ngcontent-ng-c1337320241="">Tableten</li></ul></div><div _ngcontent-ng-c1337320241="" class="info-card"><h4 _ngcontent-ng-c1337320241="">💬 Interakció &amp; Közösség</h4><p _ngcontent-ng-c1337320241="">Csatlakozzon a beszélgetéshez:</p><ul _ngcontent-ng-c1337320241=""><li _ngcontent-ng-c1337320241="">YouTube chat a közvetítés alatt</li><li _ngcontent-ng-c1337320241="">Discord szerver folyamatos beszélgetéshez</li><li _ngcontent-ng-c1337320241="">Imakérések megosztása</li><li _ngcontent-ng-c1337320241="">Közösségi programok szervezése</li></ul><a _ngcontent-ng-c1337320241="" href="https://discord.gg/gTDUpApNae" target="_blank" rel="noopener noreferrer" class="discord-link"> 💬 Discord közösséghez csatlakozás </a></div></div></div></div></section><!--container--><section _ngcontent-ng-c1337320241="" class="section tech-info"><div _ngcontent-ng-c1337320241="" class="container"><div _ngcontent-ng-c1337320241="" class="tech-content"><h2 _ngcontent-ng-c1337320241="">Technikai információk</h2><div _ngcontent-ng-c1337320241="" class="tech-grid"><div _ngcontent-ng-c1337320241="" class="tech-card"><h4 _ngcontent-ng-c1337320241="">🎥 Videóminőség</h4><p _ngcontent-ng-c1337320241="">HD 1080p minőségben közvetítünk a legjobb élmény érdekében</p></div><div _ngcontent-ng-c1337320241="" class="tech-card"><h4 _ngcontent-ng-c1337320241="">🔊 Hang</h4><p _ngcontent-ng-c1337320241="">Tiszta hangminőség professzionális mikrofonrendszerrel</p></div><div _ngcontent-ng-c1337320241="" class="tech-card"><h4 _ngcontent-ng-c1337320241="">📱 Mobil</h4><p _ngcontent-ng-c1337320241="">Mobilbarát lejátszó minden okoseszközön</p></div><div _ngcontent-ng-c1337320241="" class="tech-card"><h4 _ngcontent-ng-c1337320241="">💾 Utólag</h4><p _ngcontent-ng-c1337320241="">Minden közvetítés elérhető marad a YouTube csatornán</p></div></div></div></div></section></app-elo-kozvetites><!--container--></main></app-root>
+<script src="main.js" type="module"></script>
+
+<script id="ng-state" type="application/json">{"__nghData__":[{"t":{"28":"t0"},"c":{"28":[]}},{"t":{"102":"t1"},"c":{"102":[]}},{"c":{"2":[{"i":"c1337320241","r":1}]}}]}</script></body></html>

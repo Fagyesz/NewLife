@@ -1,0 +1,688 @@
+export default `<!DOCTYPE html><html lang="en"><head>
+  <meta charset="utf-8">
+  <title>NewLife</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="stylesheet" href="styles.css"><link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&amp;display=swap" as="style"><style ng-app-id="ng">
+
+.main-content[_ngcontent-ng-c1233144696] {
+  min-height: calc(100vh - 70px);
+  background-color: #f8f9fa;
+  padding: 0;
+}
+/*# sourceMappingURL=/app.css.map */</style><style ng-app-id="ng">
+
+.navbar[_ngcontent-ng-c1582400746] {
+  background:
+    linear-gradient(
+      135deg,
+      #399344 0%,
+      #429aca 100%);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+.navbar[_ngcontent-ng-c1582400746]   .navbar-container[_ngcontent-ng-c1582400746] {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 60px;
+}
+.navbar[_ngcontent-ng-c1582400746]   .navbar-brand[_ngcontent-ng-c1582400746]   .brand-link[_ngcontent-ng-c1582400746] {
+  text-decoration: none;
+  color: #ffffff;
+}
+.navbar[_ngcontent-ng-c1582400746]   .navbar-brand[_ngcontent-ng-c1582400746]   .brand-link[_ngcontent-ng-c1582400746]   .brand-text[_ngcontent-ng-c1582400746] {
+  font-size: 1.2rem;
+  font-weight: 700;
+  display: block;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+.navbar[_ngcontent-ng-c1582400746]   .navbar-brand[_ngcontent-ng-c1582400746]   .brand-link[_ngcontent-ng-c1582400746]   .brand-location[_ngcontent-ng-c1582400746] {
+  font-size: 0.8rem;
+  font-weight: 400;
+  opacity: 0.9;
+  color: #eac338;
+}
+.navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746] {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .navbar-nav[_ngcontent-ng-c1582400746] {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 0.8rem;
+}
+.navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .navbar-nav[_ngcontent-ng-c1582400746]   li[_ngcontent-ng-c1582400746]   a[_ngcontent-ng-c1582400746] {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  position: relative;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+.navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .navbar-nav[_ngcontent-ng-c1582400746]   li[_ngcontent-ng-c1582400746]   a[_ngcontent-ng-c1582400746]:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+.navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .navbar-nav[_ngcontent-ng-c1582400746]   li[_ngcontent-ng-c1582400746]   a.active[_ngcontent-ng-c1582400746] {
+  background-color: #eac338;
+  color: #333333;
+  font-weight: 600;
+}
+.navbar[_ngcontent-ng-c1582400746]   .navbar-toggle[_ngcontent-ng-c1582400746] {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+.navbar[_ngcontent-ng-c1582400746]   .navbar-toggle[_ngcontent-ng-c1582400746]   span[_ngcontent-ng-c1582400746] {
+  width: 25px;
+  height: 3px;
+  background-color: #ffffff;
+  margin: 3px 0;
+  transition: 0.3s;
+  border-radius: 2px;
+}
+.navbar[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .btn-staff[_ngcontent-ng-c1582400746] {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+.navbar[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .btn-staff[_ngcontent-ng-c1582400746]:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+}
+.navbar[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .btn-staff[_ngcontent-ng-c1582400746]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+.navbar[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .user-section[_ngcontent-ng-c1582400746] {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.navbar[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .user-section[_ngcontent-ng-c1582400746]   .user-info[_ngcontent-ng-c1582400746] {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.navbar[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .user-section[_ngcontent-ng-c1582400746]   .user-info[_ngcontent-ng-c1582400746]   .user-name[_ngcontent-ng-c1582400746] {
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+.navbar[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .user-section[_ngcontent-ng-c1582400746]   .user-info[_ngcontent-ng-c1582400746]   .user-role[_ngcontent-ng-c1582400746] {
+  color: #eac338;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.navbar[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .user-section[_ngcontent-ng-c1582400746]   .user-actions[_ngcontent-ng-c1582400746] {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+.navbar[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .user-section[_ngcontent-ng-c1582400746]   .user-actions[_ngcontent-ng-c1582400746]   .btn-admin[_ngcontent-ng-c1582400746] {
+  background: rgba(234, 195, 56, 0.2);
+  color: #eac338;
+  border: 1px solid rgba(234, 195, 56, 0.4);
+  padding: 0.3rem 0.6rem;
+  border-radius: 15px;
+  font-size: 0.75rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+.navbar[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .user-section[_ngcontent-ng-c1582400746]   .user-actions[_ngcontent-ng-c1582400746]   .btn-admin[_ngcontent-ng-c1582400746]:hover {
+  background: rgba(234, 195, 56, 0.3);
+  border-color: rgba(234, 195, 56, 0.6);
+  transform: translateY(-1px);
+}
+.navbar[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .user-section[_ngcontent-ng-c1582400746]   .user-actions[_ngcontent-ng-c1582400746]   .btn-logout[_ngcontent-ng-c1582400746] {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.3rem 0.6rem;
+  border-radius: 15px;
+  font-size: 0.75rem;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+.navbar[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .user-section[_ngcontent-ng-c1582400746]   .user-actions[_ngcontent-ng-c1582400746]   .btn-logout[_ngcontent-ng-c1582400746]:hover {
+  background: rgba(255, 0, 0, 0.2);
+  border-color: rgba(255, 0, 0, 0.4);
+}
+@media (max-width: 1000px) {
+  .navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .navbar-nav[_ngcontent-ng-c1582400746] {
+    gap: 0.5rem;
+  }
+  .navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .navbar-nav[_ngcontent-ng-c1582400746]   li[_ngcontent-ng-c1582400746]   a[_ngcontent-ng-c1582400746] {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.85rem;
+  }
+}
+@media (max-width: 768px) {
+  .navbar[_ngcontent-ng-c1582400746]   .navbar-brand[_ngcontent-ng-c1582400746]   .brand-link[_ngcontent-ng-c1582400746]   .brand-text[_ngcontent-ng-c1582400746] {
+    font-size: 1.1rem;
+  }
+  .navbar[_ngcontent-ng-c1582400746]   .navbar-toggle[_ngcontent-ng-c1582400746] {
+    display: flex;
+  }
+  .navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746] {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background:
+      linear-gradient(
+        135deg,
+        #399344 0%,
+        #429aca 100%);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .navbar[_ngcontent-ng-c1582400746]   .navbar-menu.is-active[_ngcontent-ng-c1582400746] {
+    max-height: 500px;
+  }
+  .navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .navbar-nav[_ngcontent-ng-c1582400746] {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 0.5rem;
+  }
+  .navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .navbar-nav[_ngcontent-ng-c1582400746]   li[_ngcontent-ng-c1582400746]   a[_ngcontent-ng-c1582400746] {
+    display: block;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+  }
+  .navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746] {
+    padding: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin-top: 1rem;
+  }
+  .navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .btn-staff[_ngcontent-ng-c1582400746] {
+    width: 100%;
+    text-align: center;
+  }
+  .navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .user-section[_ngcontent-ng-c1582400746] {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .user-section[_ngcontent-ng-c1582400746]   .user-info[_ngcontent-ng-c1582400746] {
+    align-items: center;
+    text-align: center;
+  }
+  .navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .user-section[_ngcontent-ng-c1582400746]   .user-actions[_ngcontent-ng-c1582400746] {
+    flex-direction: column;
+    width: 100%;
+  }
+  .navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .user-section[_ngcontent-ng-c1582400746]   .user-actions[_ngcontent-ng-c1582400746]   .btn-admin[_ngcontent-ng-c1582400746], 
+   .navbar[_ngcontent-ng-c1582400746]   .navbar-menu[_ngcontent-ng-c1582400746]   .staff-section[_ngcontent-ng-c1582400746]   .user-section[_ngcontent-ng-c1582400746]   .user-actions[_ngcontent-ng-c1582400746]   .btn-logout[_ngcontent-ng-c1582400746] {
+    width: 100%;
+    text-align: center;
+  }
+}
+.navbar-toggle.is-active[_ngcontent-ng-c1582400746]   span[_ngcontent-ng-c1582400746]:nth-child(1) {
+  transform: rotate(-45deg) translate(-5px, 6px);
+}
+.navbar-toggle.is-active[_ngcontent-ng-c1582400746]   span[_ngcontent-ng-c1582400746]:nth-child(2) {
+  opacity: 0;
+}
+.navbar-toggle.is-active[_ngcontent-ng-c1582400746]   span[_ngcontent-ng-c1582400746]:nth-child(3) {
+  transform: rotate(45deg) translate(-5px, -6px);
+}
+/*# sourceMappingURL=/navigation.css.map */</style><style ng-app-id="ng">
+
+.page-header[_ngcontent-ng-c1517220651] {
+  background:
+    linear-gradient(
+      135deg,
+      #399344 0%,
+      #429aca 100%);
+  color: #ffffff;
+  padding: 4rem 0 3rem;
+  text-align: center;
+}
+.page-header[_ngcontent-ng-c1517220651]   h1[_ngcontent-ng-c1517220651] {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+}
+.page-header[_ngcontent-ng-c1517220651]   p[_ngcontent-ng-c1517220651] {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+.about-section[_ngcontent-ng-c1517220651] {
+  background-color: #ffffff;
+  padding: 4rem 0;
+}
+.about-section[_ngcontent-ng-c1517220651]   .about-content[_ngcontent-ng-c1517220651] {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.about-section[_ngcontent-ng-c1517220651]   .about-content[_ngcontent-ng-c1517220651]   h2[_ngcontent-ng-c1517220651] {
+  color: #399344;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+}
+.about-section[_ngcontent-ng-c1517220651]   .about-content[_ngcontent-ng-c1517220651]   .lead[_ngcontent-ng-c1517220651] {
+  font-size: 1.2rem;
+  line-height: 1.7;
+  text-align: center;
+  color: #666;
+  margin-bottom: 3rem;
+}
+.about-section[_ngcontent-ng-c1517220651]   .values-grid[_ngcontent-ng-c1517220651] {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 3rem;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.about-section[_ngcontent-ng-c1517220651]   .values-grid[_ngcontent-ng-c1517220651]   .value-card[_ngcontent-ng-c1517220651] {
+  flex: 0 1 250px;
+  max-width: 280px;
+}
+.about-section[_ngcontent-ng-c1517220651]   .value-card[_ngcontent-ng-c1517220651] {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+.about-section[_ngcontent-ng-c1517220651]   .value-card[_ngcontent-ng-c1517220651]:hover {
+  border-color: #429aca;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+.about-section[_ngcontent-ng-c1517220651]   .value-card[_ngcontent-ng-c1517220651]   .value-icon[_ngcontent-ng-c1517220651] {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+.about-section[_ngcontent-ng-c1517220651]   .value-card[_ngcontent-ng-c1517220651]   h4[_ngcontent-ng-c1517220651] {
+  color: #399344;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+.about-section[_ngcontent-ng-c1517220651]   .value-card[_ngcontent-ng-c1517220651]   p[_ngcontent-ng-c1517220651] {
+  color: #666;
+  line-height: 1.6;
+}
+.history-section[_ngcontent-ng-c1517220651] {
+  background-color: #f8f9fa;
+  padding: 4rem 0;
+}
+.history-section[_ngcontent-ng-c1517220651]   .history-content[_ngcontent-ng-c1517220651] {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.history-section[_ngcontent-ng-c1517220651]   .history-content[_ngcontent-ng-c1517220651]   h2[_ngcontent-ng-c1517220651] {
+  color: #399344;
+  text-align: center;
+  margin-bottom: 3rem;
+  font-size: 2rem;
+}
+.history-section[_ngcontent-ng-c1517220651]   .timeline[_ngcontent-ng-c1517220651] {
+  position: relative;
+}
+.history-section[_ngcontent-ng-c1517220651]   .timeline[_ngcontent-ng-c1517220651]::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background:
+    linear-gradient(
+      to bottom,
+      #399344,
+      #429aca);
+  transform: translateX(-50%);
+}
+.history-section[_ngcontent-ng-c1517220651]   .timeline-item[_ngcontent-ng-c1517220651] {
+  display: flex;
+  margin-bottom: 3rem;
+  position: relative;
+}
+.history-section[_ngcontent-ng-c1517220651]   .timeline-item[_ngcontent-ng-c1517220651]:nth-child(odd) {
+  flex-direction: row;
+}
+.history-section[_ngcontent-ng-c1517220651]   .timeline-item[_ngcontent-ng-c1517220651]:nth-child(odd)   .timeline-date[_ngcontent-ng-c1517220651] {
+  order: 1;
+  margin-left: 2rem;
+  text-align: left;
+}
+.history-section[_ngcontent-ng-c1517220651]   .timeline-item[_ngcontent-ng-c1517220651]:nth-child(odd)   .timeline-content[_ngcontent-ng-c1517220651] {
+  order: 0;
+  margin-right: 2rem;
+  text-align: right;
+}
+.history-section[_ngcontent-ng-c1517220651]   .timeline-item[_ngcontent-ng-c1517220651]:nth-child(even) {
+  flex-direction: row;
+}
+.history-section[_ngcontent-ng-c1517220651]   .timeline-item[_ngcontent-ng-c1517220651]:nth-child(even)   .timeline-date[_ngcontent-ng-c1517220651] {
+  order: 0;
+  margin-right: 2rem;
+  text-align: right;
+}
+.history-section[_ngcontent-ng-c1517220651]   .timeline-item[_ngcontent-ng-c1517220651]:nth-child(even)   .timeline-content[_ngcontent-ng-c1517220651] {
+  order: 1;
+  margin-left: 2rem;
+  text-align: left;
+}
+.history-section[_ngcontent-ng-c1517220651]   .timeline-item[_ngcontent-ng-c1517220651]::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 1rem;
+  width: 16px;
+  height: 16px;
+  background: #eac338;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  border: 4px solid #ffffff;
+}
+.history-section[_ngcontent-ng-c1517220651]   .timeline-date[_ngcontent-ng-c1517220651] {
+  flex: 0 0 100px;
+  background: #399344;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  align-self: flex-start;
+}
+.history-section[_ngcontent-ng-c1517220651]   .timeline-content[_ngcontent-ng-c1517220651] {
+  flex: 1;
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+.history-section[_ngcontent-ng-c1517220651]   .timeline-content[_ngcontent-ng-c1517220651]   h4[_ngcontent-ng-c1517220651] {
+  color: #429aca;
+  margin-bottom: 0.5rem;
+}
+.history-section[_ngcontent-ng-c1517220651]   .timeline-content[_ngcontent-ng-c1517220651]   p[_ngcontent-ng-c1517220651] {
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+.beliefs-section[_ngcontent-ng-c1517220651] {
+  background-color: #ffffff;
+  padding: 4rem 0;
+}
+.beliefs-section[_ngcontent-ng-c1517220651]   h2[_ngcontent-ng-c1517220651] {
+  color: #399344;
+  margin-bottom: 3rem;
+  font-size: 2rem;
+}
+.beliefs-section[_ngcontent-ng-c1517220651]   .beliefs-grid[_ngcontent-ng-c1517220651] {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.beliefs-section[_ngcontent-ng-c1517220651]   .beliefs-grid[_ngcontent-ng-c1517220651]   .belief-card[_ngcontent-ng-c1517220651] {
+  flex: 0 1 300px;
+  max-width: 350px;
+}
+.beliefs-section[_ngcontent-ng-c1517220651]   .belief-card[_ngcontent-ng-c1517220651] {
+  background:
+    linear-gradient(
+      135deg,
+      rgba(57, 147, 68, 0.05) 0%,
+      rgba(66, 154, 202, 0.05) 100%);
+  padding: 2rem;
+  border-radius: 15px;
+  border-left: 4px solid #429aca;
+  transition: transform 0.3s ease;
+}
+.beliefs-section[_ngcontent-ng-c1517220651]   .belief-card[_ngcontent-ng-c1517220651]:hover {
+  transform: translateY(-3px);
+}
+.beliefs-section[_ngcontent-ng-c1517220651]   .belief-card[_ngcontent-ng-c1517220651]   h4[_ngcontent-ng-c1517220651] {
+  color: #399344;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+.beliefs-section[_ngcontent-ng-c1517220651]   .belief-card[_ngcontent-ng-c1517220651]   p[_ngcontent-ng-c1517220651] {
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+.leadership-section[_ngcontent-ng-c1517220651] {
+  background-color: #f8f9fa;
+  padding: 4rem 0;
+}
+.leadership-section[_ngcontent-ng-c1517220651]   h2[_ngcontent-ng-c1517220651] {
+  color: #399344;
+  margin-bottom: 3rem;
+  font-size: 2rem;
+}
+.leadership-section[_ngcontent-ng-c1517220651]   .leadership-grid[_ngcontent-ng-c1517220651] {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.leadership-section[_ngcontent-ng-c1517220651]   .leadership-grid[_ngcontent-ng-c1517220651]   .leader-card[_ngcontent-ng-c1517220651] {
+  flex: 0 1 300px;
+  max-width: 350px;
+}
+.leadership-section[_ngcontent-ng-c1517220651]   .leader-card[_ngcontent-ng-c1517220651] {
+  background: #ffffff;
+  border-radius: 15px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+.leadership-section[_ngcontent-ng-c1517220651]   .leader-card[_ngcontent-ng-c1517220651]:hover {
+  transform: translateY(-5px);
+}
+.leadership-section[_ngcontent-ng-c1517220651]   .leader-card[_ngcontent-ng-c1517220651]   .leader-photo[_ngcontent-ng-c1517220651] {
+  margin-bottom: 1.5rem;
+}
+.leadership-section[_ngcontent-ng-c1517220651]   .leader-card[_ngcontent-ng-c1517220651]   .leader-photo[_ngcontent-ng-c1517220651]   .photo-placeholder[_ngcontent-ng-c1517220651] {
+  width: 100px;
+  height: 100px;
+  background: #f8f9fa;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  margin: 0 auto;
+  border: 4px solid #429aca;
+}
+.leadership-section[_ngcontent-ng-c1517220651]   .leader-card[_ngcontent-ng-c1517220651]   .leader-info[_ngcontent-ng-c1517220651]   h4[_ngcontent-ng-c1517220651] {
+  color: #399344;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+.leadership-section[_ngcontent-ng-c1517220651]   .leader-card[_ngcontent-ng-c1517220651]   .leader-info[_ngcontent-ng-c1517220651]   h5[_ngcontent-ng-c1517220651] {
+  color: #429aca;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+.leadership-section[_ngcontent-ng-c1517220651]   .leader-card[_ngcontent-ng-c1517220651]   .leader-info[_ngcontent-ng-c1517220651]   p[_ngcontent-ng-c1517220651] {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+.leadership-section[_ngcontent-ng-c1517220651]   .leader-card[_ngcontent-ng-c1517220651]   .leader-info[_ngcontent-ng-c1517220651]   .leader-contact[_ngcontent-ng-c1517220651] {
+  font-size: 0.9rem;
+  color: #429aca;
+  font-weight: 500;
+}
+.visit-section[_ngcontent-ng-c1517220651] {
+  background-color: #ffffff;
+  padding: 4rem 0;
+}
+.visit-section[_ngcontent-ng-c1517220651]   .visit-content[_ngcontent-ng-c1517220651] {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+}
+.visit-section[_ngcontent-ng-c1517220651]   .visit-content[_ngcontent-ng-c1517220651]   h2[_ngcontent-ng-c1517220651] {
+  color: #399344;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+}
+.visit-section[_ngcontent-ng-c1517220651]   .visit-content[_ngcontent-ng-c1517220651]   .lead[_ngcontent-ng-c1517220651] {
+  font-size: 1.2rem;
+  color: #666;
+  line-height: 1.7;
+  margin-bottom: 3rem;
+}
+.visit-section[_ngcontent-ng-c1517220651]   .visit-info[_ngcontent-ng-c1517220651] {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.visit-section[_ngcontent-ng-c1517220651]   .visit-card[_ngcontent-ng-c1517220651] {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  flex: 0 1 250px;
+  max-width: 280px;
+}
+.visit-section[_ngcontent-ng-c1517220651]   .visit-card[_ngcontent-ng-c1517220651]:hover {
+  border-color: #399344;
+  transform: translateY(-3px);
+}
+.visit-section[_ngcontent-ng-c1517220651]   .visit-card[_ngcontent-ng-c1517220651]   h4[_ngcontent-ng-c1517220651] {
+  color: #399344;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+.visit-section[_ngcontent-ng-c1517220651]   .visit-card[_ngcontent-ng-c1517220651]   p[_ngcontent-ng-c1517220651] {
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+.visit-section[_ngcontent-ng-c1517220651]   .visit-card[_ngcontent-ng-c1517220651]   ul[_ngcontent-ng-c1517220651] {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+.visit-section[_ngcontent-ng-c1517220651]   .visit-card[_ngcontent-ng-c1517220651]   ul[_ngcontent-ng-c1517220651]   li[_ngcontent-ng-c1517220651] {
+  padding: 0.5rem 0;
+  color: #666;
+  border-bottom: 1px solid rgba(66, 154, 202, 0.1);
+}
+.visit-section[_ngcontent-ng-c1517220651]   .visit-card[_ngcontent-ng-c1517220651]   ul[_ngcontent-ng-c1517220651]   li[_ngcontent-ng-c1517220651]:last-child {
+  border-bottom: none;
+}
+.visit-section[_ngcontent-ng-c1517220651]   .visit-card[_ngcontent-ng-c1517220651]   ul[_ngcontent-ng-c1517220651]   li[_ngcontent-ng-c1517220651]   strong[_ngcontent-ng-c1517220651] {
+  color: #429aca;
+}
+@media (max-width: 768px) {
+  .page-header[_ngcontent-ng-c1517220651] {
+    padding: 3rem 0 2rem;
+  }
+  .page-header[_ngcontent-ng-c1517220651]   h1[_ngcontent-ng-c1517220651] {
+    font-size: 2rem;
+  }
+  .page-header[_ngcontent-ng-c1517220651]   p[_ngcontent-ng-c1517220651] {
+    font-size: 1rem;
+  }
+  .about-section[_ngcontent-ng-c1517220651], 
+   .history-section[_ngcontent-ng-c1517220651], 
+   .beliefs-section[_ngcontent-ng-c1517220651], 
+   .leadership-section[_ngcontent-ng-c1517220651], 
+   .visit-section[_ngcontent-ng-c1517220651] {
+    padding: 3rem 0;
+  }
+  .about-section[_ngcontent-ng-c1517220651]   h2[_ngcontent-ng-c1517220651], 
+   .history-section[_ngcontent-ng-c1517220651]   h2[_ngcontent-ng-c1517220651], 
+   .beliefs-section[_ngcontent-ng-c1517220651]   h2[_ngcontent-ng-c1517220651], 
+   .leadership-section[_ngcontent-ng-c1517220651]   h2[_ngcontent-ng-c1517220651], 
+   .visit-section[_ngcontent-ng-c1517220651]   h2[_ngcontent-ng-c1517220651] {
+    font-size: 1.5rem;
+  }
+  .values-grid[_ngcontent-ng-c1517220651], 
+   .beliefs-grid[_ngcontent-ng-c1517220651], 
+   .leadership-grid[_ngcontent-ng-c1517220651], 
+   .visit-info[_ngcontent-ng-c1517220651] {
+    gap: 1rem;
+  }
+  .visit-info[_ngcontent-ng-c1517220651]   .visit-card[_ngcontent-ng-c1517220651], 
+   .values-grid[_ngcontent-ng-c1517220651]   .value-card[_ngcontent-ng-c1517220651], 
+   .beliefs-grid[_ngcontent-ng-c1517220651]   .belief-card[_ngcontent-ng-c1517220651], 
+   .leadership-grid[_ngcontent-ng-c1517220651]   .leader-card[_ngcontent-ng-c1517220651] {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+  .timeline[_ngcontent-ng-c1517220651]::before {
+    left: 20px;
+  }
+  .timeline[_ngcontent-ng-c1517220651]   .timeline-item[_ngcontent-ng-c1517220651] {
+    flex-direction: column !important;
+    margin-left: 40px;
+  }
+  .timeline[_ngcontent-ng-c1517220651]   .timeline-item[_ngcontent-ng-c1517220651]::before {
+    left: -30px;
+  }
+  .timeline[_ngcontent-ng-c1517220651]   .timeline-item[_ngcontent-ng-c1517220651]   .timeline-date[_ngcontent-ng-c1517220651], 
+   .timeline[_ngcontent-ng-c1517220651]   .timeline-item[_ngcontent-ng-c1517220651]   .timeline-content[_ngcontent-ng-c1517220651] {
+    order: initial !important;
+    margin: 0 0 1rem 0 !important;
+    text-align: left !important;
+  }
+  .about-content[_ngcontent-ng-c1517220651]   .lead[_ngcontent-ng-c1517220651] {
+    font-size: 1.1rem;
+  }
+}
+/*# sourceMappingURL=/rolunk.css.map */</style></head>
+<body><!--nghm-->
+  <app-root ng-version="20.0.4" _nghost-ng-c1233144696="" ngh="2" ng-server-context="ssg"><app-navigation _ngcontent-ng-c1233144696="" _nghost-ng-c1582400746="" ngh="0"><nav _ngcontent-ng-c1582400746="" class="navbar"><div _ngcontent-ng-c1582400746="" class="navbar-container"><div _ngcontent-ng-c1582400746="" class="navbar-brand"><a _ngcontent-ng-c1582400746="" routerlink="/" class="brand-link" href="/"><span _ngcontent-ng-c1582400746="" class="brand-text">Új Élet Baptista Gyülekezet</span><span _ngcontent-ng-c1582400746="" class="brand-location">Gyöngyös</span></a></div><div _ngcontent-ng-c1582400746="" class="navbar-menu"><ul _ngcontent-ng-c1582400746="" class="navbar-nav"><li _ngcontent-ng-c1582400746=""><a _ngcontent-ng-c1582400746="" routerlink="/fooldal" routerlinkactive="active" href="/fooldal" class="">Főoldal</a></li><li _ngcontent-ng-c1582400746=""><a _ngcontent-ng-c1582400746="" routerlink="/esemenyek" routerlinkactive="active" href="/esemenyek" class="">Események</a></li><li _ngcontent-ng-c1582400746=""><a _ngcontent-ng-c1582400746="" routerlink="/hirek" routerlinkactive="active" href="/hirek" class="">Hírek</a></li><li _ngcontent-ng-c1582400746=""><a _ngcontent-ng-c1582400746="" routerlink="/elo-kozvetites" routerlinkactive="active" href="/elo-kozvetites" class="">Élő&nbsp;közvetítés</a></li><li _ngcontent-ng-c1582400746=""><a _ngcontent-ng-c1582400746="" routerlink="/rolunk" routerlinkactive="active" href="/rolunk" class="active">Rólunk</a></li><li _ngcontent-ng-c1582400746=""><a _ngcontent-ng-c1582400746="" routerlink="/kapcsolat" routerlinkactive="active" href="/kapcsolat" class="">Kapcsolat</a></li></ul><!--container--></div><div _ngcontent-ng-c1582400746="" class="navbar-toggle"><span _ngcontent-ng-c1582400746=""></span><span _ngcontent-ng-c1582400746=""></span><span _ngcontent-ng-c1582400746=""></span></div></div></nav></app-navigation><main _ngcontent-ng-c1233144696="" class="main-content"><router-outlet _ngcontent-ng-c1233144696=""></router-outlet><app-rolunk _nghost-ng-c1517220651="" ngh="1"><section _ngcontent-ng-c1517220651="" class="page-header"><div _ngcontent-ng-c1517220651="" class="container"><h1 _ngcontent-ng-c1517220651="">Rólunk</h1><p _ngcontent-ng-c1517220651="">Megismerheti gyülekezetünket és küldetésünket</p></div></section><section _ngcontent-ng-c1517220651="" class="section about-section"><div _ngcontent-ng-c1517220651="" class="container"><div _ngcontent-ng-c1517220651="" class="about-content"><div _ngcontent-ng-c1517220651="" class="about-text"><h2 _ngcontent-ng-c1517220651="">Az Új Élet Baptista Gyülekezet</h2><p _ngcontent-ng-c1517220651="" class="lead"> Gyöngyösön található gyülekezetünk egy szeretetteljes közösség, ahol minden ember megtalálhatja helyét Isten családjában. Hiszünk abban, hogy Jézus Krisztus mindenkinek szabadságot és új életet kínál. </p><div _ngcontent-ng-c1517220651="" class="values-grid"><div _ngcontent-ng-c1517220651="" class="value-card"><div _ngcontent-ng-c1517220651="" class="value-icon">📖</div><h4 _ngcontent-ng-c1517220651="">Bibliai tanítás</h4><p _ngcontent-ng-c1517220651="">Életünk alapja az Isten Igéje, amelyet komolyan veszünk és gyakorlatban is alkalmazunk.</p></div><div _ngcontent-ng-c1517220651="" class="value-card"><div _ngcontent-ng-c1517220651="" class="value-icon">❤️</div><h4 _ngcontent-ng-c1517220651="">Szeretet</h4><p _ngcontent-ng-c1517220651="">Isten szeretete motivál minket arra, hogy egymást és közösségünket szolgáljuk.</p></div><div _ngcontent-ng-c1517220651="" class="value-card"><div _ngcontent-ng-c1517220651="" class="value-icon">🤝</div><h4 _ngcontent-ng-c1517220651="">Közösség</h4><p _ngcontent-ng-c1517220651="">Hiszünk a közösség erejében és abban, hogy együtt többek vagyunk.</p></div><div _ngcontent-ng-c1517220651="" class="value-card"><div _ngcontent-ng-c1517220651="" class="value-icon">🙏</div><h4 _ngcontent-ng-c1517220651="">Ima</h4><p _ngcontent-ng-c1517220651="">Az ima az alapja kapcsolatunknak Istennel és egymással való közösségünknek.</p></div></div></div></div></div></section><section _ngcontent-ng-c1517220651="" class="section history-section"><div _ngcontent-ng-c1517220651="" class="container"><div _ngcontent-ng-c1517220651="" class="history-content"><h2 _ngcontent-ng-c1517220651="">Történetünk</h2><div _ngcontent-ng-c1517220651="" class="timeline"><div _ngcontent-ng-c1517220651="" class="timeline-item"><div _ngcontent-ng-c1517220651="" class="timeline-date">Alapítás</div><div _ngcontent-ng-c1517220651="" class="timeline-content"><h4 _ngcontent-ng-c1517220651="">Gyülekezet kezdetei</h4><p _ngcontent-ng-c1517220651="">Kisebb családi körben kezdődött a közös bibliaolvasás és ima Gyöngyösön.</p></div></div><div _ngcontent-ng-c1517220651="" class="timeline-item"><div _ngcontent-ng-c1517220651="" class="timeline-date">Növekedés</div><div _ngcontent-ng-c1517220651="" class="timeline-content"><h4 _ngcontent-ng-c1517220651="">Közösség bővülése</h4><p _ngcontent-ng-c1517220651="">Egyre több család csatlakozott, és kialakult a rendszeres istentiszteleti rend.</p></div></div><div _ngcontent-ng-c1517220651="" class="timeline-item"><div _ngcontent-ng-c1517220651="" class="timeline-date">Ma</div><div _ngcontent-ng-c1517220651="" class="timeline-content"><h4 _ngcontent-ng-c1517220651="">Új Élet Baptista Gyülekezet</h4><p _ngcontent-ng-c1517220651="">Aktív közösség vagyunk, akik Isten szeretetét hirdetjük és éljük meg a városban.</p></div></div></div></div></div></section><section _ngcontent-ng-c1517220651="" class="section beliefs-section"><div _ngcontent-ng-c1517220651="" class="container"><h2 _ngcontent-ng-c1517220651="" class="text-center">Mit hiszünk?</h2><div _ngcontent-ng-c1517220651="" class="beliefs-grid"><div _ngcontent-ng-c1517220651="" class="belief-card"><h4 _ngcontent-ng-c1517220651="">✝️ Jézus Krisztus</h4><p _ngcontent-ng-c1517220651="">Hiszünk, hogy Jézus Krisztus Isten Fia, aki meghalt bűneinkért és harmadnapon feltámadt.</p></div><div _ngcontent-ng-c1517220651="" class="belief-card"><h4 _ngcontent-ng-c1517220651="">📖 A Biblia</h4><p _ngcontent-ng-c1517220651="">A Biblia Isten ihletett és tévedhetetlen Igéje, amely útmutatást ad életünkhöz.</p></div><div _ngcontent-ng-c1517220651="" class="belief-card"><h4 _ngcontent-ng-c1517220651="">💒 Keresztség</h4><p _ngcontent-ng-c1517220651="">A hit általi keresztség a nyilvános tanúságtétel Jézus Krisztus követéséről.</p></div><div _ngcontent-ng-c1517220651="" class="belief-card"><h4 _ngcontent-ng-c1517220651="">🍞 Úrvacsora</h4><p _ngcontent-ng-c1517220651="">Az úrvacsora Jézus áldozatára való emlékezés és a közösség egységének kifejezése.</p></div><div _ngcontent-ng-c1517220651="" class="belief-card"><h4 _ngcontent-ng-c1517220651="">🌟 Új születés</h4><p _ngcontent-ng-c1517220651="">Hiszünk az új születésben, amely Isten kegyelméből hit által történik.</p></div><div _ngcontent-ng-c1517220651="" class="belief-card"><h4 _ngcontent-ng-c1517220651="">👑 Jézus visszajövetele</h4><p _ngcontent-ng-c1517220651="">Várjuk és hirdetjük Urunk Jézus Krisztus dicsőséges visszajövetelét.</p></div></div></div></section><section _ngcontent-ng-c1517220651="" class="section leadership-section"><div _ngcontent-ng-c1517220651="" class="container"><h2 _ngcontent-ng-c1517220651="" class="text-center">Vezetőség</h2><div _ngcontent-ng-c1517220651="" class="leadership-grid"><div _ngcontent-ng-c1517220651="" class="leader-card"><div _ngcontent-ng-c1517220651="" class="leader-photo"><div _ngcontent-ng-c1517220651="" class="photo-placeholder">👤</div></div><div _ngcontent-ng-c1517220651="" class="leader-info"><h4 _ngcontent-ng-c1517220651="">Lelkipásztor</h4><h5 _ngcontent-ng-c1517220651="">[Név]</h5><p _ngcontent-ng-c1517220651="">A gyülekezet lelki vezetője, aki az igehirdetést és a lelki gondozást végzi.</p><p _ngcontent-ng-c1517220651="" class="leader-contact">📧 [email@példa.hu]</p></div></div><div _ngcontent-ng-c1517220651="" class="leader-card"><div _ngcontent-ng-c1517220651="" class="leader-photo"><div _ngcontent-ng-c1517220651="" class="photo-placeholder">👤</div></div><div _ngcontent-ng-c1517220651="" class="leader-info"><h4 _ngcontent-ng-c1517220651="">Diakónus</h4><h5 _ngcontent-ng-c1517220651="">[Név]</h5><p _ngcontent-ng-c1517220651="">A gyakorlati szolgálatok koordinálása és a közösség gondozása.</p><p _ngcontent-ng-c1517220651="" class="leader-contact">📞 [telefonszám]</p></div></div><div _ngcontent-ng-c1517220651="" class="leader-card"><div _ngcontent-ng-c1517220651="" class="leader-photo"><div _ngcontent-ng-c1517220651="" class="photo-placeholder">👤</div></div><div _ngcontent-ng-c1517220651="" class="leader-info"><h4 _ngcontent-ng-c1517220651="">Presbitérium tag</h4><h5 _ngcontent-ng-c1517220651="">[Név]</h5><p _ngcontent-ng-c1517220651="">A gyülekezet vezetésében és döntéshozatalban való részvétel.</p><p _ngcontent-ng-c1517220651="" class="leader-contact">📱 [telefonszám]</p></div></div></div></div></section><section _ngcontent-ng-c1517220651="" class="section visit-section"><div _ngcontent-ng-c1517220651="" class="container"><div _ngcontent-ng-c1517220651="" class="visit-content"><h2 _ngcontent-ng-c1517220651="">Látogasson el hozzánk!</h2><p _ngcontent-ng-c1517220651="" class="lead"> Szívesen látjuk Önt és családját istentiszteleteinkre és programjainkra. Nem szükséges előzetesen bejelentkezni - egyszerűen jöjjön el! </p><div _ngcontent-ng-c1517220651="" class="visit-info"><div _ngcontent-ng-c1517220651="" class="visit-card"><h4 _ngcontent-ng-c1517220651="">🕐 Mikor?</h4><ul _ngcontent-ng-c1517220651=""><li _ngcontent-ng-c1517220651=""><strong _ngcontent-ng-c1517220651="">Vasárnap 10:00</strong> - Istentisztelet</li><li _ngcontent-ng-c1517220651=""><strong _ngcontent-ng-c1517220651="">Szerda 19:00</strong> - Bibliaóra</li><li _ngcontent-ng-c1517220651=""><strong _ngcontent-ng-c1517220651="">Péntek 18:30</strong> - Imaóra</li></ul></div><div _ngcontent-ng-c1517220651="" class="visit-card"><h4 _ngcontent-ng-c1517220651="">👗 Öltözködés</h4><p _ngcontent-ng-c1517220651="">Nincs szigorú öltözködési kód. Jöjjön kényelmesen és úgy, ahogy van!</p></div><div _ngcontent-ng-c1517220651="" class="visit-card"><h4 _ngcontent-ng-c1517220651="">👶 Gyermekek</h4><p _ngcontent-ng-c1517220651="">Gyermekfelügyelet biztosított a vasárnapi istentiszteletek alatt.</p></div><div _ngcontent-ng-c1517220651="" class="visit-card"><h4 _ngcontent-ng-c1517220651="">🚗 Parkolás</h4><p _ngcontent-ng-c1517220651="">Ingyenes parkolási lehetőség az épület mellett és környékén.</p></div></div><div _ngcontent-ng-c1517220651="" class="visit-actions"><a _ngcontent-ng-c1517220651="" routerlink="/kapcsolat" class="btn btn-primary" href="/kapcsolat">Kapcsolatfelvétel</a><a _ngcontent-ng-c1517220651="" routerlink="/esemenyek" class="btn btn-secondary" href="/esemenyek">Események megtekintése</a><a _ngcontent-ng-c1517220651="" routerlink="/elo-kozvetites" class="btn btn-outline" href="/elo-kozvetites">Élő közvetítés</a></div></div></div></section></app-rolunk><!--container--></main></app-root>
+<script src="main.js" type="module"></script>
+
+<script id="ng-state" type="application/json">{"__nghData__":[{"t":{"28":"t0"},"c":{"28":[]}},{},{"c":{"2":[{"i":"c1517220651","r":1}]}}]}</script></body></html>`;

@@ -1,0 +1,12 @@
+{
+  "routes": {
+    "/": {},
+    "/admin": {},
+    "/elo-kozvetites": {},
+    "/esemenyek": {},
+    "/fooldal": {},
+    "/hirek": {},
+    "/kapcsolat": {},
+    "/rolunk": {}
+  }
+}
