@@ -94,6 +94,31 @@ export class Esemenyek implements OnInit {
     }).format(date);
   }
 
+  getEventMonth(date: Date): string {
+    return new Intl.DateTimeFormat('hu-HU', {
+      month: 'short'
+    }).format(date);
+  }
+
+  getEventDay(date: Date): string {
+    return new Intl.DateTimeFormat('hu-HU', {
+      day: 'numeric'
+    }).format(date);
+  }
+
+  getEventTime(date: Date): string {
+    return new Intl.DateTimeFormat('hu-HU', {
+      hour: '2-digit',
+      minute: '2-digit'
+    }).format(date);
+  }
+
+  getEventWeekday(date: Date): string {
+    return new Intl.DateTimeFormat('hu-HU', {
+      weekday: 'long'
+    }).format(date);
+  }
+
   getEventTypeIcon(type: Event['type']): string {
     switch (type) {
       case 'service': return '⛪';

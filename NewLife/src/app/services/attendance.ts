@@ -1,14 +1,14 @@
-import { Injectable, inject, signal } from '@angular/core';
-import { Firestore, collection, addDoc, query, where, getDocs, onSnapshot, doc, updateDoc } from '@angular/fire/firestore';
+import { Injectable, inject, signal, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Firestore, collection, addDoc, deleteDoc, doc, query, where, getDocs, onSnapshot } from '@angular/fire/firestore';
 
 export interface AttendanceRecord {
   id?: string;
   eventId: string;
+  userId?: string;
   deviceId: string;
   timestamp: Date;
-  confirmed: boolean;
   ipAddress?: string;
-  userAgent?: string;
 }
 
 @Injectable({
@@ -16,177 +16,231 @@ export interface AttendanceRecord {
 })
 export class AttendanceService {
   private firestore = inject(Firestore);
+  private platformId = inject(PLATFORM_ID);
   
   // Signals for reactive state
   attendanceRecords = signal<AttendanceRecord[]>([]);
   isLoading = signal(false);
+  private firebaseConnected = signal(false);
+  private localAttendance = signal<Map<string, boolean>>(new Map());
 
   constructor() {
     this.loadAttendanceRecords();
+    // Only load localStorage in browser environment
+    if (isPlatformBrowser(this.platformId)) {
+      this.loadLocalAttendance();
+    }
   }
 
   private loadAttendanceRecords(): void {
-    const attendanceRef = collection(this.firestore, 'attendance');
-    
-    onSnapshot(attendanceRef, (snapshot) => {
-      const records: AttendanceRecord[] = [];
-      snapshot.forEach((doc) => {
-        const data = doc.data();
-        records.push({
-          id: doc.id,
-          ...data,
-          timestamp: data['timestamp'].toDate() // Convert Firestore timestamp to Date
-        } as AttendanceRecord);
-      });
-      this.attendanceRecords.set(records);
-    });
-  }
-
-  /**
-   * Generate device fingerprint for attendance tracking
-   * Based on the development plan implementation
-   */
-  getDeviceId(): string {
-    const fingerprint = [
-      navigator.userAgent,
-      navigator.language,
-      screen.width + 'x' + screen.height,
-      new Date().getTimezoneOffset(),
-      navigator.platform,
-      navigator.cookieEnabled ? 'cookies-enabled' : 'cookies-disabled'
-    ].join('|');
-    
-    // Create a simple hash of the fingerprint
-    return btoa(fingerprint).substring(0, 32);
-  }
-
-  /**
-   * Mark attendance for an event
-   */
-  async markAttendance(eventId: string): Promise<void> {
     try {
-      this.isLoading.set(true);
-      const deviceId = this.getDeviceId();
-      
-      // Check if device already marked attendance for this event
-      const existingRecord = await this.getAttendanceForEvent(eventId, deviceId);
-      if (existingRecord) {
-        throw new Error('Ez az eszköz már jelezte a részvételt erre az eseményre');
-      }
-
-      const attendanceData: Omit<AttendanceRecord, 'id'> = {
-        eventId,
-        deviceId,
-        timestamp: new Date(),
-        confirmed: true,
-        ipAddress: await this.getClientIP(),
-        userAgent: navigator.userAgent
-      };
-
       const attendanceRef = collection(this.firestore, 'attendance');
-      await addDoc(attendanceRef, attendanceData);
       
+      onSnapshot(attendanceRef, (snapshot) => {
+        const records: AttendanceRecord[] = [];
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          records.push({
+            id: doc.id,
+            ...data,
+            timestamp: data['timestamp'].toDate()
+          } as AttendanceRecord);
+        });
+        this.attendanceRecords.set(records);
+        this.firebaseConnected.set(true);
+      }, (error) => {
+        console.warn('Firebase attendance connection error, using local storage:', error);
+        this.firebaseConnected.set(false);
+      });
     } catch (error) {
-      console.error('Error marking attendance:', error);
-      throw error;
-    } finally {
-      this.isLoading.set(false);
+      console.warn('Failed to initialize Firebase attendance listener:', error);
+      this.firebaseConnected.set(false);
     }
   }
 
-  /**
-   * Remove attendance for an event (if user changes mind)
-   */
-  async removeAttendance(eventId: string): Promise<void> {
-    try {
-      this.isLoading.set(true);
-      const deviceId = this.getDeviceId();
-      
-      const existingRecord = await this.getAttendanceForEvent(eventId, deviceId);
-      if (existingRecord) {
-        const recordRef = doc(this.firestore, 'attendance', existingRecord.id!);
-        await updateDoc(recordRef, { confirmed: false });
+  private loadLocalAttendance(): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return; // Skip localStorage operations on server
+    }
+
+    const stored = localStorage.getItem('church-attendance');
+    if (stored) {
+      try {
+        const data = JSON.parse(stored);
+        const map = new Map<string, boolean>();
+        Object.entries(data).forEach(([key, value]) => {
+          map.set(key, Boolean(value));
+        });
+        this.localAttendance.set(map);
+      } catch (error) {
+        console.warn('Error loading local attendance:', error);
       }
-      
-    } catch (error) {
-      console.error('Error removing attendance:', error);
-      throw error;
-    } finally {
-      this.isLoading.set(false);
     }
   }
 
-  /**
-   * Check if current device has marked attendance for an event
-   */
-  async hasMarkedAttendance(eventId: string): Promise<boolean> {
+  private saveLocalAttendance(): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return; // Skip localStorage operations on server
+    }
+
+    const data = Object.fromEntries(this.localAttendance());
+    localStorage.setItem('church-attendance', JSON.stringify(data));
+  }
+
+  private getDeviceId(): string {
+    if (!isPlatformBrowser(this.platformId)) {
+      return 'server-fallback-' + Math.random().toString(36).substring(2, 15);
+    }
+
+    let deviceId = localStorage.getItem('church-device-id');
+    if (!deviceId) {
+      deviceId = 'device-' + Math.random().toString(36).substring(2, 15);
+      localStorage.setItem('church-device-id', deviceId);
+    }
+    return deviceId;
+  }
+
+  async markAttendance(eventId: string, userId?: string): Promise<void> {
     const deviceId = this.getDeviceId();
-    const record = await this.getAttendanceForEvent(eventId, deviceId);
-    return record?.confirmed === true;
+    
+    if (this.firebaseConnected()) {
+      try {
+        this.isLoading.set(true);
+        
+        const attendanceData = {
+          eventId,
+          userId: userId || '',
+          deviceId,
+          timestamp: new Date(),
+          ipAddress: '' // Could be populated if needed
+        };
+
+        const attendanceRef = collection(this.firestore, 'attendance');
+        await addDoc(attendanceRef, attendanceData);
+        
+        // Also store locally as backup
+        const localMap = new Map(this.localAttendance());
+        localMap.set(eventId, true);
+        this.localAttendance.set(localMap);
+        this.saveLocalAttendance();
+        
+      } catch (error) {
+        console.error('Error marking attendance in Firebase, saving locally:', error);
+        // Fall back to local storage
+        const localMap = new Map(this.localAttendance());
+        localMap.set(eventId, true);
+        this.localAttendance.set(localMap);
+        this.saveLocalAttendance();
+      } finally {
+        this.isLoading.set(false);
+      }
+    } else {
+      // Firebase not connected, use local storage
+      const localMap = new Map(this.localAttendance());
+      localMap.set(eventId, true);
+      this.localAttendance.set(localMap);
+      this.saveLocalAttendance();
+    }
   }
 
-  /**
-   * Get attendance count for an event
-   */
+  async removeAttendance(eventId: string): Promise<void> {
+    const deviceId = this.getDeviceId();
+    
+    if (this.firebaseConnected()) {
+      try {
+        this.isLoading.set(true);
+        
+        // Find and delete the attendance record
+        const attendanceRef = collection(this.firestore, 'attendance');
+        const q = query(attendanceRef, where('eventId', '==', eventId), where('deviceId', '==', deviceId));
+        const querySnapshot = await getDocs(q);
+        
+        querySnapshot.forEach(async (docSnapshot) => {
+          await deleteDoc(doc(this.firestore, 'attendance', docSnapshot.id));
+        });
+        
+        // Also remove from local storage
+        const localMap = new Map(this.localAttendance());
+        localMap.delete(eventId);
+        this.localAttendance.set(localMap);
+        this.saveLocalAttendance();
+        
+      } catch (error) {
+        console.error('Error removing attendance from Firebase:', error);
+        // Still remove from local storage
+        const localMap = new Map(this.localAttendance());
+        localMap.delete(eventId);
+        this.localAttendance.set(localMap);
+        this.saveLocalAttendance();
+      } finally {
+        this.isLoading.set(false);
+      }
+    } else {
+      // Firebase not connected, use local storage
+      const localMap = new Map(this.localAttendance());
+      localMap.delete(eventId);
+      this.localAttendance.set(localMap);
+      this.saveLocalAttendance();
+    }
+  }
+
+  async hasMarkedAttendance(eventId: string): Promise<boolean> {
+    // Check local storage first (faster and works offline)
+    if (this.localAttendance().has(eventId)) {
+      return this.localAttendance().get(eventId) || false;
+    }
+
+    // If Firebase is connected, check there too
+    if (this.firebaseConnected()) {
+      try {
+        const deviceId = this.getDeviceId();
+        const attendanceRef = collection(this.firestore, 'attendance');
+        const q = query(attendanceRef, where('eventId', '==', eventId), where('deviceId', '==', deviceId));
+        const querySnapshot = await getDocs(q);
+        
+        const hasAttended = !querySnapshot.empty;
+        
+        // Update local storage with Firebase result
+        const localMap = new Map(this.localAttendance());
+        localMap.set(eventId, hasAttended);
+        this.localAttendance.set(localMap);
+        this.saveLocalAttendance();
+        
+        return hasAttended;
+      } catch (error) {
+        console.warn('Error checking Firebase attendance, using local data:', error);
+      }
+    }
+
+    return false;
+  }
+
   getAttendanceCount(eventId: string): number {
-    return this.attendanceRecords()
-      .filter(record => record.eventId === eventId && record.confirmed)
-      .length;
+    if (this.firebaseConnected()) {
+      return this.attendanceRecords().filter(record => record.eventId === eventId).length;
+    } else {
+      // When Firebase is not connected, show a placeholder count
+      return this.localAttendance().has(eventId) ? 1 : 0;
+    }
   }
 
-  /**
-   * Get all attendance records for an event (for staff/admin)
-   */
-  getEventAttendance(eventId: string): AttendanceRecord[] {
-    return this.attendanceRecords()
-      .filter(record => record.eventId === eventId && record.confirmed);
+  getAttendanceRecords(): AttendanceRecord[] {
+    return this.attendanceRecords();
   }
 
-  /**
-   * Get attendance statistics for dashboard
-   */
+  isFirebaseConnected(): boolean {
+    return this.firebaseConnected();
+  }
+
   getAttendanceStats() {
     const records = this.attendanceRecords();
-    const confirmed = records.filter(r => r.confirmed);
     
     return {
-      total: confirmed.length,
-      thisWeek: confirmed.filter(r => this.isThisWeek(r.timestamp)).length,
-      thisMonth: confirmed.filter(r => this.isThisMonth(r.timestamp)).length,
-      uniqueDevices: new Set(confirmed.map(r => r.deviceId)).size
+      total: records.length,
+      thisWeek: records.filter(r => this.isThisWeek(r.timestamp)).length,
+      thisMonth: records.filter(r => this.isThisMonth(r.timestamp)).length,
+      uniqueDevices: new Set(records.map(r => r.deviceId)).size
     };
-  }
-
-  private async getAttendanceForEvent(eventId: string, deviceId: string): Promise<AttendanceRecord | null> {
-    const attendanceRef = collection(this.firestore, 'attendance');
-    const q = query(
-      attendanceRef, 
-      where('eventId', '==', eventId),
-      where('deviceId', '==', deviceId)
-    );
-    
-    const snapshot = await getDocs(q);
-    if (!snapshot.empty) {
-      const doc = snapshot.docs[0];
-      const data = doc.data();
-      return {
-        id: doc.id,
-        ...data,
-        timestamp: data['timestamp'].toDate()
-      } as AttendanceRecord;
-    }
-    
-    return null;
-  }
-
-  private async getClientIP(): Promise<string> {
-    try {
-      // In a real app, you might use a service to get the client IP
-      // For now, we'll return a placeholder
-      return 'unknown';
-    } catch (error) {
-      return 'unknown';
-    }
   }
 
   private isThisWeek(date: Date): boolean {

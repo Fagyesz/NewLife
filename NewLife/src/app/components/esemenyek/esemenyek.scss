@@ -25,44 +25,118 @@ $dark-text: #333333;
   }
 }
 
-// Events Section
-.events-section {
-  background-color: $light-gray;
+// Recurring Events Section
+.recurring-events-section {
+  background-color: $white;
   
-  .events-grid {
+  .recurring-events-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 1.5rem;
+    gap: 2rem;
     margin-top: 2rem;
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
-    
-    .event-card {
-      flex: 0 1 300px;
-      max-width: 350px;
-      
-      @media (min-width: 768px) {
-        flex: 0 1 320px;
-      }
-    }
   }
   
-  .event-card {
-    background: $white;
+  .recurring-event-card {
+    flex: 0 1 320px;
+    max-width: 350px;
+    background: $light-gray;
     border-radius: 15px;
-    padding: 1.5rem;
+    padding: 2rem;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border-left: 4px solid $primary-blue;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+    text-align: center;
     
     &:hover {
       transform: translateY(-5px);
       box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+    
+    &.featured {
+      border-left-color: $primary-green;
+      background: linear-gradient(135deg, rgba($primary-green, 0.05) 0%, rgba($primary-blue, 0.05) 100%);
+    }
+    
+    .event-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    
+    .event-info {
+      h3 {
+        color: $primary-green;
+        margin-bottom: 1rem;
+        font-size: 1.4rem;
+      }
+      
+      .event-time {
+        background: $primary-green;
+        color: $white;
+        border-radius: 10px;
+        padding: 0.75rem 1rem;
+        margin-bottom: 1rem;
+        display: inline-block;
+        
+        .day {
+          font-weight: 600;
+          margin-right: 0.5rem;
+        }
+        
+        .time {
+          font-weight: 700;
+          font-size: 1.1rem;
+        }
+      }
+      
+      p {
+        color: #666;
+        margin-bottom: 1rem;
+        line-height: 1.6;
+      }
+      
+      .event-location {
+        span {
+          font-size: 0.9rem;
+          color: #777;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+      }
+    }
+  }
+}
+
+// Upcoming Events Section
+.upcoming-events-section {
+  background-color: $light-gray;
+  
+  .upcoming-events-list {
+    max-width: 1000px;
+    margin: 0 auto;
+    margin-top: 2rem;
+  }
+  
+  .upcoming-event-card {
+    background: $white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-left: 4px solid $primary-blue;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     }
     
     &.featured {
@@ -75,77 +149,106 @@ $dark-text: #333333;
       background: linear-gradient(135deg, rgba($accent-yellow, 0.1) 0%, rgba($primary-green, 0.05) 100%);
     }
     
-    .event-date {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background: $primary-green;
-      color: $white;
-      border-radius: 10px;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      width: 80px;
+    .event-date-time {
+      flex-shrink: 0;
       text-align: center;
-      align-self: flex-start;
       
-      .day {
-        font-size: 0.9rem;
-        font-weight: 500;
-        margin-bottom: 0.25rem;
+      .event-date {
+        background: $primary-green;
+        color: $white;
+        border-radius: 10px;
+        padding: 0.75rem;
+        margin-bottom: 0.5rem;
+        min-width: 80px;
+        
+        .month {
+          font-size: 0.8rem;
+          font-weight: 500;
+          display: block;
+          margin-bottom: 0.25rem;
+        }
+        
+        .day {
+          font-size: 1.5rem;
+          font-weight: 700;
+          display: block;
+        }
       }
       
-      .date {
-        font-size: 1.1rem;
-        font-weight: 700;
+      .event-time {
+        .time {
+          font-size: 1rem;
+          font-weight: 600;
+          color: $primary-blue;
+          display: block;
+        }
+        
+        .weekday {
+          font-size: 0.8rem;
+          color: #666;
+          display: block;
+        }
       }
     }
     
-    .event-info {
-      margin-bottom: 1.5rem;
+    .event-content {
       flex-grow: 1;
       
-      h3 {
-        color: $primary-green;
+      .event-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         margin-bottom: 0.5rem;
-        font-size: 1.25rem;
+        
+        h3 {
+          color: $primary-green;
+          margin: 0;
+          font-size: 1.3rem;
+        }
+        
+        .event-type {
+          font-size: 0.9rem;
+          color: #777;
+          background: rgba($primary-blue, 0.1);
+          padding: 0.25rem 0.75rem;
+          border-radius: 15px;
+          white-space: nowrap;
+        }
       }
       
-      p {
+      .event-description {
         color: #666;
-        margin-bottom: 1rem;
+        margin-bottom: 0.75rem;
         line-height: 1.6;
       }
       
-      .event-details {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        
+      .event-location {
         span {
           font-size: 0.9rem;
           color: #777;
-          display: flex;
+          display: inline-flex;
           align-items: center;
           gap: 0.5rem;
         }
       }
     }
     
-    .attendance-section {
+    .event-actions {
+      flex-shrink: 0;
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
-      align-items: stretch;
-      margin-top: auto;
+      align-items: center;
+      gap: 0.5rem;
       
-      .attendance-btn {
-        width: 100%;
-        padding: 0.75rem;
+      button {
+        padding: 0.75rem 1.5rem;
         font-weight: 600;
+        border-radius: 25px;
+        white-space: nowrap;
       }
       
       .attendance-count {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         color: #666;
         text-align: center;
         font-style: italic;
@@ -153,8 +256,34 @@ $dark-text: #333333;
     }
   }
   
-  .no-events {
-    display: contents;
+  .no-upcoming-events {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: $white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    
+    .no-events-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+    
+    h3 {
+      color: $primary-green;
+      margin-bottom: 1rem;
+    }
+    
+    p {
+      color: #666;
+      margin-bottom: 0.5rem;
+      
+      &.note {
+        font-style: italic;
+        font-size: 0.9rem;
+        color: #999;
+      }
+    }
   }
 }
 
@@ -241,26 +370,70 @@ $dark-text: #333333;
     }
   }
   
-  .events-section .events-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-  
-  .events-section .event-card {
-    padding: 1rem;
-    
-    .event-date {
-      width: 70px;
-      padding: 0.8rem;
+  .recurring-events-section {
+    .recurring-events-grid {
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
     }
     
-    .event-info h3 {
-      font-size: 1.1rem;
+    .recurring-event-card {
+      flex: none;
+      width: 100%;
+      max-width: 350px;
+      padding: 1.5rem;
+    }
+  }
+  
+  .upcoming-events-section {
+    .upcoming-event-card {
+      flex-direction: column;
+      text-align: center;
+      gap: 1rem;
+      padding: 1.5rem;
+      
+      .event-date-time {
+        .event-date {
+          display: inline-block;
+          margin-right: 1rem;
+          margin-bottom: 0;
+        }
+        
+        .event-time {
+          display: inline-block;
+          vertical-align: top;
+          margin-top: 0.5rem;
+        }
+      }
+      
+      .event-content {
+        .event-header {
+          flex-direction: column;
+          align-items: center;
+          gap: 0.5rem;
+          
+          .event-type {
+            order: -1;
+          }
+        }
+      }
+      
+      .event-actions {
+        button {
+          padding: 0.75rem 2rem;
+        }
+      }
     }
   }
   
   .info-section .info-cards {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: center;
     gap: 1rem;
+    
+    .info-card {
+      width: 100%;
+      max-width: 350px;
+    }
   }
 }
