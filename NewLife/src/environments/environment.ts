@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyBSTNuB88ZpzTKG0_AXe41YaYWLp2ElnLY",
+    apiKey: "REPLACE_WITH_YOUR_API_KEY", // DO NOT COMMIT REAL API KEYS - Use environment.local.ts
     authDomain: "newlife-9db00.firebaseapp.com",
     databaseURL: "https://newlife-9db00-default-rtdb.europe-west1.firebasedatabase.app",
     projectId: "newlife-9db00",

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/app.scss"],
-  "sourcesContent": ["// Baptist church brand colors\r\n$primary-green: #399344;\r\n$primary-blue: #429aca;\r\n$accent-yellow: #eac338;\r\n$white: #ffffff;\r\n$light-gray: #f8f9fa;\r\n$dark-text: #333333;\r\n\r\n.main-content {\r\n  min-height: calc(100vh - 70px); // Account for navbar height\r\n  background-color: $light-gray;\r\n  padding: 0;\r\n}\r\n"],
-  "mappings": ";AAQA,CAAA;AACE,cAAA,KAAA,MAAA,EAAA;AACA,oBALW;AAMX,WAAA;;",
-  "names": []
-}
