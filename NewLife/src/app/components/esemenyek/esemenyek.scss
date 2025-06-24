@@ -30,21 +30,22 @@ $dark-text: #333333;
   background-color: $light-gray;
   
   .events-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 1.5rem;
     margin-top: 2rem;
-    justify-content: center;
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
     
-    @media (min-width: 768px) {
-      grid-template-columns: repeat(auto-fit, minmax(300px, 350px));
-    }
-    
-    @media (min-width: 1200px) {
-      grid-template-columns: repeat(auto-fit, minmax(300px, 350px));
+    .event-card {
+      flex: 0 1 300px;
+      max-width: 350px;
+      
+      @media (min-width: 768px) {
+        flex: 0 1 320px;
+      }
     }
   }
   
@@ -172,14 +173,19 @@ $dark-text: #333333;
   }
   
   .info-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 2rem;
     margin-top: 2rem;
-    justify-content: center;
     max-width: 1000px;
     margin-left: auto;
     margin-right: auto;
+    
+    .info-card {
+      flex: 0 1 250px;
+      max-width: 300px;
+    }
   }
   
   .info-card {

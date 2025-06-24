@@ -51,14 +51,19 @@ $dark-text: #333333;
   }
   
   .values-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 280px));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 2rem;
     margin-top: 3rem;
-    justify-content: center;
     max-width: 1000px;
     margin-left: auto;
     margin-right: auto;
+    
+    .value-card {
+      flex: 0 1 250px;
+      max-width: 280px;
+    }
   }
   
   .value-card {
@@ -220,14 +225,19 @@ $dark-text: #333333;
   }
   
   .beliefs-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 350px));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 2rem;
     margin-top: 2rem;
-    justify-content: center;
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
+    
+    .belief-card {
+      flex: 0 1 300px;
+      max-width: 350px;
+    }
   }
   
   .belief-card {
@@ -267,14 +277,19 @@ $dark-text: #333333;
   }
   
   .leadership-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 350px));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 2rem;
     margin-top: 2rem;
-    justify-content: center;
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
+    
+    .leader-card {
+      flex: 0 1 300px;
+      max-width: 350px;
+    }
   }
   
   .leader-card {
@@ -360,11 +375,11 @@ $dark-text: #333333;
   }
   
   .visit-info {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 280px));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 2rem;
     margin-top: 2rem;
-    justify-content: center;
     max-width: 1000px;
     margin-left: auto;
     margin-right: auto;
@@ -377,6 +392,8 @@ $dark-text: #333333;
     text-align: center;
     border: 2px solid transparent;
     transition: all 0.3s ease;
+    flex: 0 1 250px;
+    max-width: 280px;
     
     &:hover {
       border-color: $primary-green;
@@ -448,8 +465,15 @@ $dark-text: #333333;
   .beliefs-grid,
   .leadership-grid,
   .visit-info {
-    grid-template-columns: 1fr;
     gap: 1rem;
+  }
+  
+  .visit-info .visit-card,
+  .values-grid .value-card,
+  .beliefs-grid .belief-card,
+  .leadership-grid .leader-card {
+    flex: 1 1 100%;
+    max-width: 100%;
   }
   
   .timeline {

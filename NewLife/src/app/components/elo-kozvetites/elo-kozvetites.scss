@@ -116,13 +116,18 @@ $dark-text: #333333;
   
   .stream-info {
     .info-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 350px));
-      gap: 2rem;
+      display: flex;
+      flex-wrap: wrap;
       justify-content: center;
+      gap: 2rem;
       max-width: 1200px;
       margin-left: auto;
       margin-right: auto;
+      
+      .info-card {
+        flex: 0 1 300px;
+        max-width: 350px;
+      }
     }
     
     .info-card {
@@ -175,14 +180,19 @@ $dark-text: #333333;
   padding: 3rem 0;
   
   .streams-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 350px));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 2rem;
     margin-top: 2rem;
-    justify-content: center;
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
+    
+    .stream-card {
+      flex: 0 1 300px;
+      max-width: 350px;
+    }
   }
   
   .stream-card {
@@ -281,14 +291,19 @@ $dark-text: #333333;
   }
   
   .tech-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 240px));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 2rem;
     margin-top: 2rem;
-    justify-content: center;
     max-width: 1000px;
     margin-left: auto;
     margin-right: auto;
+    
+    .tech-card {
+      flex: 0 1 200px;
+      max-width: 240px;
+    }
   }
   
   .tech-card {

@@ -31,13 +31,18 @@ $dark-text: #333333;
   padding: 4rem 0;
   
   .contact-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 280px));
-    gap: 2rem;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
+    gap: 2rem;
     max-width: 1000px;
     margin-left: auto;
     margin-right: auto;
+    
+    .contact-card {
+      flex: 0 1 250px;
+      max-width: 280px;
+    }
   }
   
   .contact-card {
@@ -280,14 +285,19 @@ $dark-text: #333333;
   }
   
   .faq-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 350px));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 2rem;
     margin-top: 2rem;
-    justify-content: center;
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
+    
+    .faq-item {
+      flex: 0 1 300px;
+      max-width: 350px;
+    }
   }
   
   .faq-item {
