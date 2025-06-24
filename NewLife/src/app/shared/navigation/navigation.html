@@ -1,0 +1,27 @@
+<nav class="navbar">
+  <div class="navbar-container">
+    <div class="navbar-brand">
+      <a routerLink="/" class="brand-link">
+        <span class="brand-text">Új Élet Baptista Gyülekezet</span>
+        <span class="brand-location">Gyöngyös</span>
+      </a>
+    </div>
+    
+    <div class="navbar-menu" [class.is-active]="isMenuOpen()">
+      <ul class="navbar-nav">
+        <li><a routerLink="/fooldal" routerLinkActive="active">Főoldal</a></li>
+        <li><a routerLink="/esemenyek" routerLinkActive="active">Események</a></li>
+        <li><a routerLink="/hirek" routerLinkActive="active">Hírek</a></li>
+        <li><a routerLink="/elo-kozvetites" routerLinkActive="active">Élő közvetítés</a></li>
+        <li><a routerLink="/rolunk" routerLinkActive="active">Rólunk</a></li>
+        <li><a routerLink="/kapcsolat" routerLinkActive="active">Kapcsolat</a></li>
+      </ul>
+    </div>
+    
+    <div class="navbar-toggle" [class.is-active]="isMenuOpen()" (click)="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,228 @@
+// Baptist church brand colors
+$primary-green: #399344;
+$primary-blue: #429aca;
+$accent-yellow: #eac338;
+$white: #ffffff;
+$light-gray: #f8f9fa;
+$dark-text: #333333;
+
+// Page Header
+.page-header {
+  background: linear-gradient(135deg, $primary-green 0%, $primary-blue 100%);
+  color: $white;
+  padding: 4rem 0 3rem;
+  text-align: center;
+  
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: $white;
+  }
+  
+  p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+  }
+}
+
+// Events Section
+.events-section {
+  background-color: $light-gray;
+  
+  .events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  
+  .event-card {
+    background: $white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-left: 4px solid $primary-blue;
+    
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+    
+    &.featured {
+      border-left-color: $primary-green;
+      background: linear-gradient(135deg, rgba($primary-green, 0.05) 0%, rgba($primary-blue, 0.05) 100%);
+    }
+    
+    &.special {
+      border-left-color: $accent-yellow;
+      background: linear-gradient(135deg, rgba($accent-yellow, 0.1) 0%, rgba($primary-green, 0.05) 100%);
+    }
+    
+    .event-date {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: $primary-green;
+      color: $white;
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      width: 80px;
+      text-align: center;
+      
+      .day {
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin-bottom: 0.25rem;
+      }
+      
+      .date {
+        font-size: 1.1rem;
+        font-weight: 700;
+      }
+    }
+    
+    .event-info {
+      margin-bottom: 1.5rem;
+      
+      h3 {
+        color: $primary-green;
+        margin-bottom: 0.5rem;
+        font-size: 1.25rem;
+      }
+      
+      p {
+        color: #666;
+        margin-bottom: 1rem;
+        line-height: 1.6;
+      }
+      
+      .event-details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        
+        span {
+          font-size: 0.9rem;
+          color: #777;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+      }
+    }
+    
+    .attendance-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      align-items: stretch;
+      
+      .attendance-btn {
+        width: 100%;
+        padding: 0.75rem;
+        font-weight: 600;
+      }
+      
+      .attendance-count {
+        font-size: 0.85rem;
+        color: #666;
+        text-align: center;
+        font-style: italic;
+      }
+    }
+  }
+}
+
+// Info Section
+.info-section {
+  background-color: $white;
+  
+  .info-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    
+    h2 {
+      margin-bottom: 2rem;
+    }
+  }
+  
+  .info-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  
+  .info-card {
+    background: $light-gray;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: left;
+    
+    h4 {
+      color: $primary-green;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+    
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      
+      li {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba($primary-blue, 0.1);
+        
+        &:last-child {
+          border-bottom: none;
+        }
+        
+        strong {
+          color: $primary-blue;
+        }
+      }
+    }
+    
+    p {
+      line-height: 1.6;
+      margin: 0;
+      color: #666;
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .page-header {
+    padding: 3rem 0 2rem;
+    
+    h1 {
+      font-size: 2rem;
+    }
+  }
+  
+  .events-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .event-card {
+    .event-date {
+      width: 70px;
+      padding: 0.75rem;
+    }
+    
+    .attendance-section {
+      .attendance-btn {
+        padding: 0.5rem;
+      }
+    }
+  }
+  
+  .info-cards {
+    grid-template-columns: 1fr;
+  }
+}

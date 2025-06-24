@@ -1,0 +1,114 @@
+/* You can add global styles to this file, and also import other style files */
+
+@use 'sass:color';
+
+// Baptist church brand colors
+$primary-green: #399344;
+$primary-blue: #429aca;
+$accent-yellow: #eac338;
+$white: #ffffff;
+$light-gray: #f8f9fa;
+$dark-text: #333333;
+
+// Google Fonts import for Hungarian support
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: $dark-text;
+  background-color: $light-gray;
+}
+
+body {
+  margin: 0;
+}
+
+// Typography
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 1rem;
+  font-weight: 500;
+  color: $primary-green;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
+
+p {
+  margin-bottom: 1rem;
+}
+
+// Links
+a {
+  color: $primary-blue;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  
+  &:hover {
+    color: color.adjust($primary-blue, $lightness: -10%);
+  }
+}
+
+// Buttons
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 25px;
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &.btn-primary {
+    background: linear-gradient(135deg, $primary-green 0%, $primary-blue 100%);
+    color: $white;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+  }
+  
+  &.btn-secondary {
+    background-color: $accent-yellow;
+    color: $dark-text;
+    
+    &:hover {
+      background-color: color.adjust($accent-yellow, $lightness: -10%);
+      transform: translateY(-2px);
+    }
+  }
+}
+
+// Container
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+// Section
+.section {
+  padding: 4rem 0;
+}
+
+// Utilities
+.text-center { text-align: center; }
+.text-white { color: $white; }
+.mb-1 { margin-bottom: 1rem; }
+.mb-2 { margin-bottom: 2rem; }
+.mb-3 { margin-bottom: 3rem; }

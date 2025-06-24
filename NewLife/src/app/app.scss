@@ -1,0 +1,13 @@
+// Baptist church brand colors
+$primary-green: #399344;
+$primary-blue: #429aca;
+$accent-yellow: #eac338;
+$white: #ffffff;
+$light-gray: #f8f9fa;
+$dark-text: #333333;
+
+.main-content {
+  min-height: calc(100vh - 70px); // Account for navbar height
+  background-color: $light-gray;
+  padding: 0;
+}
