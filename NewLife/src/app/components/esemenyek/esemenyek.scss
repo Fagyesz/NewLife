@@ -31,9 +31,21 @@ $dark-text: #333333;
   
   .events-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
     margin-top: 2rem;
+    justify-content: center;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 350px));
+    }
+    
+    @media (min-width: 1200px) {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 350px));
+    }
   }
   
   .event-card {
@@ -43,6 +55,9 @@ $dark-text: #333333;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border-left: 4px solid $primary-blue;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     
     &:hover {
       transform: translateY(-5px);
@@ -70,6 +85,7 @@ $dark-text: #333333;
       margin-bottom: 1rem;
       width: 80px;
       text-align: center;
+      align-self: flex-start;
       
       .day {
         font-size: 0.9rem;
@@ -85,6 +101,7 @@ $dark-text: #333333;
     
     .event-info {
       margin-bottom: 1.5rem;
+      flex-grow: 1;
       
       h3 {
         color: $primary-green;
@@ -118,6 +135,7 @@ $dark-text: #333333;
       flex-direction: column;
       gap: 0.75rem;
       align-items: stretch;
+      margin-top: auto;
       
       .attendance-btn {
         width: 100%;
@@ -132,6 +150,10 @@ $dark-text: #333333;
         font-style: italic;
       }
     }
+  }
+  
+  .no-events {
+    display: contents;
   }
 }
 
@@ -151,9 +173,13 @@ $dark-text: #333333;
   
   .info-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
     gap: 2rem;
     margin-top: 2rem;
+    justify-content: center;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
   }
   
   .info-card {
@@ -203,26 +229,32 @@ $dark-text: #333333;
     h1 {
       font-size: 2rem;
     }
+    
+    p {
+      font-size: 1rem;
+    }
   }
   
-  .events-grid {
+  .events-section .events-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
   
-  .event-card {
+  .events-section .event-card {
+    padding: 1rem;
+    
     .event-date {
       width: 70px;
-      padding: 0.75rem;
+      padding: 0.8rem;
     }
     
-    .attendance-section {
-      .attendance-btn {
-        padding: 0.5rem;
-      }
+    .event-info h3 {
+      font-size: 1.1rem;
     }
   }
   
-  .info-cards {
+  .info-section .info-cards {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
 }

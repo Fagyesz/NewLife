@@ -10,9 +10,10 @@ $dark-text: #333333;
 .hero {
   background: linear-gradient(135deg, $primary-green 0%, $primary-blue 100%);
   color: $white;
-  min-height: 500px;
+  min-height: 70vh;
   display: flex;
   align-items: center;
+  justify-content: center;
   position: relative;
   overflow: hidden;
   
@@ -31,7 +32,11 @@ $dark-text: #333333;
     position: relative;
     z-index: 2;
     text-align: center;
-    padding: 2rem 0;
+    padding: 4rem 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   
   .hero-title {

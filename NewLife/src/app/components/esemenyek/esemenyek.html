@@ -11,84 +11,107 @@
   <div class="container">
     <h2 class="text-center mb-3">Közelgő események</h2>
     
-    <div class="events-grid">
-      <!-- Sunday Service -->
-      <div class="event-card featured">
+    <!-- Loading State -->
+    <div *ngIf="isLoading()" class="text-center">
+      <p>Események betöltése...</p>
+    </div>
+    
+    <!-- Events Grid -->
+    <div class="events-grid" *ngIf="!isLoading()">
+      <!-- Dynamic Events from Firebase -->
+      <div *ngFor="let event of getUpcomingEvents(); trackBy: trackByEventId" 
+           class="event-card" 
+           [class.featured]="event.type === 'service'"
+           [class.special]="event.type === 'special'">
+        
         <div class="event-date">
-          <span class="day">Vas</span>
-          <span class="date">10:00</span>
+          <span class="day">{{ formatEventDate(event.date).split(' ')[0] }}</span>
+          <span class="date">{{ formatEventDate(event.date).split(' ')[1] }}</span>
         </div>
+        
         <div class="event-info">
-          <h3>Vasárnapi istentisztelet</h3>
-          <p>Közös imádat, ige és úrvacsora minden vasárnap reggel</p>
+          <h3>{{ event.title }}</h3>
+          <p>{{ event.description }}</p>
           <div class="event-details">
-            <span class="location">📍 Gyülekezeti terem</span>
-            <span class="type">⛪ Istentisztelet</span>
+            <span class="location">📍 {{ event.location }}</span>
+            <span class="type">{{ getEventTypeIcon(event.type) }} {{ getEventTypeText(event.type) }}</span>
           </div>
         </div>
+        
         <div class="attendance-section">
-          <button class="btn btn-primary attendance-btn">Ott leszek</button>
-          <span class="attendance-count">12 jelölte meg</span>
+          <button 
+            *ngIf="event.id"
+            [class]="getAttendanceButtonClass(event.id)"
+            (click)="toggleAttendance(event)"
+            [disabled]="isLoading()">
+            {{ getAttendanceButtonText(event.id) }}
+          </button>
+          <span class="attendance-count" *ngIf="event.id">
+            {{ getAttendanceCount(event.id) }} jelölte meg
+          </span>
         </div>
       </div>
 
-      <!-- Bible Study -->
-      <div class="event-card">
-        <div class="event-date">
-          <span class="day">Sze</span>
-          <span class="date">19:00</span>
-        </div>
-        <div class="event-info">
-          <h3>Bibliaóra</h3>
-          <p>Közös bibliatanulmányozás és beszélgetés</p>
-          <div class="event-details">
-            <span class="location">📍 Gyülekezeti terem</span>
-            <span class="type">📖 Bibliaóra</span>
+      <!-- Fallback Events (if no Firebase events) -->
+      <div *ngIf="getUpcomingEvents().length === 0" class="no-events">
+        <!-- Sunday Service -->
+        <div class="event-card featured">
+          <div class="event-date">
+            <span class="day">Vas</span>
+            <span class="date">10:00</span>
+          </div>
+          <div class="event-info">
+            <h3>Vasárnapi istentisztelet</h3>
+            <p>Közös imádat, ige és úrvacsora minden vasárnap reggel</p>
+            <div class="event-details">
+              <span class="location">📍 Gyülekezeti terem</span>
+              <span class="type">⛪ Istentisztelet</span>
+            </div>
+          </div>
+          <div class="attendance-section">
+            <button class="btn btn-primary attendance-btn">Firebase kapcsolódás szükséges</button>
+            <span class="attendance-count">Konfiguráció hiányzik</span>
           </div>
         </div>
-        <div class="attendance-section">
-          <button class="btn btn-secondary attendance-btn">Ott leszek</button>
-          <span class="attendance-count">8 jelölte meg</span>
-        </div>
-      </div>
 
-      <!-- Prayer Meeting -->
-      <div class="event-card">
-        <div class="event-date">
-          <span class="day">Pén</span>
-          <span class="date">18:30</span>
-        </div>
-        <div class="event-info">
-          <h3>Imaóra</h3>
-          <p>Közös ima és közbenjárás</p>
-          <div class="event-details">
-            <span class="location">📍 Gyülekezeti terem</span>
-            <span class="type">🙏 Imaóra</span>
+        <!-- Bible Study -->
+        <div class="event-card">
+          <div class="event-date">
+            <span class="day">Sze</span>
+            <span class="date">19:00</span>
+          </div>
+          <div class="event-info">
+            <h3>Bibliaóra</h3>
+            <p>Közös bibliatanulmányozás és beszélgetés</p>
+            <div class="event-details">
+              <span class="location">📍 Gyülekezeti terem</span>
+              <span class="type">📖 Bibliaóra</span>
+            </div>
+          </div>
+          <div class="attendance-section">
+            <button class="btn btn-secondary attendance-btn">Firebase kapcsolódás szükséges</button>
+            <span class="attendance-count">Konfiguráció hiányzik</span>
           </div>
         </div>
-        <div class="attendance-section">
-          <button class="btn btn-secondary attendance-btn">Ott leszek</button>
-          <span class="attendance-count">5 jelölte meg</span>
-        </div>
-      </div>
 
-      <!-- Special Event -->
-      <div class="event-card special">
-        <div class="event-date">
-          <span class="day">Dec</span>
-          <span class="date">24</span>
-        </div>
-        <div class="event-info">
-          <h3>Karácsonyi istentisztelet</h3>
-          <p>Különleges karácsonyesti szolgálat énekkel és igével</p>
-          <div class="event-details">
-            <span class="location">📍 Gyülekezeti terem</span>
-            <span class="type">🎄 Különleges alkalom</span>
+        <!-- Prayer Meeting -->
+        <div class="event-card">
+          <div class="event-date">
+            <span class="day">Pén</span>
+            <span class="date">18:30</span>
           </div>
-        </div>
-        <div class="attendance-section">
-          <button class="btn btn-primary attendance-btn">Ott leszek</button>
-          <span class="attendance-count">18 jelölte meg</span>
+          <div class="event-info">
+            <h3>Imaóra</h3>
+            <p>Közös ima és közbenjárás</p>
+            <div class="event-details">
+              <span class="location">📍 Gyülekezeti terem</span>
+              <span class="type">🙏 Imaóra</span>
+            </div>
+          </div>
+          <div class="attendance-section">
+            <button class="btn btn-secondary attendance-btn">Firebase kapcsolódás szükséges</button>
+            <span class="attendance-count">Konfiguráció hiányzik</span>
+          </div>
         </div>
       </div>
     </div>

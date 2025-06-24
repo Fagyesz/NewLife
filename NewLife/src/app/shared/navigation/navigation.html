@@ -12,10 +12,40 @@
         <li><a routerLink="/fooldal" routerLinkActive="active">Főoldal</a></li>
         <li><a routerLink="/esemenyek" routerLinkActive="active">Események</a></li>
         <li><a routerLink="/hirek" routerLinkActive="active">Hírek</a></li>
-        <li><a routerLink="/elo-kozvetites" routerLinkActive="active">Élő közvetítés</a></li>
+        <li><a routerLink="/elo-kozvetites" routerLinkActive="active">Élő&nbsp;közvetítés</a></li>
         <li><a routerLink="/rolunk" routerLinkActive="active">Rólunk</a></li>
         <li><a routerLink="/kapcsolat" routerLinkActive="active">Kapcsolat</a></li>
       </ul>
+      
+      <!-- Staff Login Section - Only show when authenticated or on mobile -->
+      <div class="staff-section" *ngIf="authService.isAuthenticated() || isMenuOpen()">
+        <!-- Not logged in -->
+        <div *ngIf="!authService.isAuthenticated()" class="login-section">
+          <button 
+            class="btn btn-staff" 
+            (click)="signIn()"
+            [disabled]="authService.isLoading()">
+            <span *ngIf="!authService.isLoading()">👤 Személyzet</span>
+            <span *ngIf="authService.isLoading()">⏳ Bejelentkezés...</span>
+          </button>
+        </div>
+        
+        <!-- Logged in -->
+        <div *ngIf="authService.isAuthenticated()" class="user-section">
+          <div class="user-info">
+            <span class="user-name">{{ authService.userProfile()?.displayName }}</span>
+            <span class="user-role">{{ getUserRoleText() }}</span>
+          </div>
+          <div class="user-actions">
+            <a routerLink="/admin" class="btn btn-admin" *ngIf="authService.isStaff()">
+              ⚙️ Admin
+            </a>
+            <button class="btn btn-logout" (click)="signOut()">
+              🚪 Kijelentkezés
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
     
     <div class="navbar-toggle" [class.is-active]="isMenuOpen()" (click)="toggleMenu()">

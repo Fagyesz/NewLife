@@ -1,0 +1,64 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Users collection - only authenticated users can read/write their own data
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Events collection
+    match /events/{eventId} {
+      // Anyone can read events (public information)
+      allow read: if true;
+      
+      // Only authenticated staff/admin can create/update/delete events
+      allow create, update: if request.auth != null && 
+        isAuthorizedStaff();
+      
+      allow delete: if request.auth != null && 
+        isAdmin();
+    }
+    
+    // Attendance collection
+    match /attendance/{attendanceId} {
+      // Anyone can read attendance records (for counting)
+      allow read: if true;
+      
+      // Anyone can create attendance records (for device-based tracking)
+      allow create: if true;
+      
+      // Only the original device or staff can update attendance
+      allow update: if request.auth != null && 
+        (resource.data.deviceId == request.resource.data.deviceId || 
+         isAuthorizedStaff());
+      
+      // Only admin can delete attendance records
+      allow delete: if request.auth != null && isAdmin();
+    }
+    
+    // News collection (if implemented)
+    match /news/{newsId} {
+      allow read: if true;
+      allow create, update: if request.auth != null && isAuthorizedStaff();
+      allow delete: if request.auth != null && isAdmin();
+    }
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isAuthorizedStaff() {
+      return isAuthenticated() && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAuthorized == true &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['staff', 'admin'];
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAuthorized == true &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+  }
+} 
