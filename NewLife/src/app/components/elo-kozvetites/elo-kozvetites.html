@@ -16,6 +16,51 @@
       <span class="next-stream">Következő közvetítés: Vasárnap 10:00</span>
     </div>
 
+    <!-- Countdown Timer -->
+    <div class="countdown-container">
+      <h3>🕐 Következő istentiszteletig:</h3>
+      <div class="countdown-timer">
+        <div class="time-unit">
+          <span class="number" id="days">0</span>
+          <span class="label">nap</span>
+        </div>
+        <div class="time-unit">
+          <span class="number" id="hours">0</span>
+          <span class="label">óra</span>
+        </div>
+        <div class="time-unit">
+          <span class="number" id="minutes">0</span>
+          <span class="label">perc</span>
+        </div>
+        <div class="time-unit">
+          <span class="number" id="seconds">0</span>
+          <span class="label">mp</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notification Subscription -->
+    <div class="notification-section">
+      <div class="notification-card">
+        <h4>🔔 Értesítések</h4>
+        <p>Szeretne értesítést kapni a közvetítések kezdete előtt?</p>
+        <div class="notification-options">
+          <a href="https://www.youtube.com/@ujeletbaptistagyulekezet?sub_confirmation=1" 
+             target="_blank" 
+             rel="noopener noreferrer" 
+             class="btn btn-notification youtube">
+            📺 YouTube feliratkozás
+          </a>
+          <a href="https://discord.gg/gTDUpApNae" 
+             target="_blank" 
+             rel="noopener noreferrer" 
+             class="btn btn-notification discord">
+            💬 Discord csatlakozás
+          </a>
+        </div>
+      </div>
+    </div>
+
     <!-- Video Player Placeholder -->
     <div class="video-container">
       <div class="video-placeholder">
@@ -57,73 +102,40 @@
         </div>
         
         <div class="info-card">
-          <h4>💬 Interakció</h4>
-          <p>A közvetítés alatt:</p>
+          <h4>💬 Interakció & Közösség</h4>
+          <p>Csatlakozzon a beszélgetéshez:</p>
           <ul>
-            <li>Kommentelhet a chat-ben</li>
-            <li>Imakéréseket írhat</li>
-            <li>Köszönthet másokat</li>
-            <li>Kérdéseket tehet fel</li>
+            <li>YouTube chat a közvetítés alatt</li>
+            <li>Discord szerver folyamatos beszélgetéshez</li>
+            <li>Imakérések megosztása</li>
+            <li>Közösségi programok szervezése</li>
           </ul>
+          <a href="https://discord.gg/gTDUpApNae" 
+             target="_blank" 
+             rel="noopener noreferrer" 
+             class="discord-link">
+            💬 Discord közösséghez csatlakozás
+          </a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Past Streams -->
-<section class="section past-streams">
+<!-- Live Stream Feed -->
+<section class="section live-feed" *ngIf="isStreamLive">
   <div class="container">
-    <h2 class="text-center mb-3">Korábbi közvetítések</h2>
-    
-    <div class="streams-grid">
-      <div class="stream-card">
-        <div class="stream-thumbnail">
-          <img src="https://via.placeholder.com/320x180/399344/ffffff?text=Istentisztelet" alt="Vasárnapi istentisztelet">
-          <div class="play-overlay">▶</div>
-        </div>
-        <div class="stream-content">
-          <h4>Vasárnapi istentisztelet</h4>
-          <p>2024. December 8. - "Isten szeretete"</p>
-          <span class="duration">1:15:32</span>
-        </div>
+    <h2 class="text-center mb-3">🔴 Élő közvetítés</h2>
+    <div class="live-stream-embed">
+      <!-- YouTube embed would go here when live -->
+      <div class="embed-placeholder">
+        <p>YouTube élő közvetítés lesz itt megjelenítve</p>
       </div>
-      
-      <div class="stream-card">
-        <div class="stream-thumbnail">
-          <img src="https://via.placeholder.com/320x180/429aca/ffffff?text=Bibliaóra" alt="Bibliaóra">
-          <div class="play-overlay">▶</div>
-        </div>
-        <div class="stream-content">
-          <h4>Bibliaóra</h4>
-          <p>2024. December 4. - "Zsoltárok könyve"</p>
-          <span class="duration">58:14</span>
-        </div>
-      </div>
-      
-      <div class="stream-card">
-        <div class="stream-thumbnail">
-          <img src="https://via.placeholder.com/320x180/eac338/333333?text=Különleges" alt="Különleges alkalom">
-          <div class="play-overlay">▶</div>
-        </div>
-        <div class="stream-content">
-          <h4>Hálaadó istentisztelet</h4>
-          <p>2024. November 24. - "Hála minden körülmények között"</p>
-          <span class="duration">1:22:18</span>
-        </div>
-      </div>
-    </div>
-    
-    <div class="text-center" style="margin-top: 2rem;">
-      <a href="https://www.youtube.com/@ujeletbaptistagyulekezet" 
-         target="_blank" 
-         rel="noopener noreferrer" 
-         class="btn btn-secondary">
-        📺 Több videó megtekintése YouTube-on
-      </a>
     </div>
   </div>
 </section>
+
+
 
 <!-- Technical Info -->
 <section class="section tech-info">

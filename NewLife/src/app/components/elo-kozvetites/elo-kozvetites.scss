@@ -172,6 +172,164 @@ $dark-text: #333333;
       }
     }
   }
+  
+  // Countdown Timer
+  .countdown-container {
+    background: linear-gradient(135deg, rgba($primary-green, 0.05) 0%, rgba($primary-blue, 0.05) 100%);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    margin: 2rem 0;
+    border: 1px solid rgba($primary-blue, 0.1);
+    
+    h3 {
+      color: $primary-green;
+      margin-bottom: 1.5rem;
+      font-size: 1.3rem;
+    }
+    
+    .countdown-timer {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      
+      .time-unit {
+        background: $white;
+        padding: 1rem;
+        border-radius: 10px;
+        min-width: 80px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        
+        .number {
+          display: block;
+          font-size: 2rem;
+          font-weight: 700;
+          color: $primary-blue;
+          line-height: 1;
+        }
+        
+        .label {
+          display: block;
+          font-size: 0.8rem;
+          color: #666;
+          margin-top: 0.25rem;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+      }
+    }
+  }
+  
+  // Notification Section
+  .notification-section {
+    margin: 2rem 0;
+    
+    .notification-card {
+      background: linear-gradient(135deg, rgba($accent-yellow, 0.1) 0%, rgba($primary-green, 0.1) 100%);
+      padding: 2rem;
+      border-radius: 15px;
+      text-align: center;
+      border: 1px solid rgba($accent-yellow, 0.2);
+      
+      h4 {
+        color: $primary-green;
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+      }
+      
+      p {
+        color: #666;
+        margin-bottom: 1.5rem;
+      }
+      
+      .notification-options {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+        
+        .btn-notification {
+          padding: 0.8rem 1.5rem;
+          border-radius: 25px;
+          text-decoration: none;
+          font-weight: 500;
+          transition: all 0.3s ease;
+          border: 2px solid transparent;
+          
+          &.youtube {
+            background: rgba(255, 0, 0, 0.1);
+            color: #ff0000;
+            border-color: rgba(255, 0, 0, 0.2);
+            
+            &:hover {
+              background: rgba(255, 0, 0, 0.2);
+              transform: translateY(-2px);
+              box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
+            }
+          }
+          
+          &.discord {
+            background: rgba(114, 137, 218, 0.1);
+            color: #7289da;
+            border-color: rgba(114, 137, 218, 0.2);
+            
+            &:hover {
+              background: rgba(114, 137, 218, 0.2);
+              transform: translateY(-2px);
+              box-shadow: 0 4px 12px rgba(114, 137, 218, 0.3);
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  // Discord Link in Info Card
+  .info-card .discord-link {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background: rgba(114, 137, 218, 0.1);
+    color: #7289da;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background: rgba(114, 137, 218, 0.2);
+      transform: translateY(-1px);
+    }
+  }
+}
+
+// Live Stream Feed
+.live-feed {
+  background: linear-gradient(135deg, rgba(255, 0, 0, 0.05) 0%, rgba($primary-green, 0.05) 100%);
+  padding: 3rem 0;
+  border-top: 3px solid #ff0000;
+  
+  .live-stream-embed {
+    max-width: 900px;
+    margin: 2rem auto;
+    background: $white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    
+    .embed-placeholder {
+      padding: 3rem;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(255, 0, 0, 0.1) 0%, rgba($primary-green, 0.1) 100%);
+      
+      p {
+        color: #666;
+        font-size: 1.1rem;
+      }
+    }
+  }
 }
 
 // Past Streams
@@ -201,6 +359,9 @@ $dark-text: #333333;
     overflow: hidden;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    display: block;
     
     &:hover {
       transform: translateY(-5px);
@@ -233,6 +394,19 @@ $dark-text: #333333;
         justify-content: center;
         font-size: 1.5rem;
         transition: all 0.3s ease;
+      }
+      
+      .live-badge {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: rgba(255, 0, 0, 0.9);
+        color: $white;
+        padding: 0.25rem 0.5rem;
+        border-radius: 5px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        animation: pulse-red 2s infinite;
       }
       
       &:hover {
@@ -269,6 +443,16 @@ $dark-text: #333333;
         border-radius: 5px;
         font-size: 0.8rem;
         font-weight: 600;
+        margin-right: 0.5rem;
+      }
+      
+      .views {
+        background: rgba($accent-yellow, 0.2);
+        color: #666;
+        padding: 0.25rem 0.5rem;
+        border-radius: 5px;
+        font-size: 0.8rem;
+        font-weight: 500;
       }
     }
   }
@@ -337,6 +521,19 @@ $dark-text: #333333;
   }
   100% {
     box-shadow: 0 0 0 0 rgba(56, 142, 60, 0);
+  }
+}
+
+// Pulse animation for live badge
+@keyframes pulse-red {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
   }
 }
 
