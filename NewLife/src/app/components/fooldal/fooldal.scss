@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 // Baptist church brand colors
 $primary-green: #399344;
 $primary-blue: #429aca;
@@ -58,6 +60,50 @@ $dark-text: #333333;
     font-weight: 300;
   }
   
+  // Hero Status & Countdown
+  .hero-status {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    
+    .live-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 1.2rem;
+      
+      .live-badge {
+        background: #ff4444;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-weight: 600;
+        animation: pulse 2s infinite;
+      }
+    }
+    
+    .countdown-display {
+      text-align: center;
+      
+      .countdown-label {
+        display: block;
+        font-size: 1rem;
+        opacity: 0.9;
+        margin-bottom: 0.5rem;
+      }
+      
+      .countdown-time {
+        display: block;
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: $accent-yellow;
+      }
+    }
+  }
+  
   .hero-buttons {
     display: flex;
     gap: 1rem;
@@ -75,6 +121,11 @@ $dark-text: #333333;
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
 }
 
 // Welcome Section
@@ -97,9 +148,76 @@ $dark-text: #333333;
   }
 }
 
+// Upcoming Events Preview
+.upcoming-events {
+  background-color: $light-gray;
+  
+  .events-preview {
+    display: grid;
+    gap: 1.5rem;
+    margin: 2rem 0;
+    
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+  }
+  
+  .event-preview-card {
+    background: $white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-3px);
+    }
+    
+    .event-date {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      
+      .event-icon {
+        font-size: 1.5rem;
+      }
+      
+      .event-time {
+        font-weight: 600;
+        color: $primary-blue;
+      }
+    }
+    
+    .event-info {
+      h4 {
+        color: $primary-green;
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+      }
+      
+      p {
+        color: #666;
+        margin-bottom: 1rem;
+        line-height: 1.5;
+      }
+      
+      .event-meta {
+        display: flex;
+        gap: 1rem;
+        font-size: 0.9rem;
+        color: #888;
+        flex-wrap: wrap;
+      }
+    }
+  }
+}
+
+
+
 // Info Cards Section
 .info-cards {
-  background-color: $light-gray;
+  background-color: $white;
   
   .cards-grid {
     display: flex;
@@ -118,10 +236,12 @@ $dark-text: #333333;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     flex: 0 1 300px;
     max-width: 400px;
+    border: 2px solid transparent;
     
     &:hover {
       transform: translateY(-5px);
       box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+      border-color: $primary-blue;
     }
     
     .card-icon {
@@ -139,6 +259,74 @@ $dark-text: #333333;
     p {
       color: #666;
       line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    
+    .card-link {
+      color: $primary-blue;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+      
+      &:hover {
+        color: $primary-green;
+      }
+    }
+  }
+}
+
+// Latest News Preview
+.latest-news {
+  background-color: $light-gray;
+  
+  .news-preview {
+    display: grid;
+    gap: 1.5rem;
+    margin: 2rem 0;
+    
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+  }
+  
+  .news-preview-card {
+    background: $white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-3px);
+    }
+    
+    .news-date {
+      font-size: 0.9rem;
+      color: $primary-blue;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    
+    h4 {
+      color: $primary-green;
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+    }
+    
+    p {
+      color: #666;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+    
+    .news-category {
+      display: inline-block;
+      background: rgba($primary-blue, 0.1);
+      color: $primary-blue;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
     }
   }
 }
@@ -196,6 +384,50 @@ $dark-text: #333333;
   }
 }
 
+// Button Styles
+.btn {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  cursor: pointer;
+  
+  &.btn-primary {
+    background: $primary-green;
+    color: $white;
+    
+    &:hover {
+      background: color.adjust($primary-green, $lightness: -10%);
+      transform: translateY(-2px);
+    }
+  }
+  
+  &.btn-secondary {
+    background: $primary-blue;
+    color: $white;
+    
+    &:hover {
+      background: color.adjust($primary-blue, $lightness: -10%);
+      transform: translateY(-2px);
+    }
+  }
+  
+  &.btn-outline {
+    background: transparent;
+    color: $primary-blue;
+    border-color: $primary-blue;
+    
+    &:hover {
+      background: $primary-blue;
+      color: $white;
+      transform: translateY(-2px);
+    }
+  }
+}
+
 // Responsive Grid
 .row {
   display: flex;
@@ -206,4 +438,33 @@ $dark-text: #333333;
 .col {
   flex: 1;
   padding: 0 15px;
+}
+
+// Utilities
+.text-center {
+  text-align: center;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  
+  @media (max-width: 768px) {
+    padding: 0 1rem;
+  }
+}
+
+.section {
+  padding: 4rem 0;
+  
+  h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: $primary-green;
+    
+    @media (max-width: 768px) {
+      font-size: 2rem;
+    }
+  }
 }

@@ -82,10 +82,24 @@
       <h2>Iratkozzon fel hírlevelünkre!</h2>
       <p>Értesüljön elsők között gyülekezeti híreinkről és programjainkról</p>
       <div class="newsletter-form">
-        <input type="email" placeholder="Az Ön email címe" class="email-input">
-        <button class="btn btn-primary">Feliratkozás</button>
+        <input type="email" 
+               placeholder="Az Ön email címe" 
+               class="email-input"
+               [(ngModel)]="newsletterEmail"
+               (keyup.enter)="subscribeToNewsletter()">
+        <button class="btn btn-primary" 
+                (click)="subscribeToNewsletter()"
+                [disabled]="isSubscribing()">
+          {{ isSubscribing() ? 'Feliratkozás...' : 'Feliratkozás' }}
+        </button>
       </div>
       <p class="newsletter-info">📧 Heti rendszerességgel küldünk hírleveleket. Bármikor leiratkozhat.</p>
+    </div>
+    
+    <div class="news-actions">
+      <a routerLink="/esemenyek" class="btn btn-primary">Események megtekintése</a>
+      <a routerLink="/elo-kozvetites" class="btn btn-secondary">Élő közvetítés</a>
+      <a routerLink="/kapcsolat" class="btn btn-outline">Kapcsolatfelvétel</a>
     </div>
   </div>
 </section>
