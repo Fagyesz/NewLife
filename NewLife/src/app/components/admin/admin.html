@@ -238,10 +238,13 @@
                 <span class="date">📅 {{ formatNewsDate(newsItem.publishedAt) }}</span>
                 <span class="author">👤 {{ newsItem.author }}</span>
                 <span class="category">📝 {{ getCategoryText(newsItem.category || 'general') }}</span>
+                <span *ngIf="newsItem.tillDate" class="expiry">⏰ Lejár: {{ formatNewsDate(newsItem.tillDate) }}</span>
               </div>
             </div>
             <div class="news-status">
               <span class="status-badge published">✅ Publikálva</span>
+              <span *ngIf="!newsItem.isActive" class="status-badge inactive">⏸️ Inaktív</span>
+              <span *ngIf="isNewsExpired(newsItem)" class="status-badge expired">⏰ Lejárt</span>
             </div>
             <div class="news-actions">
               <button class="btn btn-secondary" (click)="openNewsForm(newsItem)">
@@ -290,6 +293,101 @@
           <!-- No Unpublished News -->
           <div *ngIf="unpublishedNews.length === 0" class="no-news">
             <p>Nincsenek vázlatok.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Expired News -->
+      <div class="news-subsection">
+        <h3>Lejárt hírek ({{ expiredNews.length }})</h3>
+        <div class="news-list">
+          <div *ngFor="let newsItem of expiredNews" class="news-item expired">
+            <div class="news-info">
+              <h4>{{ newsItem.title }}</h4>
+              <p class="news-summary">{{ newsItem.summary || (newsItem.content | slice:0:100) + '...' }}</p>
+              <div class="news-meta">
+                <span class="date">📅 {{ formatNewsDate(newsItem.publishedAt) }}</span>
+                <span class="author">👤 {{ newsItem.author }}</span>
+                <span class="category">📝 {{ getCategoryText(newsItem.category || 'general') }}</span>
+                <span class="expiry expired-date" *ngIf="newsItem.tillDate">⏰ Lejárt: {{ formatNewsDate(newsItem.tillDate) }}</span>
+              </div>
+            </div>
+            <div class="news-status">
+              <span class="status-badge published">✅ Publikálva</span>
+              <span class="status-badge expired">⏰ Lejárt</span>
+              <span *ngIf="!newsItem.isActive" class="status-badge inactive">⏸️ Inaktív</span>
+            </div>
+            <div class="news-actions">
+              <button class="btn btn-secondary" (click)="openNewsForm(newsItem)">
+                ✏️ Szerkesztés
+              </button>
+              <button class="btn btn-success" (click)="reactivateNews(newsItem)" [disabled]="isLoading()" title="30 nappal meghosszabbítja és aktiválja">
+                🔄 Újraaktiválás
+              </button>
+              <div class="dropdown">
+                <button class="btn btn-outline dropdown-toggle" [disabled]="isLoading()">
+                  ⚙️ Opciók
+                </button>
+                <div class="dropdown-content">
+                  <button (click)="extendNewsExpiration(newsItem, 7)" class="dropdown-item">
+                    📅 +7 nap
+                  </button>
+                  <button (click)="extendNewsExpiration(newsItem, 30)" class="dropdown-item">
+                    📅 +30 nap
+                  </button>
+                  <button (click)="makeNewsPermanent(newsItem)" class="dropdown-item">
+                    ♾️ Állandó
+                  </button>
+                </div>
+              </div>
+              <button class="btn btn-danger" (click)="deleteNews(newsItem)" [disabled]="isLoading()">
+                🗑️ Törlés
+              </button>
+            </div>
+          </div>
+
+          <!-- No Expired News -->
+          <div *ngIf="expiredNews.length === 0" class="no-news">
+            <p>Nincsenek lejárt hírek.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inactive News -->
+      <div class="news-subsection">
+        <h3>Inaktív hírek ({{ inactiveNews.length }})</h3>
+        <div class="news-list">
+          <div *ngFor="let newsItem of inactiveNews" class="news-item inactive">
+            <div class="news-info">
+              <h4>{{ newsItem.title }}</h4>
+              <p class="news-summary">{{ newsItem.summary || (newsItem.content | slice:0:100) + '...' }}</p>
+              <div class="news-meta">
+                <span class="date">📅 {{ formatNewsDate(newsItem.publishedAt) }}</span>
+                <span class="author">👤 {{ newsItem.author }}</span>
+                <span class="category">📝 {{ getCategoryText(newsItem.category || 'general') }}</span>
+                <span *ngIf="newsItem.tillDate" class="expiry">⏰ Lejár: {{ formatNewsDate(newsItem.tillDate) }}</span>
+              </div>
+            </div>
+            <div class="news-status">
+              <span class="status-badge published">✅ Publikálva</span>
+              <span class="status-badge inactive">⏸️ Inaktív</span>
+            </div>
+            <div class="news-actions">
+              <button class="btn btn-secondary" (click)="openNewsForm(newsItem)">
+                ✏️ Szerkesztés
+              </button>
+              <button class="btn btn-success" (click)="toggleNewsActive(newsItem)" [disabled]="isLoading()">
+                ▶️ Aktiválás
+              </button>
+              <button class="btn btn-danger" (click)="deleteNews(newsItem)" [disabled]="isLoading()">
+                🗑️ Törlés
+              </button>
+            </div>
+          </div>
+
+          <!-- No Inactive News -->
+          <div *ngIf="inactiveNews.length === 0" class="no-news">
+            <p>Nincsenek inaktív hírek.</p>
           </div>
         </div>
       </div>
@@ -364,6 +462,33 @@
             [(ngModel)]="newsForm.publishedAt" 
             name="newsDate" 
             class="form-control">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="newsTillDate">Lejárat dátuma</label>
+          <input 
+            type="date" 
+            id="newsTillDate" 
+            [(ngModel)]="newsForm.tillDate" 
+            name="newsTillDate" 
+            class="form-control"
+            placeholder="Opcionális - ha üresen hagyja, a hír nem jár le">
+          <small class="form-help">Ha üresen hagyja, a hír nem jár le automatikusan</small>
+        </div>
+
+        <div class="form-group">
+          <div class="checkbox-group">
+            <label for="newsActive" class="checkbox-label">
+              <input 
+                type="checkbox" 
+                id="newsActive" 
+                [(ngModel)]="newsForm.isActive" 
+                name="newsActive">
+              <span class="checkbox-text">Aktív (ha ki van kapcsolva, a hír nem jelenik meg)</span>
+            </label>
+          </div>
         </div>
       </div>
 

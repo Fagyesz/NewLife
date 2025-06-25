@@ -48,7 +48,9 @@ export class Admin implements OnInit {
     summary: '',
     author: '',
     publishedAt: '',
+    tillDate: '',
     isPublished: true,
+    isActive: true,
     category: 'general' as News['category']
   };
 
@@ -102,11 +104,23 @@ export class Admin implements OnInit {
   }
 
   get publishedNews() {
-    return this.news.filter(item => item.isPublished);
+    return this.news.filter(item => 
+      item.isPublished && 
+      item.isActive && 
+      this.newsService.isNewsActive(item)
+    );
   }
 
   get unpublishedNews() {
     return this.news.filter(item => !item.isPublished);
+  }
+
+  get expiredNews() {
+    return this.newsService.getExpiredNews();
+  }
+
+  get inactiveNews() {
+    return this.newsService.getInactiveNews();
   }
 
   openEventForm(event?: Event) {
@@ -142,7 +156,9 @@ export class Admin implements OnInit {
         summary: news.summary || '',
         author: news.author,
         publishedAt: news.publishedAt.toISOString().split('T')[0],
+        tillDate: news.tillDate ? news.tillDate.toISOString().split('T')[0] : '',
         isPublished: news.isPublished,
+        isActive: news.isActive,
         category: news.category || 'general'
       };
     } else {
@@ -272,13 +288,21 @@ export class Admin implements OnInit {
       
       const publishDate = this.newsForm.publishedAt ? new Date(this.newsForm.publishedAt) : new Date();
       
+      // Handle tillDate - set to end of day in local timezone
+      let tillDate: Date | undefined = undefined;
+      if (this.newsForm.tillDate) {
+        tillDate = new Date(this.newsForm.tillDate + 'T23:59:59');
+      }
+      
       const newsData = {
         title: this.newsForm.title,
         content: this.newsForm.content,
         summary: this.newsForm.summary,
         author: this.newsForm.author || this.authService.getUserDisplayName(),
         publishedAt: publishDate,
+        tillDate: tillDate,
         isPublished: this.newsForm.isPublished,
+        isActive: this.newsForm.isActive,
         category: this.newsForm.category
       };
 
@@ -345,6 +369,97 @@ export class Admin implements OnInit {
     }
   }
 
+  isNewsExpired(newsItem: News): boolean {
+    if (!newsItem.tillDate) return false;
+    return newsItem.tillDate < new Date();
+  }
+
+  async reactivateNews(newsItem: News) {
+    if (!newsItem.id) return;
+    
+    try {
+      this.isLoading.set(true);
+      
+      // Extend expiration by 30 days or make it active again
+      const newTillDate = new Date();
+      newTillDate.setDate(newTillDate.getDate() + 30);
+      
+      await this.newsService.updateNews(newsItem.id, {
+        isActive: true,
+        tillDate: newTillDate
+      });
+      
+      console.log('News reactivated:', newsItem.id);
+    } catch (error) {
+      console.error('Error reactivating news:', error);
+      alert('Hiba történt a hír újraaktiválása során: ' + (error as Error).message);
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
+
+  async extendNewsExpiration(newsItem: News, days: number = 30) {
+    if (!newsItem.id) return;
+    
+    try {
+      this.isLoading.set(true);
+      
+      const newTillDate = new Date();
+      newTillDate.setDate(newTillDate.getDate() + days);
+      
+      await this.newsService.updateNews(newsItem.id, {
+        tillDate: newTillDate,
+        isActive: true
+      });
+      
+      console.log('News expiration extended:', newsItem.id);
+    } catch (error) {
+      console.error('Error extending news expiration:', error);
+      alert('Hiba történt a lejárat meghosszabbítása során: ' + (error as Error).message);
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
+
+  async makeNewsPermanent(newsItem: News) {
+    if (!newsItem.id) return;
+    
+    try {
+      this.isLoading.set(true);
+      
+      await this.newsService.updateNews(newsItem.id, {
+        tillDate: undefined,
+        isActive: true
+      });
+      
+      console.log('News made permanent:', newsItem.id);
+    } catch (error) {
+      console.error('Error making news permanent:', error);
+      alert('Hiba történt a hír állandóvá tétele során: ' + (error as Error).message);
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
+
+  async toggleNewsActive(newsItem: News) {
+    if (!newsItem.id) return;
+    
+    try {
+      this.isLoading.set(true);
+      
+      await this.newsService.updateNews(newsItem.id, {
+        isActive: !newsItem.isActive
+      });
+      
+      console.log('News active status toggled:', newsItem.id);
+    } catch (error) {
+      console.error('Error toggling news active status:', error);
+      alert('Hiba történt a hír állapotának váltása során: ' + (error as Error).message);
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
+
   getEventTypeText(type: string): string {
     switch (type) {
       case 'service': return 'Istentisztelet';
@@ -384,7 +499,9 @@ export class Admin implements OnInit {
       summary: '',
       author: this.authService.getUserDisplayName(),
       publishedAt: new Date().toISOString().split('T')[0],
+      tillDate: '',
       isPublished: true,
+      isActive: true,
       category: 'general'
     };
   }

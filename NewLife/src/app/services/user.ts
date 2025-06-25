@@ -23,7 +23,9 @@ export interface News {
   imageUrl?: string;
   author: string;
   publishedAt: Date;
+  tillDate?: Date;  // Expiration date - when null, news doesn't expire
   isPublished: boolean;
+  isActive: boolean;  // Manual active/inactive toggle
   createdBy: string;
   createdAt?: Date;
   updatedAt?: Date;
@@ -196,6 +198,7 @@ export class NewsService {
             id: doc.id,
             ...data,
             publishedAt: data['publishedAt'].toDate(),
+            tillDate: data['tillDate']?.toDate(),
             createdAt: data['createdAt']?.toDate(),
             updatedAt: data['updatedAt']?.toDate()
           } as News);
@@ -221,7 +224,9 @@ export class NewsService {
         summary: 'Karácsonyi ünnepség különleges programmal',
         author: 'Lelkész',
         publishedAt: new Date('2024-12-20T10:00:00'),
+        tillDate: new Date('2024-12-26T23:59:59'),
         isPublished: true,
+        isActive: true,
         createdBy: 'system',
         category: 'event'
       },
@@ -233,6 +238,7 @@ export class NewsService {
         author: 'Lelkész',
         publishedAt: new Date('2024-12-31T18:00:00'),
         isPublished: true,
+        isActive: true,
         createdBy: 'system',
         category: 'announcement'
       }
@@ -250,8 +256,13 @@ export class NewsService {
       this.isLoading.set(true);
       const userProfile = this.authService.userProfile();
       
+      // Clean up data for Firebase - remove undefined values
+      const cleanedNewsItem = Object.fromEntries(
+        Object.entries(newsItem).filter(([_, value]) => value !== undefined)
+      );
+      
       const newsData = {
-        ...newsItem,
+        ...cleanedNewsItem,
         createdBy: userProfile?.uid || '',
         author: newsItem.author || userProfile?.displayName || 'Ismeretlen',
         createdAt: new Date(),
@@ -279,9 +290,15 @@ export class NewsService {
 
     try {
       this.isLoading.set(true);
+      
+      // Clean up data for Firebase - remove undefined values
+      const cleanedUpdates = Object.fromEntries(
+        Object.entries(updates).filter(([_, value]) => value !== undefined)
+      );
+      
       const newsRef = doc(this.firestore, 'news', newsId);
       await updateDoc(newsRef, {
-        ...updates,
+        ...cleanedUpdates,
         updatedAt: new Date()
       });
       
@@ -313,7 +330,12 @@ export class NewsService {
   }
 
   getPublishedNews(): News[] {
-    return this.news().filter(item => item.isPublished);
+    const now = new Date();
+    return this.news().filter(item => 
+      item.isPublished && 
+      item.isActive && 
+      (!item.tillDate || item.tillDate >= now)
+    );
   }
 
   getNewsByCategory(category: News['category']): News[] {
@@ -326,5 +348,62 @@ export class NewsService {
 
   getRecentNews(limit: number = 5): News[] {
     return this.getPublishedNews().slice(0, limit);
+  }
+
+  // Get news that are published but expired
+  getExpiredNews(): News[] {
+    const now = new Date();
+    return this.news().filter(item => 
+      item.isPublished && 
+      item.tillDate && 
+      item.tillDate < now
+    );
+  }
+
+  // Get news that are manually deactivated
+  getInactiveNews(): News[] {
+    return this.news().filter(item => 
+      item.isPublished && 
+      !item.isActive
+    );
+  }
+
+  // Get all news (published, draft, expired, inactive)
+  getAllNews(): News[] {
+    return this.news();
+  }
+
+  // Check if news is currently active (published, active, and not expired)
+  isNewsActive(newsItem: News): boolean {
+    const now = new Date();
+    return newsItem.isPublished && 
+           newsItem.isActive && 
+           (!newsItem.tillDate || newsItem.tillDate >= now);
+  }
+
+  // Toggle news active status manually
+  async toggleNewsActive(newsId: string): Promise<void> {
+    const newsItem = this.getNewsById(newsId);
+    if (!newsItem) {
+      throw new Error('Hír nem található');
+    }
+
+    await this.updateNews(newsId, {
+      isActive: !newsItem.isActive
+    });
+  }
+
+  // Extend news expiration date
+  async extendNewsExpiration(newsId: string, newTillDate: Date): Promise<void> {
+    await this.updateNews(newsId, {
+      tillDate: newTillDate
+    });
+  }
+
+  // Remove expiration date (make news permanent until manually deactivated)
+  async removeNewsExpiration(newsId: string): Promise<void> {
+    await this.updateNews(newsId, {
+      tillDate: undefined
+    });
   }
 }
