@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth';
 import { EventService, Event } from '../../services/event';
 import { AttendanceService } from '../../services/attendance';
-import { UserService } from '../../services/user';
+import { UserService, NewsService, News } from '../../services/user';
 
 @Component({
   selector: 'app-admin',
@@ -18,13 +18,17 @@ export class Admin implements OnInit {
   private eventService = inject(EventService);
   private attendanceService = inject(AttendanceService);
   userService = inject(UserService);
+  private newsService = inject(NewsService);
   private router = inject(Router);
 
   // Signals
   showEventForm = signal(false);
+  showNewsForm = signal(false);
   showUsersSection = signal(false);
   showEventsSection = signal(false);
+  showNewsSection = signal(false);
   editingEvent = signal<Event | null>(null);
+  editingNews = signal<News | null>(null);
   isLoading = signal(false);
 
   // Form data
@@ -37,6 +41,16 @@ export class Admin implements OnInit {
     location: ''
   };
 
+  newsForm = {
+    title: '',
+    content: '',
+    summary: '',
+    author: '',
+    publishedAt: '',
+    isPublished: true,
+    category: 'general' as News['category']
+  };
+
   ngOnInit() {
     if (!this.authService.isStaff()) {
       this.router.navigate(['/']);
@@ -46,6 +60,10 @@ export class Admin implements OnInit {
 
   get events() {
     return this.eventService.events();
+  }
+
+  get news() {
+    return this.newsService.news();
   }
 
   get users() {
@@ -68,6 +86,10 @@ export class Admin implements OnInit {
     this.showEventsSection.set(!this.showEventsSection());
   }
 
+  toggleNewsSection() {
+    this.showNewsSection.set(!this.showNewsSection());
+  }
+
   get upcomingEvents() {
     const now = new Date();
     return this.events.filter(event => event.date >= now);
@@ -76,6 +98,14 @@ export class Admin implements OnInit {
   get pastEvents() {
     const now = new Date();
     return this.events.filter(event => event.date < now);
+  }
+
+  get publishedNews() {
+    return this.news.filter(item => item.isPublished);
+  }
+
+  get unpublishedNews() {
+    return this.news.filter(item => !item.isPublished);
   }
 
   openEventForm(event?: Event) {
@@ -91,7 +121,7 @@ export class Admin implements OnInit {
       };
     } else {
       this.editingEvent.set(null);
-      this.resetForm();
+      this.resetEventForm();
     }
     this.showEventForm.set(true);
   }
@@ -99,7 +129,32 @@ export class Admin implements OnInit {
   closeEventForm() {
     this.showEventForm.set(false);
     this.editingEvent.set(null);
-    this.resetForm();
+    this.resetEventForm();
+  }
+
+  openNewsForm(news?: News) {
+    if (news) {
+      this.editingNews.set(news);
+      this.newsForm = {
+        title: news.title,
+        content: news.content,
+        summary: news.summary || '',
+        author: news.author,
+        publishedAt: news.publishedAt.toISOString().split('T')[0],
+        isPublished: news.isPublished,
+        category: news.category || 'general'
+      };
+    } else {
+      this.editingNews.set(null);
+      this.resetNewsForm();
+    }
+    this.showNewsForm.set(true);
+  }
+
+  closeNewsForm() {
+    this.showNewsForm.set(false);
+    this.editingNews.set(null);
+    this.resetNewsForm();
   }
 
   async saveEvent() {
@@ -205,7 +260,81 @@ export class Admin implements OnInit {
     }
   }
 
-  private resetForm() {
+  async saveNews() {
+    if (!this.newsForm.title || !this.newsForm.content) {
+      alert('Kérjük, töltse ki a cím és tartalom mezőket!');
+      return;
+    }
+
+    try {
+      this.isLoading.set(true);
+      
+      const publishDate = this.newsForm.publishedAt ? new Date(this.newsForm.publishedAt) : new Date();
+      
+      const newsData = {
+        title: this.newsForm.title,
+        content: this.newsForm.content,
+        summary: this.newsForm.summary,
+        author: this.newsForm.author || this.authService.getUserDisplayName(),
+        publishedAt: publishDate,
+        isPublished: this.newsForm.isPublished,
+        category: this.newsForm.category
+      };
+
+      const editingNews = this.editingNews();
+      if (editingNews?.id) {
+        await this.newsService.updateNews(editingNews.id, newsData);
+      } else {
+        await this.newsService.createNews(newsData);
+      }
+
+      this.closeNewsForm();
+    } catch (error) {
+      console.error('Error saving news:', error);
+      alert('Hiba történt a hír mentése során: ' + (error as Error).message);
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
+
+  async deleteNews(news: News) {
+    if (!news.id) return;
+    
+    if (!confirm(`Biztosan törölni szeretné a "${news.title}" hírt?`)) {
+      return;
+    }
+
+    try {
+      this.isLoading.set(true);
+      await this.newsService.deleteNews(news.id);
+    } catch (error) {
+      console.error('Error deleting news:', error);
+      alert('Hiba történt a hír törlése során: ' + (error as Error).message);
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
+
+  formatNewsDate(date: Date): string {
+    return new Intl.DateTimeFormat('hu-HU', {
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    }).format(date);
+  }
+
+  getCategoryText(category: string): string {
+    switch (category) {
+      case 'announcement': return 'Közlemény';
+      case 'event': return 'Esemény';
+      case 'ministry': return 'Szolgálat';
+      case 'general': return 'Általános';
+      default: return 'Általános';
+    }
+  }
+
+  private resetEventForm() {
     this.eventForm = {
       title: '',
       description: '',
@@ -213,6 +342,18 @@ export class Admin implements OnInit {
       time: '',
       type: 'service',
       location: 'Gyöngyös Gyüli' // Default location
+    };
+  }
+
+  private resetNewsForm() {
+    this.newsForm = {
+      title: '',
+      content: '',
+      summary: '',
+      author: this.authService.getUserDisplayName(),
+      publishedAt: new Date().toISOString().split('T')[0],
+      isPublished: true,
+      category: 'general'
     };
   }
 }

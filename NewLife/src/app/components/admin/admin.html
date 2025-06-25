@@ -209,6 +209,207 @@
   </div>
 </section>
 
+<!-- News Management -->
+<section class="section news-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Hírek kezelése</h2>
+      <div class="header-actions">
+        <button class="btn btn-primary" (click)="openNewsForm()">
+          ➕ Új hír
+        </button>
+        <button class="btn btn-secondary" (click)="toggleNewsSection()">
+          {{ showNewsSection() ? '➖ Elrejtés' : '➕ Megjelenítés' }}
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="showNewsSection()" class="news-content">
+      <!-- Published News -->
+      <div class="news-subsection">
+        <h3>Publikált hírek ({{ publishedNews.length }})</h3>
+        <div class="news-list">
+          <div *ngFor="let newsItem of publishedNews" class="news-item published">
+            <div class="news-info">
+              <h4>{{ newsItem.title }}</h4>
+              <p class="news-summary">{{ newsItem.summary || (newsItem.content | slice:0:100) + '...' }}</p>
+              <div class="news-meta">
+                <span class="date">📅 {{ formatNewsDate(newsItem.publishedAt) }}</span>
+                <span class="author">👤 {{ newsItem.author }}</span>
+                <span class="category">📝 {{ getCategoryText(newsItem.category || 'general') }}</span>
+              </div>
+            </div>
+            <div class="news-status">
+              <span class="status-badge published">✅ Publikálva</span>
+            </div>
+            <div class="news-actions">
+              <button class="btn btn-secondary" (click)="openNewsForm(newsItem)">
+                ✏️ Szerkesztés
+              </button>
+              <button class="btn btn-danger" (click)="deleteNews(newsItem)" [disabled]="isLoading()">
+                🗑️ Törlés
+              </button>
+            </div>
+          </div>
+
+          <!-- No Published News -->
+          <div *ngIf="publishedNews.length === 0" class="no-news">
+            <p>Nincsenek publikált hírek.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unpublished News -->
+      <div class="news-subsection">
+        <h3>Vázlatok ({{ unpublishedNews.length }})</h3>
+        <div class="news-list">
+          <div *ngFor="let newsItem of unpublishedNews" class="news-item draft">
+            <div class="news-info">
+              <h4>{{ newsItem.title }}</h4>
+              <p class="news-summary">{{ newsItem.summary || (newsItem.content | slice:0:100) + '...' }}</p>
+              <div class="news-meta">
+                <span class="date">📅 {{ formatNewsDate(newsItem.publishedAt) }}</span>
+                <span class="author">👤 {{ newsItem.author }}</span>
+                <span class="category">📝 {{ getCategoryText(newsItem.category || 'general') }}</span>
+              </div>
+            </div>
+            <div class="news-status">
+              <span class="status-badge draft">📝 Vázlat</span>
+            </div>
+            <div class="news-actions">
+              <button class="btn btn-secondary" (click)="openNewsForm(newsItem)">
+                ✏️ Szerkesztés
+              </button>
+              <button class="btn btn-danger" (click)="deleteNews(newsItem)" [disabled]="isLoading()">
+                🗑️ Törlés
+              </button>
+            </div>
+          </div>
+
+          <!-- No Unpublished News -->
+          <div *ngIf="unpublishedNews.length === 0" class="no-news">
+            <p>Nincsenek vázlatok.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- No News at all -->
+      <div *ngIf="news.length === 0" class="no-news">
+        <p>Még nincsenek hírek. Hozza létre az elsőt!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- News Form Modal -->
+<div *ngIf="showNewsForm()" class="modal-overlay" (click)="closeNewsForm()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>{{ editingNews() ? 'Hír szerkesztése' : 'Új hír' }}</h3>
+      <button class="close-btn" (click)="closeNewsForm()">✕</button>
+    </div>
+    
+    <form (ngSubmit)="saveNews()" #newsFormRef="ngForm">
+      <div class="form-group">
+        <label for="newsTitle">Cím *</label>
+        <input 
+          type="text" 
+          id="newsTitle" 
+          [(ngModel)]="newsForm.title" 
+          name="newsTitle" 
+          required 
+          class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="newsSummary">Összefoglaló</label>
+        <input 
+          type="text" 
+          id="newsSummary" 
+          [(ngModel)]="newsForm.summary" 
+          name="newsSummary" 
+          class="form-control"
+          placeholder="Rövid összefoglaló a hírről">
+      </div>
+
+      <div class="form-group">
+        <label for="newsContent">Tartalom *</label>
+        <textarea 
+          id="newsContent" 
+          [(ngModel)]="newsForm.content" 
+          name="newsContent" 
+          rows="6" 
+          required
+          class="form-control">
+        </textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="newsAuthor">Szerző</label>
+          <input 
+            type="text" 
+            id="newsAuthor" 
+            [(ngModel)]="newsForm.author" 
+            name="newsAuthor" 
+            class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="newsDate">Publikálás dátuma</label>
+          <input 
+            type="date" 
+            id="newsDate" 
+            [(ngModel)]="newsForm.publishedAt" 
+            name="newsDate" 
+            class="form-control">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="newsCategory">Kategória</label>
+          <select 
+            id="newsCategory" 
+            [(ngModel)]="newsForm.category" 
+            name="newsCategory" 
+            class="form-control">
+            <option value="general">Általános</option>
+            <option value="announcement">Közlemény</option>
+            <option value="event">Esemény</option>
+            <option value="ministry">Szolgálat</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <div class="checkbox-group">
+            <label for="newsPublished" class="checkbox-label">
+              <input 
+                type="checkbox" 
+                id="newsPublished" 
+                [(ngModel)]="newsForm.isPublished" 
+                name="newsPublished">
+              <span class="checkbox-text">Azonnal publikálás</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" (click)="closeNewsForm()">
+          Mégse
+        </button>
+        <button 
+          type="submit" 
+          class="btn btn-primary" 
+          [disabled]="isLoading() || !newsFormRef.form.valid">
+          {{ isLoading() ? 'Mentés...' : 'Mentés' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <!-- Event Form Modal -->
 <div *ngIf="showEventForm()" class="modal-overlay" (click)="closeEventForm()">
   <div class="modal-content" (click)="$event.stopPropagation()">
