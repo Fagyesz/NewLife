@@ -4,7 +4,7 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    "public": "dist/NewLife",
+    "public": "dist/NewLife/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
