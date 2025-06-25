@@ -44,12 +44,30 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# Environment files - NEVER COMMIT THESE
+# Environment files - NEVER COMMIT THESE (CONTAIN API KEYS!)
+/src/environments/environment.ts
+/src/environments/environment.prod.ts
 /src/environments/environment.local.ts
 /src/environments/environment.*.local.ts
 .env
 .env.local
 .env.*.local
 
+# Firebase configuration files
+.firebaserc
+firebase.json
 
+# Deployment scripts (may contain sensitive info)
 deploy-firebase.bat
+*.bat
+
+# Firebase functions
+functions/
+
+# Firebase debug files
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+
+# Firebase emulator data
+.firebase/
