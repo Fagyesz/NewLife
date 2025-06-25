@@ -308,7 +308,15 @@ export class Admin implements OnInit {
 
       const editingNews = this.editingNews();
       if (editingNews?.id) {
-        await this.newsService.updateNews(editingNews.id, newsData);
+        // Special handling for updates - if tillDate field is empty, remove it
+        if (!this.newsForm.tillDate && editingNews.tillDate) {
+          await this.newsService.updateNews(editingNews.id, {
+            ...newsData,
+            tillDate: null as any
+          });
+        } else {
+          await this.newsService.updateNews(editingNews.id, newsData);
+        }
       } else {
         await this.newsService.createNews(newsData);
       }
@@ -428,7 +436,7 @@ export class Admin implements OnInit {
       this.isLoading.set(true);
       
       await this.newsService.updateNews(newsItem.id, {
-        tillDate: undefined,
+        tillDate: null as any,
         isActive: true
       });
       

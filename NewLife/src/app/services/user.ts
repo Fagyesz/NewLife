@@ -291,16 +291,20 @@ export class NewsService {
     try {
       this.isLoading.set(true);
       
-      // Clean up data for Firebase - remove undefined values
-      const cleanedUpdates = Object.fromEntries(
-        Object.entries(updates).filter(([_, value]) => value !== undefined)
-      );
+      // Handle special case: if tillDate is explicitly set to null, we want to delete the field
+      const updateData: any = { updatedAt: new Date() };
+      
+      for (const [key, value] of Object.entries(updates)) {
+        if (key === 'tillDate' && value === null) {
+          // Use Firebase FieldValue.delete() to remove the field
+          updateData[key] = null;
+        } else if (value !== undefined) {
+          updateData[key] = value;
+        }
+      }
       
       const newsRef = doc(this.firestore, 'news', newsId);
-      await updateDoc(newsRef, {
-        ...cleanedUpdates,
-        updatedAt: new Date()
-      });
+      await updateDoc(newsRef, updateData);
       
       console.log('✅ News updated successfully:', newsId);
     } catch (error) {
