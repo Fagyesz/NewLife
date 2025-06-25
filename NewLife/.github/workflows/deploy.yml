@@ -30,12 +30,13 @@ jobs:
           production: true,
           firebase: {
             apiKey: "${{ secrets.FIREBASE_API_KEY }}",
-            authDomain: "newlife-a8648.firebaseapp.com",
-            projectId: "newlife-a8648",
-            storageBucket: "newlife-a8648.firebasestorage.app",
-            messagingSenderId: "925061673374",
-            appId: "1:925061673374:web:6ae65e6a6874a8abcae68f",
-            measurementId: "G-D8G49NSL7L"
+            authDomain: "bapti-50b84.firebaseapp.com",
+            databaseURL: "https://bapti-50b84-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "bapti-50b84",
+            storageBucket: "bapti-50b84.firebasestorage.app",
+            messagingSenderId: "756194112208",
+            appId: "1:756194112208:web:3d77619a7ea9ece62f24d5",
+            measurementId: "G-4SEQPT1WMZ"
           }
         };
         EOF
