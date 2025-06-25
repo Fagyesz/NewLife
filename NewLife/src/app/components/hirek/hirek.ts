@@ -19,6 +19,8 @@ export class Hirek implements OnInit {
   allNews = signal<News[]>([]);
   featuredNews = signal<News | null>(null);
   regularNews = signal<News[]>([]);
+  selectedNews = signal<News | null>(null);
+  showNewsModal = signal(false);
 
   ngOnInit(): void {
     this.loadNews();
@@ -124,5 +126,15 @@ export class Hirek implements OnInit {
   getNewsExcerpt(content: string, length: number = 150): string {
     if (content.length <= length) return content;
     return content.substring(0, length) + '...';
+  }
+
+  openNewsModal(newsItem: News): void {
+    this.selectedNews.set(newsItem);
+    this.showNewsModal.set(true);
+  }
+
+  closeNewsModal(): void {
+    this.showNewsModal.set(false);
+    this.selectedNews.set(null);
   }
 }

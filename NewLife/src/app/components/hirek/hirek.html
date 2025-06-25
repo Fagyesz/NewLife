@@ -12,7 +12,7 @@
   <div class="container">
     <div class="news-grid">
       <!-- Featured News -->
-      <article *ngIf="featuredNews()" class="news-card featured">
+      <article *ngIf="featuredNews()" class="news-card featured" (click)="openNewsModal(featuredNews()!)">
         <div class="news-date">{{ formatNewsDate(featuredNews()!.publishedAt) }}</div>
         <h2>{{ featuredNews()!.title }}</h2>
         <p>{{ featuredNews()!.summary || getNewsExcerpt(featuredNews()!.content, 200) }}</p>
@@ -23,11 +23,12 @@
           <span class="news-category">
             {{ getCategoryIcon(featuredNews()!.category || 'general') }} {{ getCategoryText(featuredNews()!.category || 'general') }}
           </span>
+          <span class="read-more">Részletek →</span>
         </div>
       </article>
 
       <!-- Regular News -->
-      <article *ngFor="let newsItem of regularNews()" class="news-card">
+      <article *ngFor="let newsItem of regularNews()" class="news-card" (click)="openNewsModal(newsItem)">
         <div class="news-date">{{ formatNewsDate(newsItem.publishedAt) }}</div>
         <h3>{{ newsItem.title }}</h3>
         <p>{{ newsItem.summary || getNewsExcerpt(newsItem.content, 150) }}</p>
@@ -38,6 +39,7 @@
           <span class="news-category">
             {{ getCategoryIcon(newsItem.category || 'general') }} {{ getCategoryText(newsItem.category || 'general') }}
           </span>
+          <span class="read-more">Részletek →</span>
         </div>
       </article>
 
@@ -73,7 +75,30 @@
       </div>
       <p class="newsletter-info">📧 Heti rendszerességgel küldünk hírleveleket. Bármikor leiratkozhat.</p>
     </div>
-    
-    
   </div>
 </section>
+
+<!-- News Modal -->
+<div *ngIf="showNewsModal()" class="modal-overlay" (click)="closeNewsModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div class="news-meta-header">
+        <div class="news-date">{{ formatNewsDate(selectedNews()!.publishedAt) }}</div>
+        <span class="news-category">
+          {{ getCategoryIcon(selectedNews()!.category || 'general') }} {{ getCategoryText(selectedNews()!.category || 'general') }}
+        </span>
+      </div>
+      <button class="close-btn" (click)="closeNewsModal()">✕</button>
+    </div>
+    
+    <div class="modal-body">
+      <h1>{{ selectedNews()!.title }}</h1>
+      <div class="news-author">👤 {{ selectedNews()!.author }}</div>
+      
+      <div class="news-content">
+        <p *ngIf="selectedNews()!.summary" class="news-summary">{{ selectedNews()!.summary }}</p>
+        <div class="news-text">{{ selectedNews()!.content }}</div>
+      </div>
+    </div>
+  </div>
+</div>
