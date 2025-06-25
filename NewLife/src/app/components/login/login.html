@@ -1,0 +1,70 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <h1>Személyzet bejelentkezés</h1>
+      <p>Hírek és események szerkesztéséhez</p>
+    </div>
+
+    <div class="login-content">
+      @if (!authService.isAuthenticated()) {
+        <div class="login-form">
+          <p class="login-description">
+            Csak a gyülekezet személyzete számára. 
+            Bejelentkezés után szerkesztheti a híreket és eseményeket.
+          </p>
+
+          <button 
+            class="google-signin-btn"
+            (click)="signInWithGoogle()"
+            [disabled]="isLoading()">
+            @if (isLoading()) {
+              <div class="loading-spinner"></div>
+              <span>Bejelentkezés...</span>
+            } @else {
+              <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" class="google-logo">
+              <span>Google bejelentkezés</span>
+            }
+          </button>
+
+          @if (errorMessage()) {
+            <div class="error-message">
+              {{ errorMessage() }}
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="logged-in-state">
+          <div class="user-info">
+            @if (authService.getUserPhotoURL()) {
+              <img [src]="authService.getUserPhotoURL()" alt="Profilkép" class="user-avatar">
+            }
+            <div class="user-details">
+              <h3>{{ authService.getUserDisplayName() }}</h3>
+              <p class="user-role">{{ getUserRoleText() }}</p>
+            </div>
+          </div>
+
+          <div class="actions">
+            @if (authService.isStaff()) {
+              <button class="primary-btn" routerLink="/admin">
+                📝 Szerkesztés
+              </button>
+            }
+            <button class="secondary-btn" routerLink="/fooldal">
+              🏠 Főoldal
+            </button>
+            <button class="secondary-btn" (click)="signOut()">
+              🚪 Kijelentkezés
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="login-footer">
+      <p>
+        <a routerLink="/fooldal">← Vissza a főoldalra</a>
+      </p>
+    </div>
+  </div>
+</div>

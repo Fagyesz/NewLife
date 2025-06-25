@@ -17,16 +17,6 @@ export class Navigation {
     this.isMenuOpen.set(!this.isMenuOpen());
   }
 
-  async signIn() {
-    try {
-      await this.authService.signInWithGoogle();
-      this.closeMenu();
-    } catch (error) {
-      console.error('Sign in error:', error);
-      alert('Bejelentkezési hiba: ' + (error as Error).message);
-    }
-  }
-
   async signOut() {
     try {
       await this.authService.signOut();
@@ -42,6 +32,7 @@ export class Navigation {
     switch (role) {
       case 'admin': return 'Adminisztrátor';
       case 'staff': return 'Személyzet';
+      case 'dev': return 'Fejlesztő';
       default: return 'Tag';
     }
   }

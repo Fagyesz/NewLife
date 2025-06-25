@@ -17,34 +17,37 @@
         <li><a routerLink="/kapcsolat" routerLinkActive="active">Kapcsolat</a></li>
       </ul>
       
-      <!-- Staff Login Section - Only show when authenticated or on mobile -->
-      <div class="staff-section" *ngIf="authService.isAuthenticated() || isMenuOpen()">
-        <!-- Not logged in -->
-        <div *ngIf="!authService.isAuthenticated()" class="login-section">
-          <button 
-            class="btn btn-staff" 
-            (click)="signIn()"
-            [disabled]="authService.isLoading()">
-            <span *ngIf="!authService.isLoading()">👤 Személyzet</span>
-            <span *ngIf="authService.isLoading()">⏳ Bejelentkezés...</span>
-          </button>
-        </div>
-        
-        <!-- Logged in -->
-        <div *ngIf="authService.isAuthenticated()" class="user-section">
-          <div class="user-info">
-            <span class="user-name">{{ authService.userProfile()?.displayName }}</span>
-            <span class="user-role">{{ getUserRoleText() }}</span>
-          </div>
-          <div class="user-actions">
-            <a routerLink="/admin" class="btn btn-admin" *ngIf="authService.isStaff()">
-              ⚙️ Admin
+      <!-- Staff Auth Section -->
+      <div class="auth-section">
+        @if (!authService.isAuthenticated()) {
+          <div class="login-section">
+            <a routerLink="/login" class="btn btn-login" routerLinkActive="active">
+              <span>👤 Személyzet</span>
             </a>
-            <button class="btn btn-logout" (click)="signOut()">
-              🚪 Kijelentkezés
-            </button>
           </div>
-        </div>
+        } @else {
+          <div class="user-section">
+            <div class="user-info">
+              @if (authService.getUserPhotoURL()) {
+                <img [src]="authService.getUserPhotoURL()" alt="Profilkép" class="user-avatar">
+              }
+              <div class="user-details">
+                <span class="user-name">{{ authService.getUserDisplayName() }}</span>
+                <span class="user-role" [class.dev]="authService.isDev()">{{ getUserRoleText() }}</span>
+              </div>
+            </div>
+            <div class="user-actions">
+              @if (authService.isStaff()) {
+                <a routerLink="/admin" class="btn btn-admin" routerLinkActive="active">
+                  📝 Szerkesztés
+                </a>
+              }
+              <button class="btn btn-logout" (click)="signOut()">
+                🚪 Kijelentkezés
+              </button>
+            </div>
+          </div>
+        }
       </div>
     </div>
     

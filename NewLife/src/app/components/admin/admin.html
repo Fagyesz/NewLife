@@ -26,6 +26,93 @@
         <h3>{{ events.length }}</h3>
         <p>Aktív események</p>
       </div>
+      <div class="stat-card">
+        <h3>{{ userStats.total }}</h3>
+        <p>Regisztrált felhasználó</p>
+      </div>
+      <div class="stat-card">
+        <h3>{{ userStats.activeThisWeek }}</h3>
+        <p>Aktív ezen a héten</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- User Management -->
+<section class="section users-section" *ngIf="authService.isAdmin()">
+  <div class="container">
+    <div class="section-header">
+      <h2>Felhasználók kezelése</h2>
+      <button class="btn btn-secondary" (click)="toggleUsersSection()">
+        {{ showUsersSection() ? '➖ Elrejtés' : '➕ Megjelenítés' }}
+      </button>
+    </div>
+
+    <div *ngIf="showUsersSection()" class="users-content">
+      <!-- User Stats -->
+      <div class="user-stats">
+        <div class="stat-item">
+          <span class="count">{{ userStats.admins }}</span>
+          <span class="label">Admin</span>
+        </div>
+        <div class="stat-item">
+          <span class="count">{{ userStats.staff }}</span>
+          <span class="label">Személyzet</span>
+        </div>
+        <div class="stat-item">
+          <span class="count">{{ userStats.devs }}</span>
+          <span class="label">Fejlesztő</span>
+        </div>
+        <div class="stat-item">
+          <span class="count">{{ userStats.members }}</span>
+          <span class="label">Tag</span>
+        </div>
+      </div>
+
+      <!-- Users List -->
+      <div class="users-list">
+        <div *ngFor="let user of users" class="user-item">
+          <div class="user-info">
+            <img [src]="user.photoURL || '/assets/default-avatar.png'" 
+                 alt="Avatar" class="user-avatar" 
+                 onerror="this.src='/assets/default-avatar.png'">
+            <div class="user-details">
+              <h4>{{ user.displayName }}</h4>
+              <p>{{ user.email }}</p>
+              <div class="user-meta">
+                <span class="login-count">{{ user.loginCount || 0 }} bejelentkezés</span>
+                <span class="last-login">Utolsó: {{ formatUserDate(user.lastLogin) }}</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="user-role">
+                         <select [value]="user.role" 
+                     (change)="updateUserRole(user.uid, $any($event.target).value)"
+                     [disabled]="user.role === 'dev' || userService.isLoading()">
+              <option value="member">Tag</option>
+              <option value="staff">Személyzet</option>
+              <option value="admin">Admin</option>
+              <option value="dev" [disabled]="true">Fejlesztő</option>
+            </select>
+          </div>
+          
+          <div class="user-status">
+            <span class="role-badge" [class]="user.role">{{ getRoleText(user.role) }}</span>
+            <button class="btn btn-sm" 
+                    [class]="user.isAuthorized ? 'btn-success' : 'btn-warning'"
+                    (click)="toggleUserAuthorization(user.uid, user.isAuthorized)"
+                    [disabled]="user.role === 'dev'">
+              {{ user.isAuthorized ? '✅ Engedélyezett' : '❌ Tiltott' }}
+            </button>
+          </div>
+        </div>
+
+        <!-- No Users -->
+        <div *ngIf="users.length === 0" class="no-users">
+          <p>Még nincsenek regisztrált felhasználók.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>

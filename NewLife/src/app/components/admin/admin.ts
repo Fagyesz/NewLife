@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth';
 import { EventService, Event } from '../../services/event';
 import { AttendanceService } from '../../services/attendance';
+import { UserService } from '../../services/user';
 
 @Component({
   selector: 'app-admin',
@@ -13,13 +14,15 @@ import { AttendanceService } from '../../services/attendance';
   styleUrl: './admin.scss'
 })
 export class Admin implements OnInit {
-  private authService = inject(AuthService);
+  authService = inject(AuthService);
   private eventService = inject(EventService);
   private attendanceService = inject(AttendanceService);
+  userService = inject(UserService);
   private router = inject(Router);
 
   // Signals
   showEventForm = signal(false);
+  showUsersSection = signal(false);
   editingEvent = signal<Event | null>(null);
   isLoading = signal(false);
 
@@ -44,8 +47,20 @@ export class Admin implements OnInit {
     return this.eventService.events();
   }
 
+  get users() {
+    return this.userService.users();
+  }
+
+  get userStats() {
+    return this.userService.getUserStats();
+  }
+
   get attendanceStats() {
     return this.attendanceService.getAttendanceStats();
+  }
+
+  toggleUsersSection() {
+    this.showUsersSection.set(!this.showUsersSection());
   }
 
   openEventForm(event?: Event) {
@@ -125,6 +140,24 @@ export class Admin implements OnInit {
     }
   }
 
+  async updateUserRole(uid: string, newRole: any) {
+    try {
+      await this.userService.updateUserRole(uid, newRole);
+    } catch (error) {
+      console.error('Error updating user role:', error);
+      alert('Hiba történt a szerepkör módosítása során: ' + (error as Error).message);
+    }
+  }
+
+  async toggleUserAuthorization(uid: string, currentAuth: boolean) {
+    try {
+      await this.userService.updateUserAuthorization(uid, !currentAuth);
+    } catch (error) {
+      console.error('Error updating user authorization:', error);
+      alert('Hiba történt a jogosultság módosítása során: ' + (error as Error).message);
+    }
+  }
+
   getEventAttendance(eventId: string): number {
     return this.attendanceService.getAttendanceCount(eventId);
   }
@@ -137,6 +170,24 @@ export class Admin implements OnInit {
       hour: '2-digit',
       minute: '2-digit'
     }).format(date);
+  }
+
+  formatUserDate(date: Date): string {
+    return new Intl.DateTimeFormat('hu-HU', {
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    }).format(date);
+  }
+
+  getRoleText(role: string): string {
+    switch (role) {
+      case 'admin': return 'Admin';
+      case 'staff': return 'Személyzet';
+      case 'dev': return 'Fejlesztő';
+      default: return 'Tag';
+    }
   }
 
   private resetForm() {

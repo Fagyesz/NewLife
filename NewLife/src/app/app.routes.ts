@@ -6,6 +6,8 @@ import { EloKozvetites } from './components/elo-kozvetites/elo-kozvetites';
 import { Rolunk } from './components/rolunk/rolunk';
 import { Kapcsolat } from './components/kapcsolat/kapcsolat';
 import { Admin } from './components/admin/admin';
+import { Login } from './components/login/login';
+import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
   { path: '', component: Fooldal }, // Főoldal (Home)
@@ -15,6 +17,7 @@ export const routes: Routes = [
   { path: 'elo-kozvetites', component: EloKozvetites }, // Élő közvetítés (Live Stream)
   { path: 'rolunk', component: Rolunk }, // Rólunk (About Us)
   { path: 'kapcsolat', component: Kapcsolat }, // Kapcsolat (Contact)
-  { path: 'admin', component: Admin }, // Admin Dashboard (Staff only)
+  { path: 'login', component: Login }, // Bejelentkezés (Login)
+  { path: 'admin', component: Admin, canActivate: [authGuard] }, // Admin Dashboard (Authentication required)
   { path: '**', redirectTo: '' } // Wildcard route - redirect to home
 ];

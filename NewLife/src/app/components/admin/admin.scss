@@ -259,6 +259,169 @@ $dark-gray: #343a40;
   }
 }
 
+// User Management Styles
+.users-section {
+  padding: 3rem 0;
+  
+  .user-stats {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+
+    .stat-item {
+      background: rgba(57, 147, 68, 0.1);
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+      min-width: 100px;
+      border: 1px solid rgba(57, 147, 68, 0.2);
+
+      .count {
+        display: block;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: $primary-green;
+      }
+
+      .label {
+        font-size: 0.9rem;
+        color: $dark-gray;
+      }
+    }
+  }
+
+  .users-list {
+    .user-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.5rem;
+      background: $white;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        flex: 1;
+
+        .user-avatar {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 2px solid $light-gray;
+        }
+
+        .user-details {
+          h4 {
+            margin: 0 0 0.25rem 0;
+            color: $dark-gray;
+            font-size: 1rem;
+          }
+
+          p {
+            margin: 0 0 0.5rem 0;
+            color: rgba(52, 58, 64, 0.8);
+            font-size: 0.9rem;
+          }
+
+          .user-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: rgba(52, 58, 64, 0.6);
+          }
+        }
+      }
+
+      .user-role {
+        select {
+          padding: 0.5rem;
+          border-radius: 4px;
+          border: 1px solid $light-gray;
+          background: $white;
+          color: $dark-gray;
+          font-size: 0.9rem;
+          min-width: 120px;
+
+          &:focus {
+            outline: none;
+            border-color: $primary-green;
+          }
+        }
+      }
+
+      .user-status {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-end;
+
+        .role-badge {
+          padding: 0.25rem 0.5rem;
+          border-radius: 4px;
+          font-size: 0.8rem;
+          font-weight: bold;
+
+          &.admin {
+            background: #e74c3c;
+            color: white;
+          }
+
+          &.staff {
+            background: #f39c12;
+            color: white;
+          }
+
+          &.dev {
+            background: #9b59b6;
+            color: white;
+          }
+
+          &.member {
+            background: $light-gray;
+            color: $dark-gray;
+          }
+        }
+
+        .btn-sm {
+          padding: 0.25rem 0.5rem;
+          font-size: 0.8rem;
+          border-radius: 4px;
+          border: none;
+          cursor: pointer;
+          min-width: 120px;
+
+          &.btn-success {
+            background: #27ae60;
+            color: white;
+          }
+
+          &.btn-warning {
+            background: #f39c12;
+            color: white;
+          }
+
+          &:hover:not(:disabled) {
+            transform: translateY(-1px);
+          }
+        }
+      }
+    }
+
+    .no-users {
+      text-align: center;
+      padding: 3rem;
+      color: $dark-gray;
+      opacity: 0.7;
+    }
+  }
+}
+
 // Button Styles
 .btn {
   border: none;
