@@ -52,7 +52,7 @@ export class Admin implements OnInit {
   }
 
   get userStats() {
-    return this.userService.getUserStats();
+    return this.userService.stats();
   }
 
   get attendanceStats() {
@@ -197,7 +197,7 @@ export class Admin implements OnInit {
       date: '',
       time: '',
       type: 'service',
-      location: ''
+      location: 'Gyöngyös Gyüli' // Default location
     };
   }
 }

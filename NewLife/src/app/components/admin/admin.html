@@ -31,8 +31,8 @@
         <p>Regisztrált felhasználó</p>
       </div>
       <div class="stat-card">
-        <h3>{{ userStats.activeThisWeek }}</h3>
-        <p>Aktív ezen a héten</p>
+        <h3>{{ userStats.activeToday }}</h3>
+        <p>Aktív ma</p>
       </div>
     </div>
   </div>
@@ -52,19 +52,19 @@
       <!-- User Stats -->
       <div class="user-stats">
         <div class="stat-item">
-          <span class="count">{{ userStats.admins }}</span>
+          <span class="count">{{ userStats.byRole.admin }}</span>
           <span class="label">Admin</span>
         </div>
         <div class="stat-item">
-          <span class="count">{{ userStats.staff }}</span>
+          <span class="count">{{ userStats.byRole.staff }}</span>
           <span class="label">Személyzet</span>
         </div>
         <div class="stat-item">
-          <span class="count">{{ userStats.devs }}</span>
+          <span class="count">{{ userStats.byRole.dev }}</span>
           <span class="label">Fejlesztő</span>
         </div>
         <div class="stat-item">
-          <span class="count">{{ userStats.members }}</span>
+          <span class="count">{{ userStats.byRole.member }}</span>
           <span class="label">Tag</span>
         </div>
       </div>

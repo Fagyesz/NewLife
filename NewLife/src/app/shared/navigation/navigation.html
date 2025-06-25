@@ -28,8 +28,8 @@
         } @else {
           <div class="user-section">
             <div class="user-info">
-              @if (authService.getUserPhotoURL()) {
-                <img [src]="authService.getUserPhotoURL()" alt="Profilkép" class="user-avatar">
+              @if (authService.getUserPhotoUrl()) {
+                <img [src]="authService.getUserPhotoUrl()" alt="Profilkép" class="user-avatar">
               }
               <div class="user-details">
                 <span class="user-name">{{ authService.getUserDisplayName() }}</span>

@@ -1,17 +1,65 @@
 import { Injectable, inject, signal } from '@angular/core';
-import { Firestore, collection, query, orderBy, onSnapshot, doc, updateDoc } from '@angular/fire/firestore';
-import { UserProfile } from './auth';
+import { Firestore, collection, query, where, orderBy, onSnapshot, doc, updateDoc, getDocs, addDoc, deleteDoc } from '@angular/fire/firestore';
+import { AuthService } from './auth';
+
+export interface UserProfile {
+  uid: string;
+  email: string;
+  displayName: string;
+  photoURL?: string;
+  role: 'admin' | 'staff' | 'member' | 'dev';
+  isAuthorized: boolean;
+  lastLogin: Date;
+  createdAt: Date;
+  loginCount: number;
+  provider: string;
+}
+
+export interface News {
+  id?: string;
+  title: string;
+  content: string;
+  summary?: string;
+  imageUrl?: string;
+  author: string;
+  publishedAt: Date;
+  isPublished: boolean;
+  createdBy: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  tags?: string[];
+  category?: 'announcement' | 'event' | 'ministry' | 'general';
+}
+
+export interface UserStats {
+  total: number;
+  byRole: {
+    admin: number;
+    staff: number;
+    member: number;
+    dev: number;
+  };
+  authorized: number;
+  unauthorized: number;
+  activeToday: number;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
   private firestore = inject(Firestore);
+  private authService = inject(AuthService);
 
-  // Signals for reactive state
   users = signal<UserProfile[]>([]);
+  stats = signal<UserStats>({
+    total: 0,
+    byRole: { admin: 0, staff: 0, member: 0, dev: 0 },
+    authorized: 0,
+    unauthorized: 0,
+    activeToday: 0
+  });
   isLoading = signal(false);
-  private firebaseConnected = signal(false);
 
   constructor() {
     this.loadUsers();
@@ -20,107 +68,263 @@ export class UserService {
   private loadUsers(): void {
     try {
       const usersRef = collection(this.firestore, 'users');
-      const q = query(usersRef, orderBy('lastLogin', 'desc'));
+      const q = query(usersRef, orderBy('createdAt', 'desc'));
       
       onSnapshot(q, (snapshot) => {
         const users: UserProfile[] = [];
         snapshot.forEach((doc) => {
           const data = doc.data();
           users.push({
-            ...data,
             uid: doc.id,
-            lastLogin: data['lastLogin'].toDate(), // Convert Firestore timestamp to Date
-            createdAt: data['createdAt'].toDate(),
+            ...data,
+            lastLogin: data['lastLogin']?.toDate() || new Date(),
+            createdAt: data['createdAt']?.toDate() || new Date()
           } as UserProfile);
         });
+        
         this.users.set(users);
-        this.firebaseConnected.set(true);
+        this.updateStats(users);
         console.log('👥 Loaded', users.length, 'users from Firestore');
       }, (error) => {
-        console.warn('Firebase users connection error:', error);
-        this.firebaseConnected.set(false);
+        console.error('Error loading users:', error);
       });
     } catch (error) {
-      console.warn('Failed to initialize users listener:', error);
-      this.firebaseConnected.set(false);
+      console.error('Failed to initialize users listener:', error);
     }
   }
 
-  async updateUserRole(uid: string, newRole: UserProfile['role']): Promise<void> {
-    if (!this.firebaseConnected()) {
-      throw new Error('Firebase kapcsolat nem elérhető');
+  private updateStats(users: UserProfile[]): void {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const stats: UserStats = {
+      total: users.length,
+      byRole: { admin: 0, staff: 0, member: 0, dev: 0 },
+      authorized: 0,
+      unauthorized: 0,
+      activeToday: 0
+    };
+
+    users.forEach(user => {
+      stats.byRole[user.role]++;
+      if (user.isAuthorized) stats.authorized++;
+      else stats.unauthorized++;
+      
+      if (user.lastLogin >= today) {
+        stats.activeToday++;
+      }
+    });
+
+    this.stats.set(stats);
+  }
+
+  async updateUserRole(uid: string, role: UserProfile['role']): Promise<void> {
+    if (!this.authService.isAdmin()) {
+      throw new Error('Nincs jogosultsága felhasználók módosításához');
     }
 
     try {
-      this.isLoading.set(true);
       const userRef = doc(this.firestore, 'users', uid);
-      await updateDoc(userRef, { role: newRole });
-      console.log('👤 User role updated:', uid, newRole);
+      await updateDoc(userRef, { role });
+      console.log('✅ User role updated:', uid, role);
     } catch (error) {
-      console.error('Error updating user role:', error);
+      console.error('❌ Error updating user role:', error);
       throw error;
-    } finally {
-      this.isLoading.set(false);
     }
   }
 
   async updateUserAuthorization(uid: string, isAuthorized: boolean): Promise<void> {
-    if (!this.firebaseConnected()) {
-      throw new Error('Firebase kapcsolat nem elérhető');
+    if (!this.authService.isAdmin()) {
+      throw new Error('Nincs jogosultsága felhasználói jogosultságok módosításához');
+    }
+
+    try {
+      const userRef = doc(this.firestore, 'users', uid);
+      await updateDoc(userRef, { isAuthorized });
+      console.log('✅ User authorization updated:', uid, isAuthorized);
+    } catch (error) {
+      console.error('❌ Error updating user authorization:', error);
+      throw error;
+    }
+  }
+
+  getUsersByRole(role: UserProfile['role']): UserProfile[] {
+    return this.users().filter(user => user.role === role);
+  }
+
+  getAuthorizedUsers(): UserProfile[] {
+    return this.users().filter(user => user.isAuthorized);
+  }
+
+  getUnauthorizedUsers(): UserProfile[] {
+    return this.users().filter(user => !user.isAuthorized);
+  }
+
+  getActiveUsers(days: number = 7): UserProfile[] {
+    const cutoff = new Date();
+    cutoff.setDate(cutoff.getDate() - days);
+    
+    return this.users().filter(user => user.lastLogin >= cutoff);
+  }
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class NewsService {
+  private firestore = inject(Firestore);
+  private authService = inject(AuthService);
+
+  // Signals for reactive state
+  news = signal<News[]>([]);
+  isLoading = signal(false);
+
+  constructor() {
+    this.loadNews();
+  }
+
+  private loadNews(): void {
+    try {
+      const newsRef = collection(this.firestore, 'news');
+      const q = query(newsRef, orderBy('publishedAt', 'desc'));
+      
+      onSnapshot(q, (snapshot) => {
+        const newsItems: News[] = [];
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          newsItems.push({
+            id: doc.id,
+            ...data,
+            publishedAt: data['publishedAt'].toDate(),
+            createdAt: data['createdAt']?.toDate(),
+            updatedAt: data['updatedAt']?.toDate()
+          } as News);
+        });
+        this.news.set(newsItems);
+        console.log('📰 Loaded', newsItems.length, 'news items from Firestore');
+      }, (error) => {
+        console.warn('Firebase news listener error, loading fallback:', error);
+        this.loadFallbackNews();
+      });
+    } catch (error) {
+      console.warn('Failed to initialize news listener, loading fallback:', error);
+      this.loadFallbackNews();
+    }
+  }
+
+  private loadFallbackNews(): void {
+    const fallbackNews: News[] = [
+      {
+        id: 'fallback-1',
+        title: 'Karácsonyi ünnepség',
+        content: 'Szeretettel várjuk Önt és családját karácsonyi ünnepségünkre. Különleges programmal és közös énekléssel készülünk.',
+        summary: 'Karácsonyi ünnepség különleges programmal',
+        author: 'Lelkész',
+        publishedAt: new Date('2024-12-20T10:00:00'),
+        isPublished: true,
+        createdBy: 'system',
+        category: 'event'
+      },
+      {
+        id: 'fallback-2', 
+        title: 'Új év - új lehetőségek',
+        content: 'Az új év sok új lehetőséget hoz magával. Gyülekezetünkben is újuló szívvel és buzgalommal várjuk a 2025-ös évet.',
+        summary: 'Újévi köszöntő és tervek',
+        author: 'Lelkész',
+        publishedAt: new Date('2024-12-31T18:00:00'),
+        isPublished: true,
+        createdBy: 'system',
+        category: 'announcement'
+      }
+    ];
+    
+    this.news.set(fallbackNews);
+  }
+
+  async createNews(newsItem: Omit<News, 'id' | 'createdBy' | 'createdAt' | 'updatedAt'>): Promise<string> {
+    if (!this.authService.isStaff()) {
+      throw new Error('Nincs jogosultsága hírek létrehozásához');
     }
 
     try {
       this.isLoading.set(true);
-      const userRef = doc(this.firestore, 'users', uid);
-      await updateDoc(userRef, { isAuthorized });
-      console.log('👤 User authorization updated:', uid, isAuthorized);
+      const userProfile = this.authService.userProfile();
+      
+      const newsData = {
+        ...newsItem,
+        createdBy: userProfile?.uid || '',
+        author: newsItem.author || userProfile?.displayName || 'Ismeretlen',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+
+      console.log('📰 Creating news:', newsData);
+      const newsRef = collection(this.firestore, 'news');
+      const docRef = await addDoc(newsRef, newsData);
+      console.log('✅ News created successfully with ID:', docRef.id);
+      
+      return docRef.id;
     } catch (error) {
-      console.error('Error updating user authorization:', error);
-      throw error;
+      console.error('❌ Error creating news:', error);
+      throw new Error('Hiba történt a hír létrehozása során: ' + (error as Error).message);
     } finally {
       this.isLoading.set(false);
     }
   }
 
-  // Get users by role
-  getUsersByRole(role: UserProfile['role']): UserProfile[] {
-    return this.users().filter(user => user.role === role);
+  async updateNews(newsId: string, updates: Partial<News>): Promise<void> {
+    if (!this.authService.isStaff()) {
+      throw new Error('Nincs jogosultsága hírek módosításához');
+    }
+
+    try {
+      this.isLoading.set(true);
+      const newsRef = doc(this.firestore, 'news', newsId);
+      await updateDoc(newsRef, {
+        ...updates,
+        updatedAt: new Date()
+      });
+      
+      console.log('✅ News updated successfully:', newsId);
+    } catch (error) {
+      console.error('❌ Error updating news:', error);
+      throw new Error('Hiba történt a hír frissítése során: ' + (error as Error).message);
+    } finally {
+      this.isLoading.set(false);
+    }
   }
 
-  // Get recent users (last 30 days)
-  getRecentUsers(): UserProfile[] {
-    const thirtyDaysAgo = new Date();
-    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-    return this.users().filter(user => user.lastLogin >= thirtyDaysAgo);
+  async deleteNews(newsId: string): Promise<void> {
+    if (!this.authService.isAdmin()) {
+      throw new Error('Nincs jogosultsága hírek törléséhez');
+    }
+
+    try {
+      this.isLoading.set(true);
+      const newsRef = doc(this.firestore, 'news', newsId);
+      await deleteDoc(newsRef);
+      console.log('✅ News deleted successfully:', newsId);
+    } catch (error) {
+      console.error('❌ Error deleting news:', error);
+      throw new Error('Hiba történt a hír törlése során: ' + (error as Error).message);
+    } finally {
+      this.isLoading.set(false);
+    }
   }
 
-  // Get active users (logged in this week)
-  getActiveUsers(): UserProfile[] {
-    const oneWeekAgo = new Date();
-    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-    return this.users().filter(user => user.lastLogin >= oneWeekAgo);
+  getPublishedNews(): News[] {
+    return this.news().filter(item => item.isPublished);
   }
 
-  // Get user statistics
-  getUserStats() {
-    const users = this.users();
-    const now = new Date();
-    const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-    const oneMonthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-
-    return {
-      total: users.length,
-      admins: users.filter(u => u.role === 'admin').length,
-      staff: users.filter(u => u.role === 'staff').length,
-      members: users.filter(u => u.role === 'member').length,
-      devs: users.filter(u => u.role === 'dev').length,
-      activeThisWeek: users.filter(u => u.lastLogin >= oneWeekAgo).length,
-      activeThisMonth: users.filter(u => u.lastLogin >= oneMonthAgo).length,
-      totalLogins: users.reduce((sum, user) => sum + (user.loginCount || 0), 0)
-    };
+  getNewsByCategory(category: News['category']): News[] {
+    return this.news().filter(item => item.category === category);
   }
 
-  isFirebaseConnected(): boolean {
-    return this.firebaseConnected();
+  getNewsById(id: string): News | undefined {
+    return this.news().find(item => item.id === id);
+  }
+
+  getRecentNews(limit: number = 5): News[] {
+    return this.getPublishedNews().slice(0, limit);
   }
 }

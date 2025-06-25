@@ -35,8 +35,8 @@
       } @else {
         <div class="logged-in-state">
           <div class="user-info">
-            @if (authService.getUserPhotoURL()) {
-              <img [src]="authService.getUserPhotoURL()" alt="Profilkép" class="user-avatar">
+            @if (authService.getUserPhotoUrl()) {
+              <img [src]="authService.getUserPhotoUrl()" alt="Profilkép" class="user-avatar">
             }
             <div class="user-details">
               <h3>{{ authService.getUserDisplayName() }}</h3>

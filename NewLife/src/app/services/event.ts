@@ -1,5 +1,5 @@
 import { Injectable, inject, signal } from '@angular/core';
-import { Firestore, collection, addDoc, updateDoc, deleteDoc, doc, getDocs, query, orderBy, where, onSnapshot } from '@angular/fire/firestore';
+import { Firestore, collection, query, orderBy, onSnapshot, doc, addDoc, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import { AuthService } from './auth';
 
 export interface Event {
@@ -24,7 +24,7 @@ export class EventService {
   // Signals for reactive state
   events = signal<Event[]>([]);
   isLoading = signal(false);
-  private firebaseConnected = signal(false);
+  private firebaseConnected = signal(true); // Start with true, only set false if real issues
 
   constructor() {
     this.loadEvents();
@@ -49,20 +49,20 @@ export class EventService {
         });
         this.events.set(events);
         this.firebaseConnected.set(true);
+        console.log('📅 Loaded', events.length, 'events from Firestore');
       }, (error) => {
-        console.warn('Firebase connection error, using fallback data:', error);
-        this.firebaseConnected.set(false);
+        console.warn('Firebase events listener error, but can still create events:', error);
+        // Don't set firebaseConnected to false, just load fallback for display
         this.loadFallbackEvents();
       });
     } catch (error) {
-      console.warn('Failed to initialize Firebase listener, using fallback data:', error);
-      this.firebaseConnected.set(false);
+      console.warn('Failed to initialize events listener, but can still create events:', error);
       this.loadFallbackEvents();
     }
   }
 
   private loadFallbackEvents(): void {
-    // Fallback events when Firebase is not available
+    // Fallback events when Firebase listener is not available (but can still create)
     const fallbackEvents: Event[] = [
       {
         id: 'fallback-1',
@@ -70,7 +70,7 @@ export class EventService {
         description: 'Különleges karácsonyi ünnepség a gyülekezetben',
         date: new Date('2024-12-25T10:00:00'),
         type: 'special',
-        location: 'Gyülekezeti terem',
+        location: 'Gyöngyös Gyüli',
         createdBy: 'system'
       },
       {
@@ -79,7 +79,7 @@ export class EventService {
         description: 'Köszönet és kérés az új évért',
         date: new Date('2025-01-01T18:00:00'),
         type: 'meeting',
-        location: 'Gyülekezeti terem',
+        location: 'Gyöngyös Gyüli',
         createdBy: 'system'
       },
       {
@@ -88,7 +88,7 @@ export class EventService {
         description: 'Fiatalok közös programja',
         date: new Date('2025-01-15T19:00:00'),
         type: 'meeting',
-        location: 'Gyülekezeti terem',
+        location: 'Gyöngyös Gyüli',
         createdBy: 'system'
       }
     ];
@@ -97,10 +97,6 @@ export class EventService {
   }
 
   async createEvent(event: Omit<Event, 'id' | 'createdBy' | 'createdAt' | 'updatedAt'>): Promise<string> {
-    if (!this.firebaseConnected()) {
-      throw new Error('Firebase kapcsolat nem elérhető');
-    }
-
     if (!this.authService.isStaff()) {
       throw new Error('Nincs jogosultsága események létrehozásához');
     }
@@ -109,53 +105,60 @@ export class EventService {
       this.isLoading.set(true);
       const userProfile = this.authService.userProfile();
       
+      // Set default location if empty
+      const location = event.location?.trim() || 'Gyöngyös Gyüli';
+      
       const eventData = {
         ...event,
+        location,
         createdBy: userProfile?.uid || '',
         createdAt: new Date(),
         updatedAt: new Date()
       };
 
+      console.log('📅 Creating event:', eventData);
       const eventsRef = collection(this.firestore, 'events');
       const docRef = await addDoc(eventsRef, eventData);
+      console.log('✅ Event created successfully with ID:', docRef.id);
+      
       return docRef.id;
     } catch (error) {
-      console.error('Error creating event:', error);
-      throw error;
+      console.error('❌ Error creating event:', error);
+      throw new Error('Hiba történt az esemény létrehozása során: ' + (error as Error).message);
     } finally {
       this.isLoading.set(false);
     }
   }
 
   async updateEvent(eventId: string, updates: Partial<Event>): Promise<void> {
-    if (!this.firebaseConnected()) {
-      throw new Error('Firebase kapcsolat nem elérhető');
-    }
-
     if (!this.authService.isStaff()) {
       throw new Error('Nincs jogosultsága események módosításához');
     }
 
     try {
       this.isLoading.set(true);
+      
+      // Set default location if empty or updating location
+      if (updates.location !== undefined) {
+        updates.location = updates.location?.trim() || 'Gyöngyös Gyüli';
+      }
+      
       const eventRef = doc(this.firestore, 'events', eventId);
       await updateDoc(eventRef, {
         ...updates,
         updatedAt: new Date()
       });
+      
+      console.log('✅ Event updated successfully:', eventId);
     } catch (error) {
-      console.error('Error updating event:', error);
-      throw error;
+      console.error('❌ Error updating event:', error);
+      throw new Error('Hiba történt az esemény frissítése során: ' + (error as Error).message);
     } finally {
       this.isLoading.set(false);
     }
   }
 
   async deleteEvent(eventId: string): Promise<void> {
-    if (!this.firebaseConnected()) {
-      throw new Error('Firebase kapcsolat nem elérhető');
-    }
-
     if (!this.authService.isAdmin()) {
       throw new Error('Nincs jogosultsága események törléséhez');
     }
@@ -164,9 +167,10 @@ export class EventService {
       this.isLoading.set(true);
       const eventRef = doc(this.firestore, 'events', eventId);
       await deleteDoc(eventRef);
+      console.log('✅ Event deleted successfully:', eventId);
     } catch (error) {
-      console.error('Error deleting event:', error);
-      throw error;
+      console.error('❌ Error deleting event:', error);
+      throw new Error('Hiba történt az esemény törlése során: ' + (error as Error).message);
     } finally {
       this.isLoading.set(false);
     }
