@@ -86,6 +86,16 @@ export class Hirek implements OnInit {
       case 'event': return 'Esemény';
       case 'ministry': return 'Szolgálat';
       case 'general': return 'Általános';
+      case 'pastoral': return 'Lelkészi üzenet';
+      case 'prayer_request': return 'Imakérés';
+      case 'testimony': return 'Bizonyságtétel';
+      case 'bible_study': return 'Bibliaóra';
+      case 'youth': return 'Ifjúsági';
+      case 'children': return 'Gyermek';
+      case 'missions': return 'Misszió';
+      case 'volunteer': return 'Önkéntes munka';
+      case 'community': return 'Közösség';
+      case 'celebration': return 'Ünneplés';
       default: return 'Hír';
     }
   }
@@ -96,6 +106,16 @@ export class Hirek implements OnInit {
       case 'event': return '🎄';
       case 'ministry': return '🙏';
       case 'general': return '📰';
+      case 'pastoral': return '✝️';
+      case 'prayer_request': return '🙏';
+      case 'testimony': return '💬';
+      case 'bible_study': return '📖';
+      case 'youth': return '👨‍👩‍👧‍👦';
+      case 'children': return '👶';
+      case 'missions': return '🌍';
+      case 'volunteer': return '🤝';
+      case 'community': return '👥';
+      case 'celebration': return '🎉';
       default: return '📝';
     }
   }

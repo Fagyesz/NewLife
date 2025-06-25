@@ -7,7 +7,7 @@ export interface Event {
   title: string;
   description: string;
   date: Date;
-  type: 'service' | 'meeting' | 'special';
+  type: 'service' | 'meeting' | 'special' | 'bible_study' | 'prayer_meeting' | 'youth' | 'children' | 'baptism' | 'wedding' | 'funeral' | 'concert' | 'conference' | 'outreach' | 'fellowship' | 'training';
   location: string;
   createdBy: string;
   createdAt?: Date;

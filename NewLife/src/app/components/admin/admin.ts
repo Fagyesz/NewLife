@@ -330,7 +330,38 @@ export class Admin implements OnInit {
       case 'event': return 'Esemény';
       case 'ministry': return 'Szolgálat';
       case 'general': return 'Általános';
+      case 'pastoral': return 'Lelkészi üzenet';
+      case 'prayer_request': return 'Imakérés';
+      case 'testimony': return 'Bizonyságtétel';
+      case 'bible_study': return 'Bibliaóra';
+      case 'youth': return 'Ifjúsági';
+      case 'children': return 'Gyermek';
+      case 'missions': return 'Misszió';
+      case 'volunteer': return 'Önkéntes munka';
+      case 'community': return 'Közösség';
+      case 'celebration': return 'Ünneplés';
       default: return 'Általános';
+    }
+  }
+
+  getEventTypeText(type: string): string {
+    switch (type) {
+      case 'service': return 'Istentisztelet';
+      case 'meeting': return 'Gyűlés';
+      case 'special': return 'Különleges alkalom';
+      case 'bible_study': return 'Bibliaóra';
+      case 'prayer_meeting': return 'Imaalalom';
+      case 'youth': return 'Ifjúsági program';
+      case 'children': return 'Gyermekprogram';
+      case 'baptism': return 'Keresztelő';
+      case 'wedding': return 'Esküvő';
+      case 'funeral': return 'Temetés';
+      case 'concert': return 'Koncert';
+      case 'conference': return 'Konferencia';
+      case 'outreach': return 'Evangelizáció';
+      case 'fellowship': return 'Közösségi program';
+      case 'training': return 'Képzés';
+      default: return 'Esemény';
     }
   }
 

@@ -123,14 +123,7 @@ export class Fooldal implements OnInit, OnDestroy {
     }).format(date);
   }
 
-  getEventTypeIcon(type: string): string {
-    switch (type) {
-      case 'service': return '⛪';
-      case 'meeting': return '👥';
-      case 'special': return '🌟';
-      default: return '📅';
-    }
-  }
+
 
   getAttendanceCount(eventId: string): number {
     return this.attendanceService.getAttendanceCount(eventId);
@@ -150,6 +143,16 @@ export class Fooldal implements OnInit, OnDestroy {
       case 'event': return 'Esemény';
       case 'ministry': return 'Szolgálat';
       case 'general': return 'Általános';
+      case 'pastoral': return 'Lelkészi üzenet';
+      case 'prayer_request': return 'Imakérés';
+      case 'testimony': return 'Bizonyságtétel';
+      case 'bible_study': return 'Bibliaóra';
+      case 'youth': return 'Ifjúsági';
+      case 'children': return 'Gyermek';
+      case 'missions': return 'Misszió';
+      case 'volunteer': return 'Önkéntes munka';
+      case 'community': return 'Közösség';
+      case 'celebration': return 'Ünneplés';
       default: return 'Hír';
     }
   }
@@ -160,7 +163,38 @@ export class Fooldal implements OnInit, OnDestroy {
       case 'event': return '🎄';
       case 'ministry': return '🙏';
       case 'general': return '📰';
+      case 'pastoral': return '✝️';
+      case 'prayer_request': return '🙏';
+      case 'testimony': return '💬';
+      case 'bible_study': return '📖';
+      case 'youth': return '👨‍👩‍👧‍👦';
+      case 'children': return '👶';
+      case 'missions': return '🌍';
+      case 'volunteer': return '🤝';
+      case 'community': return '👥';
+      case 'celebration': return '🎉';
       default: return '📝';
+    }
+  }
+
+  getEventTypeIcon(type: string): string {
+    switch (type) {
+      case 'service': return '⛪';
+      case 'meeting': return '👥';
+      case 'special': return '🌟';
+      case 'bible_study': return '📖';
+      case 'prayer_meeting': return '🙏';
+      case 'youth': return '👨‍👩‍👧‍👦';
+      case 'children': return '👶';
+      case 'baptism': return '💧';
+      case 'wedding': return '💒';
+      case 'funeral': return '🕊️';
+      case 'concert': return '🎵';
+      case 'conference': return '🎤';
+      case 'outreach': return '📢';
+      case 'fellowship': return '🤝';
+      case 'training': return '📚';
+      default: return '📅';
     }
   }
 }

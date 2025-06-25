@@ -28,7 +28,7 @@ export interface News {
   createdAt?: Date;
   updatedAt?: Date;
   tags?: string[];
-  category?: 'announcement' | 'event' | 'ministry' | 'general';
+  category?: 'announcement' | 'event' | 'ministry' | 'general' | 'pastoral' | 'prayer_request' | 'testimony' | 'bible_study' | 'youth' | 'children' | 'missions' | 'volunteer' | 'community' | 'celebration';
 }
 
 export interface UserStats {

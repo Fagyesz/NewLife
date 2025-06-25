@@ -367,19 +367,29 @@
       </div>
 
       <div class="form-row">
-        <div class="form-group">
-          <label for="newsCategory">Kategória</label>
-          <select 
-            id="newsCategory" 
-            [(ngModel)]="newsForm.category" 
-            name="newsCategory" 
-            class="form-control">
-            <option value="general">Általános</option>
-            <option value="announcement">Közlemény</option>
-            <option value="event">Esemény</option>
-            <option value="ministry">Szolgálat</option>
-          </select>
-        </div>
+                 <div class="form-group">
+           <label for="newsCategory">Kategória</label>
+           <select 
+             id="newsCategory" 
+             [(ngModel)]="newsForm.category" 
+             name="newsCategory" 
+             class="form-control">
+             <option value="general">Általános</option>
+             <option value="announcement">Közlemény</option>
+             <option value="event">Esemény</option>
+             <option value="ministry">Szolgálat</option>
+             <option value="pastoral">Lelkészi üzenet</option>
+             <option value="prayer_request">Imakérés</option>
+             <option value="testimony">Bizonyságtétel</option>
+             <option value="bible_study">Bibliaóra</option>
+             <option value="youth">Ifjúsági</option>
+             <option value="children">Gyermek</option>
+             <option value="missions">Misszió</option>
+             <option value="volunteer">Önkéntes munka</option>
+             <option value="community">Közösség</option>
+             <option value="celebration">Ünneplés</option>
+           </select>
+         </div>
 
         <div class="form-group">
           <div class="checkbox-group">
@@ -475,6 +485,18 @@
           <option value="service">Istentisztelet</option>
           <option value="meeting">Gyűlés</option>
           <option value="special">Különleges alkalom</option>
+          <option value="bible_study">Bibliaóra</option>
+          <option value="prayer_meeting">Imaalalom</option>
+          <option value="youth">Ifjúsági program</option>
+          <option value="children">Gyermekprogram</option>
+          <option value="baptism">Keresztelő</option>
+          <option value="wedding">Esküvő</option>
+          <option value="funeral">Temetés</option>
+          <option value="concert">Koncert</option>
+          <option value="conference">Konferencia</option>
+          <option value="outreach">Evangelizáció</option>
+          <option value="fellowship">Közösségi program</option>
+          <option value="training">Képzés</option>
         </select>
       </div>
 
