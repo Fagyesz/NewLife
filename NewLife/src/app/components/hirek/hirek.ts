@@ -137,4 +137,11 @@ export class Hirek implements OnInit {
     this.showNewsModal.set(false);
     this.selectedNews.set(null);
   }
+
+  onImageError(event: Event): void {
+    const imgElement = event.target as HTMLImageElement;
+    if (imgElement) {
+      imgElement.style.display = 'none';
+    }
+  }
 }

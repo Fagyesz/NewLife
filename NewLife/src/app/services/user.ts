@@ -20,7 +20,7 @@ export interface News {
   title: string;
   content: string;
   summary?: string;
-  imageUrl?: string;
+  imageUrl?: string;  // URL for the main news image
   author: string;
   publishedAt: Date;
   tillDate?: Date;  // Expiration date - when null, news doesn't expire

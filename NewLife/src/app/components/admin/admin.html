@@ -401,7 +401,10 @@
 </section>
 
 <!-- News Form Modal -->
-<div *ngIf="showNewsForm()" class="modal-overlay" (click)="closeNewsForm()">
+<div *ngIf="showNewsForm()" 
+     class="modal-overlay" 
+     (mousedown)="onModalOverlayMouseDown($event)"
+     (mouseup)="onModalOverlayMouseUp($event, 'news')">
   <div class="modal-content" (click)="$event.stopPropagation()">
     <div class="modal-header">
       <h3>{{ editingNews() ? 'Hír szerkesztése' : 'Új hír' }}</h3>
@@ -429,6 +432,18 @@
           name="newsSummary" 
           class="form-control"
           placeholder="Rövid összefoglaló a hírről">
+      </div>
+
+      <div class="form-group">
+        <label for="newsImageUrl">Kép URL</label>
+        <input 
+          type="url" 
+          id="newsImageUrl" 
+          [(ngModel)]="newsForm.imageUrl" 
+          name="newsImageUrl" 
+          class="form-control"
+          placeholder="https://example.com/image.jpg">
+        <small class="form-help">Opcionális - adjon meg egy képet a hírhez</small>
       </div>
 
       <div class="form-group">
@@ -547,7 +562,10 @@
 </div>
 
 <!-- Event Form Modal -->
-<div *ngIf="showEventForm()" class="modal-overlay" (click)="closeEventForm()">
+<div *ngIf="showEventForm()" 
+     class="modal-overlay" 
+     (mousedown)="onModalOverlayMouseDown($event)"
+     (mouseup)="onModalOverlayMouseUp($event, 'event')">
   <div class="modal-content" (click)="$event.stopPropagation()">
     <div class="modal-header">
       <h3>{{ editingEvent() ? 'Esemény szerkesztése' : 'Új esemény' }}</h3>

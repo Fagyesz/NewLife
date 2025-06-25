@@ -46,6 +46,7 @@ export class Admin implements OnInit {
     title: '',
     content: '',
     summary: '',
+    imageUrl: '',
     author: '',
     publishedAt: '',
     tillDate: '',
@@ -154,6 +155,7 @@ export class Admin implements OnInit {
         title: news.title,
         content: news.content,
         summary: news.summary || '',
+        imageUrl: news.imageUrl || '',
         author: news.author,
         publishedAt: news.publishedAt.toISOString().split('T')[0],
         tillDate: news.tillDate ? news.tillDate.toISOString().split('T')[0] : '',
@@ -298,6 +300,7 @@ export class Admin implements OnInit {
         title: this.newsForm.title,
         content: this.newsForm.content,
         summary: this.newsForm.summary,
+        imageUrl: this.newsForm.imageUrl,
         author: this.newsForm.author || this.authService.getUserDisplayName(),
         publishedAt: publishDate,
         tillDate: tillDate,
@@ -505,6 +508,7 @@ export class Admin implements OnInit {
       title: '',
       content: '',
       summary: '',
+      imageUrl: '',
       author: this.authService.getUserDisplayName(),
       publishedAt: new Date().toISOString().split('T')[0],
       tillDate: '',
@@ -512,5 +516,25 @@ export class Admin implements OnInit {
       isActive: true,
       category: 'general'
     };
+  }
+
+  // Modal overlay click handling
+  private mouseDownTarget: EventTarget | null = null;
+
+  onModalOverlayMouseDown(event: MouseEvent): void {
+    this.mouseDownTarget = event.target;
+  }
+
+  onModalOverlayMouseUp(event: MouseEvent, modalType: 'news' | 'event'): void {
+    // Only close modal if both mousedown and mouseup happened on the overlay (not dragged from inside)
+    if (this.mouseDownTarget === event.target && event.target === event.currentTarget) {
+      if (modalType === 'news') {
+        this.closeNewsForm();
+      } else if (modalType === 'event') {
+        this.closeEventForm();
+      }
+    }
+    // Reset the tracking
+    this.mouseDownTarget = null;
   }
 }

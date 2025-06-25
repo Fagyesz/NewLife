@@ -418,9 +418,19 @@ $dark-gray: #343a40;
     background: $white;
     border-radius: 15px;
     width: 100%;
-    max-width: 500px;
-    max-height: 90vh;
+    max-width: 900px;
+    max-height: 95vh;
     overflow-y: auto;
+    resize: both;
+    min-width: 600px;
+    min-height: 500px;
+    
+    @media (max-width: 768px) {
+      max-width: 95vw;
+      min-width: 320px;
+      min-height: 400px;
+      resize: none;
+    }
     
     .modal-header {
       padding: 1.5rem;
@@ -476,7 +486,7 @@ $dark-gray: #343a40;
         
         textarea.form-control {
           resize: vertical;
-          min-height: 80px;
+          min-height: 150px;
         }
         
         .form-help {

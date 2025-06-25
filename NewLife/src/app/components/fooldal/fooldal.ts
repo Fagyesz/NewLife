@@ -198,4 +198,11 @@ export class Fooldal implements OnInit, OnDestroy {
       default: return '📅';
     }
   }
+
+  onImageError(event: any): void {
+    const imgElement = event.target as HTMLImageElement;
+    if (imgElement) {
+      imgElement.style.display = 'none';
+    }
+  }
 }
