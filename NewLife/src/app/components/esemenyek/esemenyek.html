@@ -82,7 +82,8 @@
       <div *ngFor="let event of getUpcomingEvents(); trackBy: trackByEventId" 
            class="upcoming-event-card" 
            [class.featured]="event.type === 'service'"
-           [class.special]="event.type === 'special'">
+           [class.special]="event.type === 'special'"
+           (click)="openEventModal(event)">
         
         <div class="event-date-time">
           <div class="event-date">
@@ -110,7 +111,7 @@
           <button 
             *ngIf="event.id"
             [class]="getAttendanceButtonClass(event.id)"
-            (click)="toggleAttendance(event)"
+            (click)="toggleAttendance(event); $event.stopPropagation()"
             [disabled]="isLoading()">
             {{ getAttendanceButtonText(event.id) }}
           </button>
@@ -157,3 +158,43 @@
     </div>
   </div>
 </section>
+
+<!-- Event Modal -->
+<div *ngIf="showEventModal()" class="modal-overlay" (click)="closeEventModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div class="event-meta-header">
+        <div class="event-date-full">{{ formatEventDate(selectedEvent()!.date) }}</div>
+        <span class="event-type">
+          {{ getEventTypeIcon(selectedEvent()!.type) }} {{ getEventTypeText(selectedEvent()!.type) }}
+        </span>
+      </div>
+      <button class="close-btn" (click)="closeEventModal()">✕</button>
+    </div>
+    
+    <div class="modal-body">
+      <h1>{{ selectedEvent()!.title }}</h1>
+      <div class="event-location-full">📍 {{ selectedEvent()!.location }}</div>
+      
+      <div class="event-details">
+        <p class="event-description-full">{{ selectedEvent()!.description }}</p>
+        
+                 <div class="event-attendance-section" *ngIf="selectedEvent()!.id">
+           <div class="attendance-info">
+             <h3>Részvétel</h3>
+             <p>{{ getAttendanceCount(selectedEvent()!.id!) }} fő jelölte meg, hogy részt vesz ezen az eseményen.</p>
+           </div>
+           
+           <div class="attendance-actions">
+             <button 
+               [class]="getAttendanceButtonClass(selectedEvent()!.id!)"
+               (click)="toggleAttendance(selectedEvent()!)"
+               [disabled]="isLoading()">
+               {{ getAttendanceButtonText(selectedEvent()!.id!) }}
+             </button>
+           </div>
+         </div>
+      </div>
+    </div>
+  </div>
+</div>

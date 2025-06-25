@@ -24,6 +24,10 @@ export class Fooldal implements OnInit, OnDestroy {
   isLive = signal<boolean>(false);
   latestNews = signal<News[]>([]);
   
+  // Modal state
+  showNewsModal = signal<boolean>(false);
+  selectedNews = signal<News | null>(null);
+  
   private countdownInterval: any;
 
   ngOnInit(): void {
@@ -204,5 +208,21 @@ export class Fooldal implements OnInit, OnDestroy {
     if (imgElement) {
       imgElement.style.display = 'none';
     }
+  }
+
+  // Modal methods
+  openNewsModal(news: News): void {
+    this.selectedNews.set(news);
+    this.showNewsModal.set(true);
+  }
+
+  closeNewsModal(): void {
+    this.showNewsModal.set(false);
+    this.selectedNews.set(null);
+  }
+
+  getNewsExcerpt(content: string, maxLength: number = 150): string {
+    if (content.length <= maxLength) return content;
+    return content.substring(0, maxLength) + '...';
   }
 }

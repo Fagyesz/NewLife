@@ -133,6 +133,7 @@ $dark-text: #333333;
     display: flex;
     align-items: center;
     gap: 1.5rem;
+    cursor: pointer;
     
     &:hover {
       transform: translateY(-2px);
@@ -434,6 +435,211 @@ $dark-text: #333333;
     .info-card {
       width: 100%;
       max-width: 350px;
+    }
+  }
+}
+
+// Event Modal
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  backdrop-filter: blur(5px);
+  animation: fadeIn 0.3s ease;
+  
+  .modal-content {
+    background: $white;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideInScale 0.3s ease;
+    
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 2rem 2rem 1rem;
+      border-bottom: 1px solid rgba($primary-blue, 0.1);
+      
+      .event-meta-header {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        
+        .event-date-full {
+          display: inline-block;
+          background: linear-gradient(135deg, $primary-green 0%, $primary-blue 100%);
+          color: $white;
+          padding: 0.5rem 1rem;
+          border-radius: 20px;
+          font-size: 0.85rem;
+          font-weight: 600;
+          text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+          max-width: fit-content;
+        }
+        
+        .event-type {
+          background: rgba($accent-yellow, 0.2);
+          color: $dark-text;
+          padding: 0.3rem 0.8rem;
+          border-radius: 15px;
+          font-size: 0.8rem;
+          font-weight: 500;
+          max-width: fit-content;
+        }
+      }
+      
+      .close-btn {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #666;
+        padding: 0.5rem;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        
+        &:hover {
+          background: rgba($primary-blue, 0.1);
+          color: $primary-blue;
+          transform: rotate(90deg);
+        }
+      }
+    }
+    
+    .modal-body {
+      padding: 2rem;
+      
+      h1 {
+        color: $primary-green;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        line-height: 1.3;
+      }
+      
+      .event-location-full {
+        background: rgba($primary-blue, 0.1);
+        color: $primary-blue;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        display: inline-block;
+        margin-bottom: 2rem;
+      }
+      
+      .event-details {
+        .event-description-full {
+          color: #555;
+          line-height: 1.8;
+          font-size: 1.1rem;
+          margin-bottom: 2rem;
+          white-space: pre-wrap;
+        }
+        
+        .event-attendance-section {
+          background: rgba($primary-green, 0.05);
+          border-radius: 15px;
+          padding: 1.5rem;
+          border-left: 4px solid $primary-green;
+          
+          .attendance-info {
+            margin-bottom: 1rem;
+            
+            h3 {
+              color: $primary-green;
+              margin-bottom: 0.5rem;
+              font-size: 1.2rem;
+            }
+            
+            p {
+              color: #666;
+              margin: 0;
+            }
+          }
+          
+          .attendance-actions {
+            button {
+              padding: 0.75rem 2rem;
+              font-weight: 600;
+              border-radius: 25px;
+              transition: all 0.3s ease;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInScale {
+  from {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// Mobile responsive for modal
+@media (max-width: 768px) {
+  .modal-overlay {
+    padding: 0.5rem;
+    
+    .modal-content {
+      border-radius: 15px;
+      max-height: 95vh;
+      
+      .modal-header {
+        padding: 1.5rem 1.5rem 1rem;
+        
+        .event-meta-header {
+          .event-date-full, .event-type {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+          }
+        }
+      }
+      
+      .modal-body {
+        padding: 1.5rem;
+        
+        h1 {
+          font-size: 1.5rem;
+        }
+        
+        .event-details {
+          .event-description-full {
+            font-size: 1rem;
+          }
+          
+          .event-attendance-section {
+            padding: 1rem;
+            
+            .attendance-actions button {
+              padding: 0.75rem 1.5rem;
+            }
+          }
+        }
+      }
     }
   }
 }

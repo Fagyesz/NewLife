@@ -39,7 +39,8 @@ export class Admin implements OnInit {
     date: '',
     time: '',
     type: 'service' as Event['type'],
-    location: ''
+    location: '',
+    imageUrl: ''
   };
 
   newsForm = {
@@ -133,7 +134,8 @@ export class Admin implements OnInit {
         date: event.date.toISOString().split('T')[0],
         time: event.date.toTimeString().slice(0, 5),
         type: event.type,
-        location: event.location
+        location: event.location,
+        imageUrl: event.imageUrl || ''
       };
     } else {
       this.editingEvent.set(null);
@@ -192,7 +194,8 @@ export class Admin implements OnInit {
         description: this.eventForm.description,
         date: eventDateTime,
         type: this.eventForm.type,
-        location: this.eventForm.location
+        location: this.eventForm.location,
+        imageUrl: this.eventForm.imageUrl
       };
 
       const editingEvent = this.editingEvent();
@@ -499,7 +502,8 @@ export class Admin implements OnInit {
       date: '',
       time: '',
       type: 'service',
-      location: 'Gyöngyös Gyüli' // Default location
+      location: 'Gyöngyös Gyüli', // Default location
+      imageUrl: ''
     };
   }
 

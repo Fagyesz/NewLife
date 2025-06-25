@@ -9,6 +9,7 @@ export interface Event {
   date: Date;
   type: 'service' | 'meeting' | 'special' | 'bible_study' | 'prayer_meeting' | 'youth' | 'children' | 'baptism' | 'wedding' | 'funeral' | 'concert' | 'conference' | 'outreach' | 'fellowship' | 'training';
   location: string;
+  imageUrl?: string;
   createdBy: string;
   createdAt?: Date;
   updatedAt?: Date;

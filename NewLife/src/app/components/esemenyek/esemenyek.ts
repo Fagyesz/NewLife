@@ -20,6 +20,10 @@ export class Esemenyek implements OnInit {
   events = this.eventService.events;
   isLoading = signal(false);
   attendanceStates = signal<Map<string, boolean>>(new Map());
+  
+  // Event modal state
+  showEventModal = signal<boolean>(false);
+  selectedEvent = signal<Event | null>(null);
 
   async ngOnInit() {
     await this.loadAttendanceStates();
@@ -140,5 +144,16 @@ export class Esemenyek implements OnInit {
 
   trackByEventId(index: number, event: Event): string {
     return event.id || index.toString();
+  }
+
+  // Event modal methods
+  openEventModal(event: Event): void {
+    this.selectedEvent.set(event);
+    this.showEventModal.set(true);
+  }
+
+  closeEventModal(): void {
+    this.showEventModal.set(false);
+    this.selectedEvent.set(null);
   }
 }

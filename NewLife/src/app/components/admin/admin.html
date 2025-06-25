@@ -124,9 +124,9 @@
     <div class="section-header">
       <h2>Események kezelése</h2>
       <div class="header-actions">
-        <button class="btn btn-primary" (click)="openEventForm()">
-          ➕ Új esemény
-        </button>
+      <button class="btn btn-primary" (click)="openEventForm()">
+        ➕ Új esemény
+      </button>
         <button class="btn btn-secondary" (click)="toggleEventsSection()">
           {{ showEventsSection() ? '➖ Elrejtés' : '➕ Megjelenítés' }}
         </button>
@@ -171,29 +171,29 @@
       <!-- Past Events -->
       <div class="events-subsection">
         <h3>Múltbeli események ({{ pastEvents.length }})</h3>
-        <div class="events-list">
+    <div class="events-list">
           <div *ngFor="let event of pastEvents" class="event-item past">
-            <div class="event-info">
+        <div class="event-info">
               <h4>{{ event.title }}</h4>
-              <p>{{ event.description }}</p>
-              <div class="event-meta">
-                <span class="date">📅 {{ formatEventDate(event.date) }}</span>
-                <span class="location">📍 {{ event.location }}</span>
-                <span class="type">{{ event.type }}</span>
-              </div>
-            </div>
-            <div class="event-stats">
-              <span class="attendance">{{ getEventAttendance(event.id || '') }} résztvevő</span>
-            </div>
-            <div class="event-actions">
-              <button class="btn btn-secondary" (click)="openEventForm(event)">
-                ✏️ Szerkesztés
-              </button>
-              <button class="btn btn-danger" (click)="deleteEvent(event)" [disabled]="isLoading()">
-                🗑️ Törlés
-              </button>
-            </div>
+          <p>{{ event.description }}</p>
+          <div class="event-meta">
+            <span class="date">📅 {{ formatEventDate(event.date) }}</span>
+            <span class="location">📍 {{ event.location }}</span>
+            <span class="type">{{ event.type }}</span>
           </div>
+        </div>
+        <div class="event-stats">
+          <span class="attendance">{{ getEventAttendance(event.id || '') }} résztvevő</span>
+        </div>
+        <div class="event-actions">
+          <button class="btn btn-secondary" (click)="openEventForm(event)">
+            ✏️ Szerkesztés
+          </button>
+          <button class="btn btn-danger" (click)="deleteEvent(event)" [disabled]="isLoading()">
+            🗑️ Törlés
+          </button>
+        </div>
+      </div>
 
           <!-- No Past Events -->
           <div *ngIf="pastEvents.length === 0" class="no-events">
@@ -653,6 +653,18 @@
           name="location" 
           class="form-control"
           placeholder="pl. Gyülekezeti terem">
+      </div>
+
+      <div class="form-group">
+        <label for="eventImageUrl">Kép URL</label>
+        <input 
+          type="url" 
+          id="eventImageUrl" 
+          [(ngModel)]="eventForm.imageUrl" 
+          name="eventImageUrl" 
+          class="form-control"
+          placeholder="https://example.com/image.jpg">
+        <small class="form-help">Opcionális - adjon meg egy képet az eseményhez</small>
       </div>
 
       <div class="form-actions">

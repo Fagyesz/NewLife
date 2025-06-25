@@ -110,12 +110,13 @@
   <div class="container">
     <h2 class="text-center">Legfrissebb hírek</h2>
     <div class="news-preview">
-      <div *ngFor="let newsItem of latestNews()" class="news-preview-card">
-        <img *ngIf="newsItem.imageUrl" 
-             [src]="newsItem.imageUrl" 
-             [alt]="newsItem.title"
-             class="news-preview-image"
-             (error)="onImageError($event)">
+      <div *ngFor="let newsItem of latestNews()" class="news-preview-card" (click)="openNewsModal(newsItem)">
+        <div class="news-image-container" *ngIf="newsItem.imageUrl">
+          <img [src]="newsItem.imageUrl" 
+               [alt]="newsItem.title"
+               class="news-image"
+               (error)="onImageError($event)">
+        </div>
         <div class="news-content">
           <div class="news-date">{{ formatNewsDate(newsItem.publishedAt) }}</div>
           <h4>{{ newsItem.title }}</h4>
@@ -123,7 +124,8 @@
           <span class="news-category">
             {{ getCategoryIcon(newsItem.category || 'general') }} {{ getCategoryText(newsItem.category || 'general') }}
           </span>
-        </div>
+          <span class="read-more">Részletek →</span>
+      </div>
       </div>
     </div>
     <div class="text-center">
@@ -162,3 +164,34 @@
     </div>
   </div>
 </section>
+
+<!-- News Modal -->
+<div *ngIf="showNewsModal()" class="modal-overlay" (click)="closeNewsModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div class="news-meta-header">
+        <div class="news-date">{{ formatNewsDate(selectedNews()!.publishedAt) }}</div>
+        <span class="news-category">
+          {{ getCategoryIcon(selectedNews()!.category || 'general') }} {{ getCategoryText(selectedNews()!.category || 'general') }}
+        </span>
+      </div>
+      <button class="close-btn" (click)="closeNewsModal()">✕</button>
+    </div>
+    
+    <div class="modal-body">
+      <h1>{{ selectedNews()!.title }}</h1>
+      <div class="news-author">👤 {{ selectedNews()!.author }}</div>
+      
+      <div class="news-content">
+        <img *ngIf="selectedNews()!.imageUrl" 
+             [src]="selectedNews()!.imageUrl" 
+             [alt]="selectedNews()!.title"
+             class="news-image"
+             (error)="onImageError($event)">
+        
+        <p *ngIf="selectedNews()!.summary" class="news-summary">{{ selectedNews()!.summary }}</p>
+        <div class="news-text">{{ selectedNews()!.content }}</div>
+      </div>
+    </div>
+  </div>
+</div>

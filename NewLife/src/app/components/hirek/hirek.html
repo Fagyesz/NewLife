@@ -13,11 +13,12 @@
     <div class="news-grid">
       <!-- Featured News -->
       <article *ngIf="featuredNews()" class="news-card featured" (click)="openNewsModal(featuredNews()!)">
-        <img *ngIf="featuredNews()!.imageUrl" 
-             [src]="featuredNews()!.imageUrl" 
-             [alt]="featuredNews()!.title"
-             class="news-card-image"
-             (error)="onImageError($event)">
+        <div class="news-image-container" *ngIf="featuredNews()!.imageUrl">
+          <img [src]="featuredNews()!.imageUrl" 
+               [alt]="featuredNews()!.title"
+               class="news-image"
+               (error)="onImageError($event)">
+        </div>
         <div class="news-date">{{ formatNewsDate(featuredNews()!.publishedAt) }}</div>
         <h2>{{ featuredNews()!.title }}</h2>
         <p>{{ featuredNews()!.summary || getNewsExcerpt(featuredNews()!.content, 200) }}</p>
@@ -34,11 +35,12 @@
 
       <!-- Regular News -->
       <article *ngFor="let newsItem of regularNews()" class="news-card" (click)="openNewsModal(newsItem)">
-        <img *ngIf="newsItem.imageUrl" 
-             [src]="newsItem.imageUrl" 
-             [alt]="newsItem.title"
-             class="news-card-image"
-             (error)="onImageError($event)">
+        <div class="news-image-container" *ngIf="newsItem.imageUrl">
+          <img [src]="newsItem.imageUrl" 
+               [alt]="newsItem.title"
+               class="news-image"
+               (error)="onImageError($event)">
+        </div>
         <div class="news-date">{{ formatNewsDate(newsItem.publishedAt) }}</div>
         <h3>{{ newsItem.title }}</h3>
         <p>{{ newsItem.summary || getNewsExcerpt(newsItem.content, 150) }}</p>
@@ -59,7 +61,7 @@
           <h3>Még nincsenek hírek</h3>
           <p>Jelenleg nincsenek publikált hírek. Kérjük, térjen vissza később!</p>
         </div>
-      </div>
+        </div>
     </div>
   </div>
 </section>
