@@ -2,6 +2,8 @@
 
 # Compiled output
 /dist
+# Uncomment the line above and comment out /dist to manually commit build files (NOT RECOMMENDED)
+# Use GitHub Actions instead for cleaner automated deployment
 /tmp
 /out-tsc
 /bazel-out
