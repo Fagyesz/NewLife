@@ -80,6 +80,25 @@ $dark-gray: #343a40;
       color: $dark-gray;
       margin: 0;
     }
+    
+    .header-actions {
+      display: flex;
+      gap: 1rem;
+    }
+  }
+  
+  .events-content {
+    .events-subsection {
+      margin-bottom: 3rem;
+      
+      h3 {
+        color: $primary-blue;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid $light-gray;
+        font-size: 1.5rem;
+      }
+    }
   }
   
   .events-list {
@@ -94,8 +113,17 @@ $dark-gray: #343a40;
       gap: 1rem;
       align-items: center;
       
+      &.upcoming {
+        border-left: 4px solid $primary-green;
+      }
+      
+      &.past {
+        border-left: 4px solid #dee2e6;
+        opacity: 0.8;
+      }
+      
       .event-info {
-        h3 {
+        h3, h4 {
           color: $primary-green;
           margin-bottom: 0.5rem;
           font-size: 1.25rem;

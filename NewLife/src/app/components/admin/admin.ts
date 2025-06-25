@@ -23,6 +23,7 @@ export class Admin implements OnInit {
   // Signals
   showEventForm = signal(false);
   showUsersSection = signal(false);
+  showEventsSection = signal(false);
   editingEvent = signal<Event | null>(null);
   isLoading = signal(false);
 
@@ -61,6 +62,20 @@ export class Admin implements OnInit {
 
   toggleUsersSection() {
     this.showUsersSection.set(!this.showUsersSection());
+  }
+
+  toggleEventsSection() {
+    this.showEventsSection.set(!this.showEventsSection());
+  }
+
+  get upcomingEvents() {
+    const now = new Date();
+    return this.events.filter(event => event.date >= now);
+  }
+
+  get pastEvents() {
+    const now = new Date();
+    return this.events.filter(event => event.date < now);
   }
 
   openEventForm(event?: Event) {

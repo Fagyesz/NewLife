@@ -122,37 +122,86 @@
   <div class="container">
     <div class="section-header">
       <h2>Események kezelése</h2>
-      <button class="btn btn-primary" (click)="openEventForm()">
-        ➕ Új esemény
-      </button>
+      <div class="header-actions">
+        <button class="btn btn-primary" (click)="openEventForm()">
+          ➕ Új esemény
+        </button>
+        <button class="btn btn-secondary" (click)="toggleEventsSection()">
+          {{ showEventsSection() ? '➖ Elrejtés' : '➕ Megjelenítés' }}
+        </button>
+      </div>
     </div>
 
-    <!-- Events List -->
-    <div class="events-list">
-      <div *ngFor="let event of events" class="event-item">
-        <div class="event-info">
-          <h3>{{ event.title }}</h3>
-          <p>{{ event.description }}</p>
-          <div class="event-meta">
-            <span class="date">📅 {{ formatEventDate(event.date) }}</span>
-            <span class="location">📍 {{ event.location }}</span>
-            <span class="type">{{ event.type }}</span>
+    <div *ngIf="showEventsSection()" class="events-content">
+      <!-- Upcoming Events -->
+      <div class="events-subsection">
+        <h3>Közelgő események ({{ upcomingEvents.length }})</h3>
+        <div class="events-list">
+          <div *ngFor="let event of upcomingEvents" class="event-item upcoming">
+            <div class="event-info">
+              <h4>{{ event.title }}</h4>
+              <p>{{ event.description }}</p>
+              <div class="event-meta">
+                <span class="date">📅 {{ formatEventDate(event.date) }}</span>
+                <span class="location">📍 {{ event.location }}</span>
+                <span class="type">{{ event.type }}</span>
+              </div>
+            </div>
+            <div class="event-stats">
+              <span class="attendance">{{ getEventAttendance(event.id || '') }} résztvevő</span>
+            </div>
+            <div class="event-actions">
+              <button class="btn btn-secondary" (click)="openEventForm(event)">
+                ✏️ Szerkesztés
+              </button>
+              <button class="btn btn-danger" (click)="deleteEvent(event)" [disabled]="isLoading()">
+                🗑️ Törlés
+              </button>
+            </div>
           </div>
-        </div>
-        <div class="event-stats">
-          <span class="attendance">{{ getEventAttendance(event.id || '') }} résztvevő</span>
-        </div>
-        <div class="event-actions">
-          <button class="btn btn-secondary" (click)="openEventForm(event)">
-            ✏️ Szerkesztés
-          </button>
-          <button class="btn btn-danger" (click)="deleteEvent(event)" [disabled]="isLoading()">
-            🗑️ Törlés
-          </button>
+
+          <!-- No Upcoming Events -->
+          <div *ngIf="upcomingEvents.length === 0" class="no-events">
+            <p>Nincsenek közelgő események.</p>
+          </div>
         </div>
       </div>
 
-      <!-- No Events -->
+      <!-- Past Events -->
+      <div class="events-subsection">
+        <h3>Múltbeli események ({{ pastEvents.length }})</h3>
+        <div class="events-list">
+          <div *ngFor="let event of pastEvents" class="event-item past">
+            <div class="event-info">
+              <h4>{{ event.title }}</h4>
+              <p>{{ event.description }}</p>
+              <div class="event-meta">
+                <span class="date">📅 {{ formatEventDate(event.date) }}</span>
+                <span class="location">📍 {{ event.location }}</span>
+                <span class="type">{{ event.type }}</span>
+              </div>
+            </div>
+            <div class="event-stats">
+              <span class="attendance">{{ getEventAttendance(event.id || '') }} résztvevő</span>
+            </div>
+            <div class="event-actions">
+              <button class="btn btn-secondary" (click)="openEventForm(event)">
+                ✏️ Szerkesztés
+              </button>
+              <button class="btn btn-danger" (click)="deleteEvent(event)" [disabled]="isLoading()">
+                🗑️ Törlés
+              </button>
+            </div>
+          </div>
+
+          <!-- No Past Events -->
+          <div *ngIf="pastEvents.length === 0" class="no-events">
+            <p>Még nincsenek múltbeli események.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- No Events at all -->
       <div *ngIf="events.length === 0" class="no-events">
         <p>Még nincsenek események. Hozza létre az elsőt!</p>
       </div>
