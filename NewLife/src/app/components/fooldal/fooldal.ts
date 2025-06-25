@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { EventService, Event } from '../../services/event';
 import { AttendanceService } from '../../services/attendance';
+import { NewsService, News } from '../../services/user';
 
 @Component({
   selector: 'app-fooldal',
@@ -13,17 +14,20 @@ import { AttendanceService } from '../../services/attendance';
 export class Fooldal implements OnInit, OnDestroy {
   private eventService = inject(EventService);
   private attendanceService = inject(AttendanceService);
+  private newsService = inject(NewsService);
   
   // Signals for reactive state
   upcomingEvents = signal<Event[]>([]);
   nextSundayService = signal<Event | null>(null);
   countdownTimer = signal<string>('');
   isLive = signal<boolean>(false);
+  latestNews = signal<News[]>([]);
   
   private countdownInterval: any;
 
   ngOnInit(): void {
     this.loadUpcomingEvents();
+    this.loadLatestNews();
     this.startCountdown();
     this.checkLiveStatus();
   }
@@ -42,6 +46,12 @@ export class Fooldal implements OnInit, OnDestroy {
     // Get next Sunday service for countdown
     const nextService = this.eventService.getNextSundayService();
     this.nextSundayService.set(nextService || null);
+  }
+
+  private loadLatestNews(): void {
+    // Get latest 2 published news for preview
+    const latest = this.newsService.getRecentNews(2);
+    this.latestNews.set(latest);
   }
 
 
@@ -124,5 +134,33 @@ export class Fooldal implements OnInit, OnDestroy {
 
   getAttendanceCount(eventId: string): number {
     return this.attendanceService.getAttendanceCount(eventId);
+  }
+
+  formatNewsDate(date: Date): string {
+    return new Intl.DateTimeFormat('hu-HU', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    }).format(date);
+  }
+
+  getCategoryText(category: string): string {
+    switch (category) {
+      case 'announcement': return 'Közlemény';
+      case 'event': return 'Esemény';
+      case 'ministry': return 'Szolgálat';
+      case 'general': return 'Általános';
+      default: return 'Hír';
+    }
+  }
+
+  getCategoryIcon(category: string): string {
+    switch (category) {
+      case 'announcement': return '📢';
+      case 'event': return '🎄';
+      case 'ministry': return '🙏';
+      case 'general': return '📰';
+      default: return '📝';
+    }
   }
 }

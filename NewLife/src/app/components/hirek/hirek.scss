@@ -135,6 +135,20 @@ $dark-text: #333333;
       font-size: 1rem;
     }
     
+    .news-meta {
+      margin-bottom: 1rem;
+      
+      .news-author {
+        background: rgba($primary-blue, 0.1);
+        color: $primary-blue;
+        padding: 0.25rem 0.75rem;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        display: inline-block;
+      }
+    }
+    
     .news-footer {
       display: flex;
       justify-content: space-between;
@@ -163,6 +177,31 @@ $dark-text: #333333;
           color: $primary-green;
           transform: translateX(5px);
         }
+      }
+    }
+  }
+  
+  .no-news {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 2rem;
+    
+    .no-news-content {
+      background: rgba($primary-blue, 0.05);
+      border: 2px dashed rgba($primary-blue, 0.3);
+      border-radius: 20px;
+      padding: 3rem 2rem;
+      
+      h3 {
+        color: $primary-blue;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      
+      p {
+        color: #666;
+        font-size: 1.1rem;
+        margin: 0;
       }
     }
   }

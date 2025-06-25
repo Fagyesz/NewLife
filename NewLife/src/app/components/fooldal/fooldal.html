@@ -105,23 +105,17 @@
 </section>
 
 <!-- Latest News Preview -->
-<section class="section latest-news">
+<section class="section latest-news" *ngIf="latestNews().length > 0">
   <div class="container">
     <h2 class="text-center">Legfrissebb hírek</h2>
     <div class="news-preview">
-      <!-- Static news preview - in real app this would be dynamic from Firebase -->
-      <div class="news-preview-card">
-        <div class="news-date">2024. Dec. 15.</div>
-        <h4>Karácsonyi különleges program</h4>
-        <p>Idén is szeretettel várjuk Önöket karácsonyi istentiszteletünkre december 24-én...</p>
-        <span class="news-category">🎄 Különleges alkalom</span>
-      </div>
-      
-      <div class="news-preview-card">
-        <div class="news-date">2024. Dec. 10.</div>
-        <h4>Új bibliaóra sorozat indul</h4>
-        <p>Január első hetétől új bibliaóra sorozatot indítunk "A Példabeszédek könyve" címmel...</p>
-        <span class="news-category">📖 Bibliaóra</span>
+      <div *ngFor="let newsItem of latestNews()" class="news-preview-card">
+        <div class="news-date">{{ formatNewsDate(newsItem.publishedAt) }}</div>
+        <h4>{{ newsItem.title }}</h4>
+        <p>{{ newsItem.summary || (newsItem.content | slice:0:120) + '...' }}</p>
+        <span class="news-category">
+          {{ getCategoryIcon(newsItem.category || 'general') }} {{ getCategoryText(newsItem.category || 'general') }}
+        </span>
       </div>
     </div>
     <div class="text-center">
