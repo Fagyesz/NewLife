@@ -2,10 +2,11 @@ import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { BubblesComponent } from '../../shared/bubbles/bubbles';
 
 @Component({
   selector: 'app-kapcsolat',
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, BubblesComponent],
   templateUrl: './kapcsolat.html',
   styleUrl: './kapcsolat.scss'
 })

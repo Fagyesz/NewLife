@@ -6,10 +6,11 @@ import { AuthService } from '../../services/auth';
 import { EventService, Event } from '../../services/event';
 import { AttendanceService } from '../../services/attendance';
 import { UserService, NewsService, News } from '../../services/user';
+import { BubblesComponent } from '../../shared/bubbles/bubbles';
 
 @Component({
   selector: 'app-admin',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, BubblesComponent],
   templateUrl: './admin.html',
   styleUrl: './admin.scss'
 })

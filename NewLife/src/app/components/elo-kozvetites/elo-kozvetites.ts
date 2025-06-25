@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
+import { BubblesComponent } from '../../shared/bubbles/bubbles';
 
 @Component({
   selector: 'app-elo-kozvetites',
-  imports: [CommonModule],
+  imports: [CommonModule, BubblesComponent],
   templateUrl: './elo-kozvetites.html',
   styleUrl: './elo-kozvetites.scss'
 })

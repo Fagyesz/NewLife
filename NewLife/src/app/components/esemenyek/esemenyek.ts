@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { EventService, Event } from '../../services/event';
 import { AttendanceService } from '../../services/attendance';
 import { AuthService } from '../../services/auth';
+import { BubblesComponent } from '../../shared/bubbles/bubbles';
 
 @Component({
   selector: 'app-esemenyek',
-  imports: [CommonModule],
+  imports: [CommonModule, BubblesComponent],
   templateUrl: './esemenyek.html',
   styleUrl: './esemenyek.scss'
 })

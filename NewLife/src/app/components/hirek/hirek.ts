@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NewsService, News } from '../../services/user';
+import { BubblesComponent } from '../../shared/bubbles/bubbles';
 
 @Component({
   selector: 'app-hirek',
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, BubblesComponent],
   templateUrl: './hirek.html',
   styleUrl: './hirek.scss'
 })

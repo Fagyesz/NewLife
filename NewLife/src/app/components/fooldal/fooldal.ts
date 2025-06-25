@@ -4,10 +4,11 @@ import { RouterModule } from '@angular/router';
 import { EventService, Event } from '../../services/event';
 import { AttendanceService } from '../../services/attendance';
 import { NewsService, News } from '../../services/user';
+import { BubblesComponent } from '../../shared/bubbles/bubbles';
 
 @Component({
   selector: 'app-fooldal',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, BubblesComponent],
   templateUrl: './fooldal.html',
   styleUrl: './fooldal.scss'
 })
