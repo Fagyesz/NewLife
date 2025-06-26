@@ -29,6 +29,8 @@ export class Fooldal implements OnInit, OnDestroy {
   // Modal state
   showNewsModal = signal<boolean>(false);
   selectedNews = signal<News | null>(null);
+  showEventModal = signal<boolean>(false);
+  selectedEvent = signal<Event | null>(null);
   
   private countdownInterval: any;
 
@@ -60,8 +62,6 @@ export class Fooldal implements OnInit, OnDestroy {
     const latest = this.newsService.getRecentNews(2);
     this.latestNews.set(latest);
   }
-
-
 
   private startCountdown(): void {
     this.updateCountdown();
@@ -129,8 +129,6 @@ export class Fooldal implements OnInit, OnDestroy {
       minute: '2-digit'
     }).format(date);
   }
-
-
 
   getAttendanceCount(eventId: string): number {
     return this.attendanceService.getAttendanceCount(eventId);
@@ -221,6 +219,38 @@ export class Fooldal implements OnInit, OnDestroy {
   closeNewsModal(): void {
     this.showNewsModal.set(false);
     this.selectedNews.set(null);
+  }
+
+  // Event modal methods
+  openEventModal(event: Event): void {
+    this.selectedEvent.set(event);
+    this.showEventModal.set(true);
+  }
+
+  closeEventModal(): void {
+    this.showEventModal.set(false);
+    this.selectedEvent.set(null);
+  }
+
+  getEventTypeText(type: string): string {
+    switch (type) {
+      case 'service': return 'Istentisztelet';
+      case 'meeting': return 'Gyülekezeti összejövetel';
+      case 'special': return 'Különleges alkalom';
+      case 'bible_study': return 'Bibliaóra';
+      case 'prayer_meeting': return 'Imaóra';
+      case 'youth': return 'Ifjúsági alkalom';
+      case 'children': return 'Gyermek program';
+      case 'baptism': return 'Keresztelő';
+      case 'wedding': return 'Esküvő';
+      case 'funeral': return 'Temetés';
+      case 'concert': return 'Koncert';
+      case 'conference': return 'Konferencia';
+      case 'outreach': return 'Evangelizáció';
+      case 'fellowship': return 'Közösség';
+      case 'training': return 'Képzés';
+      default: return 'Esemény';
+    }
   }
 
   getNewsExcerpt(content: string, maxLength: number = 150): string {

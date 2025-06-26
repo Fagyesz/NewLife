@@ -2,6 +2,7 @@ import { Component, signal, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-navigation',
@@ -12,9 +13,33 @@ import { AuthService } from '../../services/auth';
 export class Navigation {
   isMenuOpen = signal(false);
   authService = inject(AuthService);
+  private viewportScroller = inject(ViewportScroller);
 
   toggleMenu() {
     this.isMenuOpen.set(!this.isMenuOpen());
+  }
+
+  onNavigate() {
+    this.closeMenu();
+    this.forceScrollToTop();
+  }
+
+  private forceScrollToTop() {
+    // Temporarily disable smooth scrolling for instant scroll
+    const html = document.documentElement;
+    const originalBehavior = html.style.scrollBehavior;
+    html.style.scrollBehavior = 'auto';
+    
+    // Multiple methods to ensure scroll to top
+    window.scrollTo(0, 0);
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+    this.viewportScroller.scrollToPosition([0, 0]);
+    
+    // Restore smooth scrolling
+    setTimeout(() => {
+      html.style.scrollBehavior = originalBehavior;
+    }, 50);
   }
 
   async signOut() {

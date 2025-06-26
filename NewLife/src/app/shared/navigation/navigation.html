@@ -1,7 +1,7 @@
 <nav class="navbar">
   <div class="navbar-container">
     <div class="navbar-brand">
-      <a routerLink="/" class="brand-link">
+      <a routerLink="/" class="brand-link" (click)="onNavigate()">
         <span class="brand-text">Új Élet Baptista Gyülekezet</span>
         <span class="brand-location">Gyöngyös</span>
       </a>
@@ -9,19 +9,19 @@
     
     <div class="navbar-menu" [class.is-active]="isMenuOpen()">
       <ul class="navbar-nav">
-        <li><a routerLink="/fooldal" routerLinkActive="active">Főoldal</a></li>
-        <li><a routerLink="/esemenyek" routerLinkActive="active">Események</a></li>
-        <li><a routerLink="/hirek" routerLinkActive="active">Hírek</a></li>
-        <li><a routerLink="/elo-kozvetites" routerLinkActive="active">Élő&nbsp;közvetítés</a></li>
-        <li><a routerLink="/rolunk" routerLinkActive="active">Rólunk</a></li>
-        <li><a routerLink="/kapcsolat" routerLinkActive="active">Kapcsolat</a></li>
+        <li><a routerLink="/fooldal" routerLinkActive="active" (click)="onNavigate()">Főoldal</a></li>
+        <li><a routerLink="/esemenyek" routerLinkActive="active" (click)="onNavigate()">Események</a></li>
+        <li><a routerLink="/hirek" routerLinkActive="active" (click)="onNavigate()">Hírek</a></li>
+        <li><a routerLink="/elo-kozvetites" routerLinkActive="active" (click)="onNavigate()">Élő&nbsp;közvetítés</a></li>
+        <li><a routerLink="/rolunk" routerLinkActive="active" (click)="onNavigate()">Rólunk</a></li>
+        <li><a routerLink="/kapcsolat" routerLinkActive="active" (click)="onNavigate()">Kapcsolat</a></li>
       </ul>
       
       <!-- Staff Auth Section -->
       <div class="auth-section">
         @if (!authService.isAuthenticated()) {
           <div class="login-section">
-            <a routerLink="/login" class="btn btn-login" routerLinkActive="active">
+            <a routerLink="/login" class="btn btn-login" routerLinkActive="active" (click)="onNavigate()">
               <span>👤 Személyzet</span>
             </a>
           </div>
@@ -38,7 +38,7 @@
             </div>
             <div class="user-actions">
               @if (authService.isStaff()) {
-                <a routerLink="/admin" class="btn btn-admin" routerLinkActive="active">
+                <a routerLink="/admin" class="btn btn-admin" routerLinkActive="active" (click)="onNavigate()">
                   📝 Szerkesztés
                 </a>
               }

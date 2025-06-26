@@ -55,7 +55,8 @@
       <div *ngFor="let event of upcomingEvents(); let i = index" 
            class="event-preview-card" 
            animateOnScroll="slideInLeft" 
-           [animationDelay]="i * 200 + 300">
+           [animationDelay]="i * 200 + 300"
+           (click)="openEventModal(event)">
         <div class="event-date">
           <span class="event-icon">{{ getEventTypeIcon(event.type) }}</span>
           <span class="event-time">{{ formatEventDate(event.date) }}</span>
@@ -77,8 +78,6 @@
     </div>
   </div>
 </section>
-
-
 
 <!-- Info Cards -->
 <section class="section info-cards">
@@ -189,6 +188,42 @@
         
         <p *ngIf="selectedNews()!.summary" class="news-summary">{{ selectedNews()!.summary }}</p>
         <div class="news-text">{{ selectedNews()!.content }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Event Modal -->
+<div *ngIf="showEventModal()" class="modal-overlay" (click)="closeEventModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div class="event-meta-header">
+        <div class="event-date">{{ formatEventDate(selectedEvent()!.date) }}</div>
+        <span class="event-type">
+          {{ getEventTypeIcon(selectedEvent()!.type) }} {{ getEventTypeText(selectedEvent()!.type) }}
+        </span>
+      </div>
+      <button class="close-btn" (click)="closeEventModal()">✕</button>
+    </div>
+    
+    <div class="modal-body">
+      <h1>{{ selectedEvent()!.title }}</h1>
+      <div class="event-location">📍 {{ selectedEvent()!.location }}</div>
+      
+      <div class="event-content">
+        <img *ngIf="selectedEvent()?.imageUrl" 
+             [lazyImg]="selectedEvent()!.imageUrl!" 
+             [alt]="selectedEvent()!.title"
+             class="event-image"
+             (error)="onImageError($event)">
+        
+        <div class="event-description">{{ selectedEvent()!.description }}</div>
+        
+        <div class="event-details" *ngIf="selectedEvent()!.id">
+          <div class="attendance-info">
+            👥 {{ getAttendanceCount(selectedEvent()!.id!) }} résztvevő
+          </div>
+        </div>
       </div>
     </div>
   </div>
