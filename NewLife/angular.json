@@ -27,6 +27,7 @@
               }
             ],
             "styles": [
+              "node_modules/quill/dist/quill.snow.css",
               "src/styles.scss"
             ],
             "outputMode": "static"
@@ -41,8 +42,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "8kB",
-                  "maximumError": "15kB"
+                  "maximumWarning": "15kB",
+                  "maximumError": "25kB"
                 }
               ],
               "outputHashing": "all"

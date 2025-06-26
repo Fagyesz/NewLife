@@ -392,6 +392,107 @@
         </div>
       </div>
 
+      <!-- Scheduled News -->
+      <div class="news-subsection">
+        <h3>Ütemezett hírek ({{ scheduledNews.length }})</h3>
+        <div class="news-list">
+          <div *ngFor="let newsItem of scheduledNews" class="news-item scheduled">
+            <div class="news-info">
+              <h4>{{ newsItem.title }}</h4>
+              <p class="news-summary">{{ newsItem.summary || (newsItem.content | slice:0:100) + '...' }}</p>
+              <div class="news-meta">
+                <span class="date">📅 Ütemezve: {{ formatNewsDate(newsItem.scheduledPublishAt!) }}</span>
+                <span class="author">👤 {{ newsItem.author }}</span>
+                <span class="category">📝 {{ getCategoryText(newsItem.category) }}</span>
+                <span class="priority">⭐ {{ newsItem.priority }}</span>
+              </div>
+              <!-- Tags Display -->
+              <div class="news-tags" *ngIf="newsItem.tags.length > 0">
+                <span *ngFor="let tag of newsItem.tags" class="tag-badge">{{ tag }}</span>
+              </div>
+            </div>
+            <div class="news-status">
+              <span class="status-badge scheduled">⏰ Ütemezett</span>
+              <span class="status-badge draft">📝 Vázlat</span>
+            </div>
+            <div class="news-actions">
+              <button class="btn btn-success btn-sm" (click)="publishScheduledNews(newsItem)" [disabled]="isLoading()">
+                🚀 Azonnali publikálás
+              </button>
+              <button class="btn btn-secondary" (click)="openNewsForm(newsItem)">
+                ✏️ Szerkesztés
+              </button>
+              <button class="btn btn-danger" (click)="deleteNews(newsItem)" [disabled]="isLoading()">
+                🗑️ Törlés
+              </button>
+            </div>
+          </div>
+
+          <!-- No Scheduled News -->
+          <div *ngIf="scheduledNews.length === 0" class="no-news">
+            <p>Nincsenek ütemezett hírek.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Draft News -->
+      <div class="news-subsection">
+        <h3>Vázlatok ({{ draftNews.length }})</h3>
+        <div class="news-list">
+          <div *ngFor="let newsItem of draftNews" class="news-item draft">
+            <div class="news-info">
+              <h4>{{ newsItem.title }}</h4>
+              <p class="news-summary">{{ newsItem.summary || (newsItem.content | slice:0:100) + '...' }}</p>
+              <div class="news-meta">
+                <span class="date">📅 Létrehozva: {{ formatNewsDate(newsItem.createdAt || newsItem.publishedAt) }}</span>
+                <span class="author">👤 {{ newsItem.author }}</span>
+                <span class="category">📝 {{ getCategoryText(newsItem.category) }}</span>
+                <span class="priority">⭐ {{ newsItem.priority }}</span>
+              </div>
+              <!-- Tags Display -->
+              <div class="news-tags" *ngIf="newsItem.tags.length > 0">
+                <span *ngFor="let tag of newsItem.tags" class="tag-badge">{{ tag }}</span>
+              </div>
+            </div>
+            <div class="news-status">
+              <span class="status-badge draft">📝 Vázlat</span>
+            </div>
+            <div class="news-actions">
+              <button class="btn btn-success btn-sm" (click)="publishScheduledNews(newsItem)" [disabled]="isLoading()">
+                🚀 Azonnali publikálás
+              </button>
+              <div class="dropdown">
+                <button class="btn btn-outline btn-sm dropdown-toggle" [disabled]="isLoading()">
+                  ⏰ Ütemezés
+                </button>
+                <div class="dropdown-content">
+                  <button (click)="scheduleNewsItem(newsItem, 1)" class="dropdown-item">
+                    📅 Holnap
+                  </button>
+                  <button (click)="scheduleNewsItem(newsItem, 7)" class="dropdown-item">
+                    📅 1 hét múlva
+                  </button>
+                  <button (click)="scheduleNewsItem(newsItem, 30)" class="dropdown-item">
+                    📅 1 hónap múlva
+                  </button>
+                </div>
+              </div>
+              <button class="btn btn-secondary" (click)="openNewsForm(newsItem)">
+                ✏️ Szerkesztés
+              </button>
+              <button class="btn btn-danger" (click)="deleteNews(newsItem)" [disabled]="isLoading()">
+                🗑️ Törlés
+              </button>
+            </div>
+          </div>
+
+          <!-- No Draft News -->
+          <div *ngIf="draftNews.length === 0" class="no-news">
+            <p>Nincsenek vázlatok.</p>
+          </div>
+        </div>
+      </div>
+
       <!-- No News at all -->
       <div *ngIf="news.length === 0" class="no-news">
         <p>Még nincsenek hírek. Hozza létre az elsőt!</p>
@@ -446,16 +547,53 @@
         <small class="form-help">Opcionális - adjon meg egy képet a hírhez</small>
       </div>
 
+      <!-- Tags Section -->
+      <div class="form-group">
+        <label for="tagInput">Címkék</label>
+        <div class="tag-input-container">
+          <input 
+            type="text" 
+            id="tagInput" 
+            [(ngModel)]="newsForm.tagInput" 
+            name="tagInput" 
+            class="form-control"
+            placeholder="Írjon be egy címkét és nyomja meg az Enter-t"
+            (keypress)="onTagInputKeyPress($event)">
+          <button type="button" class="btn btn-sm btn-outline" (click)="addTag()">
+            Hozzáadás
+          </button>
+        </div>
+        
+        <!-- Display Tags -->
+        <div class="tags-display" *ngIf="newsForm.tags.length > 0">
+          <span *ngFor="let tag of newsForm.tags; let i = index" class="tag-item">
+            {{ tag }}
+            <button type="button" class="tag-remove" (click)="removeTag(i)">×</button>
+          </span>
+        </div>
+        
+        <!-- Suggested Tags -->
+        <div class="suggested-tags" *ngIf="availableTags.length > 0">
+          <small class="form-help">Meglévő címkék:</small>
+          <div class="tags-list">
+            <span *ngFor="let tag of availableTags" 
+                  class="suggested-tag"
+                  (click)="newsForm.tagInput = tag">
+              {{ tag }}
+            </span>
+          </div>
+        </div>
+      </div>
+
       <div class="form-group">
         <label for="newsContent">Tartalom *</label>
-        <textarea 
-          id="newsContent" 
+        <quill-editor 
           [(ngModel)]="newsForm.content" 
+          [modules]="quillConfig"
           name="newsContent" 
-          rows="6" 
-          required
-          class="form-control">
-        </textarea>
+          [style]="{ height: '300px' }"
+          placeholder="Írja be a hír tartalmát...">
+        </quill-editor>
       </div>
 
       <div class="form-row">
@@ -477,6 +615,34 @@
             [(ngModel)]="newsForm.publishedAt" 
             name="newsDate" 
             class="form-control">
+        </div>
+      </div>
+
+      <!-- Scheduling Section -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="scheduledDate">Ütemezett publikálás</label>
+          <input 
+            type="date" 
+            id="scheduledDate" 
+            [(ngModel)]="newsForm.scheduledPublishAt" 
+            name="scheduledDate" 
+            class="form-control">
+          <small class="form-help">Ha kitölti, a hír automatikusan megjelenik a megadott napon</small>
+        </div>
+
+        <div class="form-group">
+          <label for="newsPriority">Prioritás</label>
+          <select 
+            id="newsPriority" 
+            [(ngModel)]="newsForm.priority" 
+            name="newsPriority" 
+            class="form-control">
+            <option value="low">Alacsony</option>
+            <option value="normal">Normál</option>
+            <option value="high">Magas</option>
+            <option value="urgent">Sürgős</option>
+          </select>
         </div>
       </div>
 
@@ -542,7 +708,20 @@
                 name="newsPublished">
               <span class="checkbox-text">Azonnal publikálás</span>
             </label>
+            <label for="newsDraft" class="checkbox-label">
+              <input 
+                type="checkbox" 
+                id="newsDraft" 
+                [(ngModel)]="newsForm.isDraft" 
+                name="newsDraft">
+              <span class="checkbox-text">Mentés vázlatként</span>
+            </label>
           </div>
+          <small class="form-help">
+            • Ha "Azonnal publikálás" be van jelölve: a hír rögtön megjelenik<br>
+            • Ha "Mentés vázlatként" be van jelölve: a hír vázlatként kerül mentésre<br>
+            • Ha "Ütemezett publikálás" ki van töltve: a hír az adott napon jelenik meg
+          </small>
         </div>
       </div>
 

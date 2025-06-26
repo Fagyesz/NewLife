@@ -23,14 +23,17 @@ export interface News {
   imageUrl?: string;  // URL for the main news image
   author: string;
   publishedAt: Date;
+  scheduledPublishAt?: Date;  // Scheduled publishing date
   tillDate?: Date;  // Expiration date - when null, news doesn't expire
   isPublished: boolean;
   isActive: boolean;  // Manual active/inactive toggle
+  isDraft: boolean;  // Draft status for scheduled content
   createdBy: string;
   createdAt?: Date;
   updatedAt?: Date;
-  tags?: string[];
-  category?: 'announcement' | 'event' | 'ministry' | 'general' | 'pastoral' | 'prayer_request' | 'testimony' | 'bible_study' | 'youth' | 'children' | 'missions' | 'volunteer' | 'community' | 'celebration';
+  tags: string[];  // Array of tags for better organization
+  category: 'announcement' | 'event' | 'ministry' | 'general' | 'pastoral' | 'prayer_request' | 'testimony' | 'bible_study' | 'youth' | 'children' | 'missions' | 'volunteer' | 'community' | 'celebration';
+  priority?: 'low' | 'normal' | 'high' | 'urgent';  // Priority for featured content
 }
 
 export interface UserStats {
@@ -227,8 +230,11 @@ export class NewsService {
         tillDate: new Date('2024-12-26T23:59:59'),
         isPublished: true,
         isActive: true,
+        isDraft: false,
         createdBy: 'system',
-        category: 'event'
+        category: 'event',
+        tags: ['karácson', 'ünnepség', 'közösség'],
+        priority: 'high'
       },
       {
         id: 'fallback-2', 
@@ -239,8 +245,11 @@ export class NewsService {
         publishedAt: new Date('2024-12-31T18:00:00'),
         isPublished: true,
         isActive: true,
+        isDraft: false,
         createdBy: 'system',
-        category: 'announcement'
+        category: 'announcement',
+        tags: ['újév', '2025', 'tervek'],
+        priority: 'normal'
       }
     ];
     
@@ -408,6 +417,80 @@ export class NewsService {
   async removeNewsExpiration(newsId: string): Promise<void> {
     await this.updateNews(newsId, {
       tillDate: undefined
+    });
+  }
+
+  // Get scheduled news (drafts with future publish dates)
+  getScheduledNews(): News[] {
+    const now = new Date();
+    return this.news().filter(item => 
+      item.isDraft && 
+      item.scheduledPublishAt && 
+      item.scheduledPublishAt > now
+    );
+  }
+
+  // Get draft news (unpublished content)
+  getDraftNews(): News[] {
+    return this.news().filter(item => item.isDraft);
+  }
+
+  // Get news by tag
+  getNewsByTag(tag: string): News[] {
+    return this.news().filter(item => 
+      item.tags.includes(tag)
+    );
+  }
+
+  // Get news by priority
+  getNewsByPriority(priority: News['priority']): News[] {
+    return this.news().filter(item => 
+      item.priority === priority
+    );
+  }
+
+  // Get all unique tags
+  getAllTags(): string[] {
+    const allTags = this.news().flatMap(item => item.tags);
+    return [...new Set(allTags)].sort();
+  }
+
+  // Check if news should be auto-published
+  async checkAndPublishScheduledNews(): Promise<void> {
+    const now = new Date();
+    const scheduledNews = this.news().filter(item => 
+      item.isDraft && 
+      item.scheduledPublishAt && 
+      item.scheduledPublishAt <= now
+    );
+
+    for (const newsItem of scheduledNews) {
+      if (newsItem.id) {
+        await this.updateNews(newsItem.id, {
+          isPublished: true,
+          isDraft: false,
+          publishedAt: new Date()
+        });
+      }
+    }
+  }
+
+  // Schedule news for future publishing
+  async scheduleNews(newsId: string, scheduledDate: Date): Promise<void> {
+    await this.updateNews(newsId, {
+      scheduledPublishAt: scheduledDate,
+      isDraft: true,
+      isPublished: false
+    });
+  }
+
+  // Publish news immediately
+  async publishNewsNow(newsId: string): Promise<void> {
+    await this.updateNews(newsId, {
+      isPublished: true,
+      isDraft: false,
+      publishedAt: new Date(),
+      scheduledPublishAt: undefined
     });
   }
 }

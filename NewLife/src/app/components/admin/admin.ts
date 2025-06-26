@@ -2,6 +2,7 @@ import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { QuillModule } from 'ngx-quill';
 import { AuthService } from '../../services/auth';
 import { EventService, Event } from '../../services/event';
 import { AttendanceService } from '../../services/attendance';
@@ -10,7 +11,7 @@ import { BubblesComponent } from '../../shared/bubbles/bubbles';
 
 @Component({
   selector: 'app-admin',
-  imports: [CommonModule, FormsModule, BubblesComponent],
+  imports: [CommonModule, FormsModule, QuillModule, BubblesComponent],
   templateUrl: './admin.html',
   styleUrl: './admin.scss'
 })
@@ -32,6 +33,24 @@ export class Admin implements OnInit {
   editingNews = signal<News | null>(null);
   isLoading = signal(false);
 
+  // Quill editor configuration
+  quillConfig = {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'],
+      ['blockquote', 'code-block'],
+      [{ 'header': 1 }, { 'header': 2 }],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'script': 'sub'}, { 'script': 'super' }],
+      [{ 'indent': '-1'}, { 'indent': '+1' }],
+      [{ 'size': ['small', false, 'large', 'huge'] }],
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      [{ 'color': [] }, { 'background': [] }],
+      [{ 'align': [] }],
+      ['clean'],
+      ['link']
+    ]
+  };
+
   // Form data
   eventForm = {
     title: '',
@@ -50,10 +69,15 @@ export class Admin implements OnInit {
     imageUrl: '',
     author: '',
     publishedAt: '',
+    scheduledPublishAt: '',
     tillDate: '',
     isPublished: true,
     isActive: true,
-    category: 'general' as News['category']
+    isDraft: false,
+    category: 'general' as News['category'],
+    tags: [] as string[],
+    tagInput: '',
+    priority: 'normal' as News['priority']
   };
 
   ngOnInit() {
@@ -160,10 +184,15 @@ export class Admin implements OnInit {
         imageUrl: news.imageUrl || '',
         author: news.author,
         publishedAt: news.publishedAt.toISOString().split('T')[0],
+        scheduledPublishAt: news.scheduledPublishAt ? news.scheduledPublishAt.toISOString().split('T')[0] : '',
         tillDate: news.tillDate ? news.tillDate.toISOString().split('T')[0] : '',
         isPublished: news.isPublished,
         isActive: news.isActive,
-        category: news.category || 'general'
+        isDraft: news.isDraft,
+        category: news.category,
+        tags: [...news.tags],
+        tagInput: '',
+        priority: news.priority || 'normal'
       };
     } else {
       this.editingNews.set(null);
@@ -299,6 +328,12 @@ export class Admin implements OnInit {
         tillDate = new Date(this.newsForm.tillDate + 'T23:59:59');
       }
       
+      // Handle scheduled publishing
+      let scheduledPublishAt: Date | undefined = undefined;
+      if (this.newsForm.scheduledPublishAt) {
+        scheduledPublishAt = new Date(this.newsForm.scheduledPublishAt + 'T09:00:00');
+      }
+
       const newsData = {
         title: this.newsForm.title,
         content: this.newsForm.content,
@@ -306,10 +341,14 @@ export class Admin implements OnInit {
         imageUrl: this.newsForm.imageUrl,
         author: this.newsForm.author || this.authService.getUserDisplayName(),
         publishedAt: publishDate,
+        scheduledPublishAt: scheduledPublishAt,
         tillDate: tillDate,
         isPublished: this.newsForm.isPublished,
         isActive: this.newsForm.isActive,
-        category: this.newsForm.category
+        isDraft: this.newsForm.isDraft,
+        category: this.newsForm.category,
+        tags: this.newsForm.tags,
+        priority: this.newsForm.priority
       };
 
       const editingNews = this.editingNews();
@@ -515,11 +554,60 @@ export class Admin implements OnInit {
       imageUrl: '',
       author: this.authService.getUserDisplayName(),
       publishedAt: new Date().toISOString().split('T')[0],
+      scheduledPublishAt: '',
       tillDate: '',
       isPublished: true,
       isActive: true,
-      category: 'general'
+      isDraft: false,
+      category: 'general',
+      tags: [],
+      tagInput: '',
+      priority: 'normal'
     };
+  }
+
+  // Tag management methods
+  addTag(): void {
+    const tag = this.newsForm.tagInput.trim().toLowerCase();
+    if (tag && !this.newsForm.tags.includes(tag)) {
+      this.newsForm.tags.push(tag);
+      this.newsForm.tagInput = '';
+    }
+  }
+
+  removeTag(index: number): void {
+    this.newsForm.tags.splice(index, 1);
+  }
+
+  onTagInputKeyPress(event: KeyboardEvent): void {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      this.addTag();
+    }
+  }
+
+  get availableTags(): string[] {
+    return this.newsService.getAllTags();
+  }
+
+  get scheduledNews() {
+    return this.newsService.getScheduledNews();
+  }
+
+  get draftNews() {
+    return this.newsService.getDraftNews();
+  }
+
+  async publishScheduledNews(newsItem: News): Promise<void> {
+    if (!newsItem.id) return;
+    await this.newsService.publishNewsNow(newsItem.id);
+  }
+
+  async scheduleNewsItem(newsItem: News, days: number): Promise<void> {
+    if (!newsItem.id) return;
+    const scheduledDate = new Date();
+    scheduledDate.setDate(scheduledDate.getDate() + days);
+    await this.newsService.scheduleNews(newsItem.id, scheduledDate);
   }
 
   // Modal overlay click handling
