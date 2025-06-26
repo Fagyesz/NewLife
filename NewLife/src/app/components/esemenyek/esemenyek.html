@@ -2,20 +2,20 @@
 <section class="page-header">
   <app-bubbles></app-bubbles>
   <div class="container">
-    <h1>Események</h1>
-    <p>Gyülekezeti alkalmaink és programjaink</p>
+    <h1 animateOnScroll="fadeInDown" [animationDelay]="200">Események</h1>
+    <p animateOnScroll="fadeInUp" [animationDelay]="400">Gyülekezeti alkalmaink és programjaink</p>
   </div>
 </section>
 
 <!-- Recurring Events Section -->
 <section class="section recurring-events-section">
   <div class="container">
-    <h2 class="text-center mb-3">Rendszeres alkalmaink</h2>
-    <p class="text-center mb-4">Minden héten ugyanezen időpontokban találkozunk</p>
+    <h2 class="text-center mb-3" animateOnScroll="fadeInDown" [animationDelay]="200">Rendszeres alkalmaink</h2>
+    <p class="text-center mb-4" animateOnScroll="fadeInUp" [animationDelay]="400">Minden héten ugyanezen időpontokban találkozunk</p>
     
     <div class="recurring-events-grid">
       <!-- Sunday Service -->
-      <div class="recurring-event-card featured">
+      <div class="recurring-event-card featured" animateOnScroll="bounceIn" [animationDelay]="300">
         <div class="event-icon">⛪</div>
         <div class="event-info">
           <h3>Vasárnapi istentisztelet</h3>
@@ -31,7 +31,7 @@
       </div>
 
       <!-- Bible Study -->
-      <div class="recurring-event-card">
+      <div class="recurring-event-card" animateOnScroll="bounceIn" [animationDelay]="500">
         <div class="event-icon">📖</div>
         <div class="event-info">
           <h3>Bibliaóra</h3>
@@ -47,7 +47,7 @@
       </div>
 
       <!-- Prayer Meeting -->
-      <div class="recurring-event-card">
+      <div class="recurring-event-card" animateOnScroll="bounceIn" [animationDelay]="700">
         <div class="event-icon">🙏</div>
         <div class="event-info">
           <h3>Imaóra</h3>
@@ -68,8 +68,8 @@
 <!-- Upcoming Events Section -->
 <section class="section upcoming-events-section">
   <div class="container">
-    <h2 class="text-center mb-3">Közelgő események</h2>
-    <p class="text-center mb-4">Különleges alkalmak és programok</p>
+    <h2 class="text-center mb-3" animateOnScroll="fadeInDown" [animationDelay]="200">Közelgő események</h2>
+    <p class="text-center mb-4" animateOnScroll="fadeInUp" [animationDelay]="400">Különleges alkalmak és programok</p>
     
     <!-- Loading State -->
     <div *ngIf="isLoading()" class="text-center">
@@ -79,11 +79,13 @@
     <!-- Events List -->
     <div class="upcoming-events-list" *ngIf="!isLoading()">
       <!-- Dynamic Events from Firebase -->
-      <div *ngFor="let event of getUpcomingEvents(); trackBy: trackByEventId" 
+      <div *ngFor="let event of getUpcomingEvents(); trackBy: trackByEventId; let i = index" 
            class="upcoming-event-card" 
            [class.featured]="event.type === 'service'"
            [class.special]="event.type === 'special'"
-           (click)="openEventModal(event)">
+           (click)="openEventModal(event)"
+           animateOnScroll="slideInLeft" 
+           [animationDelay]="i * 200 + 500">
         
         <div class="event-date-time">
           <div class="event-date">
@@ -122,7 +124,7 @@
       </div>
 
       <!-- No Events Message -->
-      <div *ngIf="getUpcomingEvents().length === 0" class="no-upcoming-events">
+      <div *ngIf="getUpcomingEvents().length === 0" class="no-upcoming-events" animateOnScroll="fadeInUp" [animationDelay]="600">
         <div class="no-events-icon">📅</div>
         <h3>Jelenleg nincsenek különleges események</h3>
         <p>A rendszeres alkalmaink továbbra is várnak minden héten!</p>
@@ -136,21 +138,21 @@
 <section class="section info-section">
   <div class="container">
     <div class="info-content">
-      <h2>További információk</h2>
+      <h2 animateOnScroll="fadeInDown" [animationDelay]="200">További információk</h2>
       <div class="info-cards">
-        <div class="info-card">
+        <div class="info-card" animateOnScroll="slideInLeft" [animationDelay]="300">
           <h4>📍 Helyszín</h4>
           <p><strong>Gyöngyös</strong><br>
           <strong>Páter Kiss Szaléz u. 14</strong><br>
           Parkolási lehetőség az épület mellett</p>
         </div>
         
-        <div class="info-card">
+        <div class="info-card" animateOnScroll="zoomIn" [animationDelay]="500">
           <h4>👥 Közösség</h4>
           <p>Szeretettel várunk minden korosztályt! Gyermekfelügyelet biztosított a vasárnapi istentiszteletek alatt.</p>
         </div>
         
-        <div class="info-card">
+        <div class="info-card" animateOnScroll="slideInRight" [animationDelay]="700">
           <h4>📞 Kapcsolat</h4>
           <p>Kérdéseid esetén keress minket bizalommal! Szívesen segítünk és tájékoztatunk.</p>
         </div>

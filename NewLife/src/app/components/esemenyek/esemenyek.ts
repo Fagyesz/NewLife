@@ -4,10 +4,11 @@ import { EventService, Event } from '../../services/event';
 import { AttendanceService } from '../../services/attendance';
 import { AuthService } from '../../services/auth';
 import { BubblesComponent } from '../../shared/bubbles/bubbles';
+import { AnimateOnScrollDirective } from '../../shared/directives/animate-on-scroll.directive';
 
 @Component({
   selector: 'app-esemenyek',
-  imports: [CommonModule, BubblesComponent],
+  imports: [CommonModule, BubblesComponent, AnimateOnScrollDirective],
   templateUrl: './esemenyek.html',
   styleUrl: './esemenyek.scss'
 })

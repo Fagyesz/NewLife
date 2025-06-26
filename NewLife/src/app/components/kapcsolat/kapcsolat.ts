@@ -3,32 +3,33 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { BubblesComponent } from '../../shared/bubbles/bubbles';
+import { AnimateOnScrollDirective } from '../../shared/directives/animate-on-scroll.directive';
 
 @Component({
   selector: 'app-kapcsolat',
-  imports: [CommonModule, FormsModule, RouterModule, BubblesComponent],
+  imports: [CommonModule, FormsModule, RouterModule, BubblesComponent, AnimateOnScrollDirective],
   templateUrl: './kapcsolat.html',
   styleUrl: './kapcsolat.scss'
 })
 export class Kapcsolat {
-  isSubmitting = signal(false);
+  isSending = signal(false);
   
   // Form data
-  contactForm = {
+  contactData = {
     name: '',
     email: '',
     subject: '',
     message: ''
   };
 
-  async onSubmit() {
-    if (!this.contactForm.name || !this.contactForm.email || !this.contactForm.message) {
+  async sendMessage() {
+    if (!this.contactData.name || !this.contactData.email || !this.contactData.message) {
       alert('Kérjük, töltse ki az összes kötelező mezőt!');
       return;
     }
 
     try {
-      this.isSubmitting.set(true);
+      this.isSending.set(true);
       
       // In a real application, this would send the form data to a server
       // For now, we'll just simulate the submission
@@ -41,12 +42,12 @@ export class Kapcsolat {
       console.error('Error submitting form:', error);
       alert('Hiba történt az üzenet küldése során. Kérjük, próbálja újra később.');
     } finally {
-      this.isSubmitting.set(false);
+      this.isSending.set(false);
     }
   }
 
   private resetForm() {
-    this.contactForm = {
+    this.contactData = {
       name: '',
       email: '',
       subject: '',

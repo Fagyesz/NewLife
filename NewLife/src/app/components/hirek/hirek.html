@@ -2,8 +2,8 @@
 <section class="page-header">
   <app-bubbles></app-bubbles>
   <div class="container">
-    <h1>Hírek</h1>
-    <p>Gyülekezeti hírek és bejelentések</p>
+    <h1 animateOnScroll="fadeInDown" [animationDelay]="200">Hírek</h1>
+    <p animateOnScroll="fadeInUp" [animationDelay]="400">Gyülekezeti hírek és bejelentések</p>
   </div>
 </section>
 
@@ -12,7 +12,7 @@
   <div class="container">
     <div class="news-grid">
       <!-- Featured News -->
-      <article *ngIf="featuredNews()" class="news-card featured" (click)="openNewsModal(featuredNews()!)">
+      <article *ngIf="featuredNews()" class="news-card featured" (click)="openNewsModal(featuredNews()!)" animateOnScroll="zoomIn" [animationDelay]="300">
         <div class="news-image-container" *ngIf="featuredNews()!.imageUrl">
           <img [src]="featuredNews()!.imageUrl" 
                [alt]="featuredNews()!.title"
@@ -34,7 +34,7 @@
       </article>
 
       <!-- Regular News -->
-      <article *ngFor="let newsItem of regularNews()" class="news-card" (click)="openNewsModal(newsItem)">
+      <article *ngFor="let newsItem of regularNews(); let i = index" class="news-card" (click)="openNewsModal(newsItem)" animateOnScroll="fadeInUp" [animationDelay]="i * 200 + 500">
         <div class="news-image-container" *ngIf="newsItem.imageUrl">
           <img [src]="newsItem.imageUrl" 
                [alt]="newsItem.title"
@@ -56,7 +56,7 @@
       </article>
 
       <!-- No News Message -->
-      <div *ngIf="allNews().length === 0" class="no-news">
+      <div *ngIf="allNews().length === 0" class="no-news" animateOnScroll="fadeInUp" [animationDelay]="500">
         <div class="no-news-content">
           <h3>Még nincsenek hírek</h3>
           <p>Jelenleg nincsenek publikált hírek. Kérjük, térjen vissza később!</p>
@@ -71,9 +71,9 @@
   <app-bubbles></app-bubbles>
   <div class="container">
     <div class="newsletter-content">
-      <h2>Iratkozzon fel hírlevelünkre!</h2>
-      <p>Értesüljön elsők között gyülekezeti híreinkről és programjainkról</p>
-      <div class="newsletter-form">
+      <h2 animateOnScroll="fadeInDown" [animationDelay]="200">Iratkozzon fel hírlevelünkre!</h2>
+      <p animateOnScroll="fadeInUp" [animationDelay]="400">Értesüljön elsők között gyülekezeti híreinkről és programjainkról</p>
+      <div class="newsletter-form" animateOnScroll="bounceIn" [animationDelay]="600">
         <input type="email" 
                placeholder="Az Ön email címe" 
                class="email-input"
@@ -85,7 +85,7 @@
           {{ isSubscribing() ? 'Feliratkozás...' : 'Feliratkozás' }}
         </button>
       </div>
-      <p class="newsletter-info">📧 Heti rendszerességgel küldünk hírleveleket. Bármikor leiratkozhat.</p>
+      <p class="newsletter-info" animateOnScroll="fadeInUp" [animationDelay]="800">📧 Heti rendszerességgel küldünk hírleveleket. Bármikor leiratkozhat.</p>
     </div>
   </div>
 </section>

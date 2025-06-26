@@ -3,11 +3,11 @@
   <app-bubbles></app-bubbles>
   <div class="hero-content">
     <div class="container">
-      <h1 class="hero-title">Üdvözöljük az Új Élet Baptista Gyülekezetben!</h1>
-      <p class="hero-subtitle">Gyöngyös szívében egy közösség, ahol Isten szeretete él</p>
+      <h1 class="hero-title" animateOnScroll="fadeInUp" [animationDelay]="200">Üdvözöljük az Új Élet Baptista Gyülekezetben!</h1>
+      <p class="hero-subtitle" animateOnScroll="fadeInUp" [animationDelay]="400">Gyöngyös szívében egy közösség, ahol Isten szeretete él</p>
       
       <!-- Live Status & Countdown -->
-      <div class="hero-status">
+      <div class="hero-status" animateOnScroll="zoomIn" [animationDelay]="600">
         <div *ngIf="isLive()" class="live-indicator">
           <span class="live-badge">🔴 ÉLŐ</span>
           <span>Istentisztelet folyamatban</span>
@@ -18,9 +18,9 @@
         </div>
       </div>
       
-      <div class="hero-buttons">
-        <a routerLink="/esemenyek" class="btn btn-primary">Események</a>
-        <a routerLink="/elo-kozvetites" class="btn btn-secondary">
+      <div class="hero-buttons" animateOnScroll="fadeInUp" [animationDelay]="800">
+        <a routerLink="/esemenyek" class="btn btn-primary btn-glow">Események</a>
+        <a routerLink="/elo-kozvetites" class="btn btn-secondary btn-glow">
           {{ isLive() ? '🔴 Élő közvetítés' : '📺 Közvetítések' }}
         </a>
       </div>
@@ -33,11 +33,11 @@
   <div class="container">
     <div class="row">
       <div class="col">
-        <h2 class="text-center">Szabadság Krisztusban</h2>
-        <p class="text-center lead">
+        <h2 class="text-center" animateOnScroll="fadeInDown" [animationDelay]="200">Szabadság Krisztusban</h2>
+        <p class="text-center lead" animateOnScroll="fadeInUp" [animationDelay]="400">
           "Ha tehát a Fiú megszabadít titeket, valóban szabadok lesztek." - János 8:36
         </p>
-        <p class="text-center">
+        <p class="text-center" animateOnScroll="fadeInUp" [animationDelay]="600">
           Gyülekezetünk egy meleg, szeretetteljes közösség Gyöngyösön, ahol minden ember 
           megtalálhatja helyét Isten családjában. Célunk, hogy az evangélium világossága 
           által új életet találjunk Jézus Krisztusban.
@@ -50,9 +50,12 @@
 <!-- Upcoming Events Preview -->
 <section class="section upcoming-events" *ngIf="upcomingEvents().length > 0">
   <div class="container">
-    <h2 class="text-center">Közelgő események</h2>
+    <h2 class="text-center" animateOnScroll="fadeInDown">Közelgő események</h2>
     <div class="events-preview">
-      <div *ngFor="let event of upcomingEvents()" class="event-preview-card">
+      <div *ngFor="let event of upcomingEvents(); let i = index" 
+           class="event-preview-card" 
+           animateOnScroll="slideInLeft" 
+           [animationDelay]="i * 200 + 300">
         <div class="event-date">
           <span class="event-icon">{{ getEventTypeIcon(event.type) }}</span>
           <span class="event-time">{{ formatEventDate(event.date) }}</span>
@@ -69,7 +72,7 @@
         </div>
       </div>
     </div>
-    <div class="text-center">
+    <div class="text-center" animateOnScroll="fadeInUp" [animationDelay]="800">
       <a routerLink="/esemenyek" class="btn btn-outline">Összes esemény megtekintése →</a>
     </div>
   </div>
@@ -81,21 +84,21 @@
 <section class="section info-cards">
   <div class="container">
     <div class="cards-grid">
-      <div class="card">
+      <div class="card" animateOnScroll="bounceIn" [animationDelay]="200">
         <div class="card-icon">⛪</div>
         <h3>Istentiszteletek</h3>
         <p>Vasárnaponként 10:00-tól várjuk szeretettel a gyülekezetet közös imádságra és ige hallgatására.</p>
         <a routerLink="/elo-kozvetites" class="card-link">Élő közvetítés →</a>
       </div>
       
-      <div class="card">
+      <div class="card" animateOnScroll="bounceIn" [animationDelay]="400">
         <div class="card-icon">👥</div>
         <h3>Közösség</h3>
         <p>Kiscsoportos alkalmak, bibliaórák és közösségi programok minden korosztály számára.</p>
         <a href="https://discord.gg/gTDUpApNae" target="_blank" rel="noopener noreferrer" class="card-link">Discord közösség →</a>
       </div>
       
-      <div class="card">
+      <div class="card" animateOnScroll="bounceIn" [animationDelay]="600">
         <div class="card-icon">📖</div>
         <h3>Bibliatanulmányozás</h3>
         <p>Heti rendszerességgel tartott bibliaórák, ahol együtt kutatjuk Isten igéjét.</p>
@@ -195,3 +198,5 @@
     </div>
   </div>
 </div>
+
+

@@ -102,19 +102,31 @@
 
 @keyframes float {
   0% {
-    transform: translateY(0) scale(0);
+    transform: translateY(0) translateX(0) scale(0) rotate(0deg);
     opacity: 0;
   }
   5% {
-    transform: translateY(-5vh) scale(1);
+    transform: translateY(-5vh) translateX(10px) scale(1) rotate(45deg);
     opacity: 0.8;
   }
+  25% {
+    transform: translateY(-25vh) translateX(-15px) scale(1.1) rotate(135deg);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(-50vh) translateX(20px) scale(0.9) rotate(225deg);
+    opacity: 1;
+  }
+  75% {
+    transform: translateY(-75vh) translateX(-10px) scale(1.05) rotate(315deg);
+    opacity: 0.9;
+  }
   95% {
-    transform: translateY(-100vh) scale(1);
+    transform: translateY(-100vh) translateX(5px) scale(1) rotate(405deg);
     opacity: 0.8;
   }
   100% {
-    transform: translateY(-105vh) scale(0);
+    transform: translateY(-105vh) translateX(0) scale(0) rotate(450deg);
     opacity: 0;
   }
 }

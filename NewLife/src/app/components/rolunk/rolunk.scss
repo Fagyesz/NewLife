@@ -244,8 +244,9 @@ $dark-text: #333333;
     background: linear-gradient(135deg, rgba($primary-green, 0.05) 0%, rgba($primary-blue, 0.05) 100%);
     padding: 2rem;
     border-radius: 15px;
-    border-left: 4px solid $primary-blue;
-    transition: transform 0.3s ease;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    position: relative;
     
     &:hover {
       transform: translateY(-3px);

@@ -2,8 +2,8 @@
 <section class="page-header">
   <app-bubbles></app-bubbles>
   <div class="container">
-    <h1>Kapcsolat</h1>
-    <p>Vegye fel velünk a kapcsolatot</p>
+    <h1 animateOnScroll="fadeInDown" [animationDelay]="200">Kapcsolat</h1>
+    <p animateOnScroll="fadeInUp" [animationDelay]="400">Vegye fel velünk a kapcsolatot</p>
   </div>
 </section>
 
@@ -99,14 +99,14 @@
         <p>Ha kérdése van, vagy szeretne többet tudni gyülekezetünkről, küldjön üzenetet!</p>
       </div>
       
-      <form class="contact-form" (ngSubmit)="onSubmit()" #contactFormRef="ngForm">
+      <form class="contact-form" (ngSubmit)="sendMessage()" #contactFormRef="ngForm">
         <div class="form-row">
           <div class="form-group">
             <label for="name">Név *</label>
             <input type="text" 
                    id="name" 
                    name="name" 
-                   [(ngModel)]="contactForm.name"
+                   [(ngModel)]="contactData.name"
                    required>
           </div>
           
@@ -115,7 +115,7 @@
             <input type="email" 
                    id="email" 
                    name="email" 
-                   [(ngModel)]="contactForm.email"
+                   [(ngModel)]="contactData.email"
                    required>
           </div>
         </div>
@@ -124,7 +124,7 @@
           <label for="subject">Tárgy</label>
           <select id="subject" 
                   name="subject"
-                  [(ngModel)]="contactForm.subject">
+                  [(ngModel)]="contactData.subject">
             <option value="">Válasszon témát...</option>
             <option value="general">Általános kérdés</option>
             <option value="visit">Látogatás</option>
@@ -139,15 +139,15 @@
           <textarea id="message" 
                     name="message" 
                     rows="6" 
-                    [(ngModel)]="contactForm.message"
+                    [(ngModel)]="contactData.message"
                     required></textarea>
         </div>
         
         <div class="form-group">
           <button type="submit" 
                   class="btn btn-primary"
-                  [disabled]="isSubmitting() || !contactFormRef.form.valid">
-            {{ isSubmitting() ? 'Küldés...' : 'Üzenet küldése' }}
+                  [disabled]="isSending() || !contactFormRef.form.valid">
+            {{ isSending() ? 'Küldés...' : 'Üzenet küldése' }}
           </button>
         </div>
       </form>

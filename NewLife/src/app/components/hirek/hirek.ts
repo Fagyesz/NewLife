@@ -4,10 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NewsService, News } from '../../services/user';
 import { BubblesComponent } from '../../shared/bubbles/bubbles';
+import { AnimateOnScrollDirective } from '../../shared/directives/animate-on-scroll.directive';
 
 @Component({
   selector: 'app-hirek',
-  imports: [CommonModule, FormsModule, RouterModule, BubblesComponent],
+  imports: [CommonModule, FormsModule, RouterModule, BubblesComponent, AnimateOnScrollDirective],
   templateUrl: './hirek.html',
   styleUrl: './hirek.scss'
 })
