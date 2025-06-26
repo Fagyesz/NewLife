@@ -111,6 +111,12 @@
         
         <div class="event-actions">
           <button 
+            class="btn btn-calendar"
+            (click)="addToGoogleCalendar(event); $event.stopPropagation()"
+            title="Hozzáadás Google Naptárhoz">
+            📅 Naptárhoz
+          </button>
+          <button 
             *ngIf="event.id"
             [class]="getAttendanceButtonClass(event.id)"
             (click)="toggleAttendance(event); $event.stopPropagation()"
@@ -194,6 +200,12 @@
            </div>
            
            <div class="attendance-actions">
+             <button 
+               class="btn btn-calendar"
+               (click)="addToGoogleCalendar(selectedEvent()!)"
+               title="Hozzáadás Google Naptárhoz">
+               📅 Hozzáadás Google Naptárhoz
+             </button>
              <button 
                [class]="getAttendanceButtonClass(selectedEvent()!.id!)"
                (click)="toggleAttendance(selectedEvent()!)"

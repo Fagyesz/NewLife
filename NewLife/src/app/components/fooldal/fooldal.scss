@@ -791,6 +791,26 @@ $dark-text: #333333;
           padding: 1rem 1.5rem;
           border-radius: 0 10px 10px 0;
           
+          .event-actions {
+            margin-bottom: 1rem;
+            
+            .btn-calendar {
+              background: linear-gradient(135deg, #4285f4 0%, #34a853 100%);
+              color: white;
+              border: none;
+              padding: 0.75rem 2rem;
+              border-radius: 25px;
+              font-weight: 600;
+              box-shadow: 0 2px 10px rgba(66, 133, 244, 0.3);
+              transition: all 0.3s ease;
+              
+              &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 20px rgba(66, 133, 244, 0.4);
+              }
+            }
+          }
+          
           .attendance-info {
             color: $primary-green;
             font-weight: 600;

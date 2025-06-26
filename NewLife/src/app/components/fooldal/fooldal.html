@@ -234,8 +234,16 @@
         
         <div class="event-description">{{ selectedEvent()!.description }}</div>
         
-        <div class="event-details" *ngIf="selectedEvent()!.id">
-          <div class="attendance-info">
+        <div class="event-details">
+          <div class="event-actions">
+            <button 
+              class="btn btn-calendar"
+              (click)="addToGoogleCalendar(selectedEvent()!)"
+              title="Hozzáadás Google Naptárhoz">
+              📅 Hozzáadás Google Naptárhoz
+            </button>
+          </div>
+          <div *ngIf="selectedEvent()!.id" class="attendance-info">
             👥 {{ getAttendanceCount(selectedEvent()!.id!) }} résztvevő
           </div>
         </div>

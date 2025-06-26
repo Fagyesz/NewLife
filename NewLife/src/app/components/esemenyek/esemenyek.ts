@@ -165,4 +165,26 @@ export class Esemenyek implements OnInit {
       imgElement.style.display = 'none';
     }
   }
+
+  // Google Calendar integration
+  addToGoogleCalendar(event: Event): void {
+    const startDate = new Date(event.date);
+    const endDate = new Date(startDate.getTime() + 2 * 60 * 60 * 1000); // Default 2 hours duration
+
+    const formatDate = (date: Date) => {
+      return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+    };
+
+    const params = new URLSearchParams({
+      action: 'TEMPLATE',
+      text: event.title,
+      dates: `${formatDate(startDate)}/${formatDate(endDate)}`,
+      details: event.description || '',
+      location: event.location || 'Új Élet Baptista Gyülekezet',
+      trp: 'false' // Don't show popup
+    });
+
+    const googleCalendarUrl = `https://calendar.google.com/calendar/render?${params.toString()}`;
+    window.open(googleCalendarUrl, '_blank');
+  }
 }
