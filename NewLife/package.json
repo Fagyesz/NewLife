@@ -5,9 +5,14 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:prod": "ng build --configuration=production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:NewLife": "node dist/NewLife/server/server.mjs"
+    "serve:ssr:NewLife": "node dist/NewLife/server/server.mjs",
+    "deploy": "npm run build:prod && firebase deploy --only hosting",
+    "deploy:full": "npm run build:prod && firebase deploy",
+    "firebase:login": "firebase login",
+    "firebase:init": "firebase init"
   },
   "private": true,
   "dependencies": {

@@ -54,15 +54,16 @@ $dark-text: #333333;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 2rem;
+    gap: 1.5rem;
     margin-top: 3rem;
-    max-width: 1000px;
+    max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
     
     .value-card {
-      flex: 0 1 250px;
-      max-width: 280px;
+      flex: 1 1 220px;
+      max-width: 260px;
+      min-width: 220px;
     }
   }
   
@@ -436,7 +437,16 @@ $dark-text: #333333;
   }
 }
 
-// Responsive Design
+// Responsive Design for larger tablets and small desktops
+@media (max-width: 1024px) and (min-width: 769px) {
+  .values-grid .value-card {
+    flex: 1 1 calc(25% - 1rem);
+    max-width: calc(25% - 1rem);
+    min-width: 200px;
+  }
+}
+
+// Responsive Design for tablets
 @media (max-width: 768px) {
   .page-header {
     padding: 3rem 0 2rem;
@@ -470,11 +480,15 @@ $dark-text: #333333;
   }
   
   .visit-info .visit-card,
-  .values-grid .value-card,
   .beliefs-grid .belief-card,
   .leadership-grid .leader-card {
     flex: 1 1 100%;
     max-width: 100%;
+  }
+  
+  .values-grid .value-card {
+    flex: 1 1 calc(50% - 0.5rem);
+    max-width: calc(50% - 0.5rem);
   }
   
   .timeline {
@@ -501,5 +515,18 @@ $dark-text: #333333;
   
   .about-content .lead {
     font-size: 1.1rem;
+  }
+}
+
+// Responsive Design for very small screens
+@media (max-width: 480px) {
+  .values-grid .value-card {
+    flex: 1 1 100%;
+    max-width: 100%;
+    min-width: auto;
+  }
+  
+  .values-grid {
+    gap: 1rem;
   }
 }

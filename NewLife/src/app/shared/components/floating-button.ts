@@ -37,6 +37,9 @@ import { filter } from 'rxjs/operators';
       right: 2rem;
       z-index: 1000;
       pointer-events: none;
+      max-width: calc(100vw - 4rem);
+      max-height: calc(100vh - 4rem);
+      overflow: visible;
     }
     
     .floating-button * {
@@ -86,6 +89,8 @@ import { filter } from 'rxjs/operators';
       flex-direction: column;
       gap: 0.75rem;
       z-index: 1002;
+      max-width: calc(100vw - 4rem);
+      overflow: visible;
     }
     
     .action-button {
@@ -159,43 +164,94 @@ import { filter } from 'rxjs/operators';
     
     @media (max-width: 768px) {
       .floating-button {
-        bottom: 1.5rem;
-        right: 1.5rem;
+        bottom: 1rem;
+        right: 1rem;
+        max-width: calc(100vw - 2rem);
       }
       
       .main-button {
-        width: 64px;
-        height: 64px;
-        box-shadow: 0 10px 30px rgba(57, 147, 68, 0.5);
+        width: 56px;
+        height: 56px;
+        box-shadow: 0 6px 20px rgba(57, 147, 68, 0.4);
         
         .icon {
-          font-size: 1.5rem;
+          font-size: 1.4rem;
         }
         
         &:hover {
-          box-shadow: 0 15px 40px rgba(57, 147, 68, 0.6);
+          box-shadow: 0 8px 25px rgba(57, 147, 68, 0.5);
         }
       }
       
       .actions {
-        bottom: 90px;
+        bottom: 75px;
+        right: 0;
+        max-width: calc(100vw - 2rem);
+        align-items: flex-end;
       }
       
       .action-button {
-        padding: 0.75rem 1rem;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        padding: 0.6rem 0.8rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        max-width: calc(100vw - 4rem);
+        min-width: auto;
+        text-align: left;
         
         .action-icon {
-          font-size: 1.25rem;
+          font-size: 1.1rem;
+          min-width: 18px;
         }
         
         .action-label {
-          font-size: 0.9rem;
-          font-weight: 600;
+          font-size: 0.85rem;
+          font-weight: 500;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 160px;
         }
         
         &:hover {
-          box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+          transform: translateX(-3px);
+        }
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .floating-button {
+        bottom: 0.75rem;
+        right: 0.75rem;
+        max-width: calc(100vw - 1.5rem);
+      }
+      
+      .main-button {
+        width: 52px;
+        height: 52px;
+        
+        .icon {
+          font-size: 1.3rem;
+        }
+      }
+      
+      .actions {
+        bottom: 70px;
+        max-width: calc(100vw - 1.5rem);
+      }
+      
+      .action-button {
+        padding: 0.5rem 0.7rem;
+        border-radius: 20px;
+        max-width: calc(100vw - 3rem);
+        
+        .action-icon {
+          font-size: 1rem;
+          min-width: 16px;
+        }
+        
+        .action-label {
+          font-size: 0.8rem;
+          max-width: 140px;
         }
       }
     }
@@ -218,7 +274,7 @@ export class FloatingButtonComponent {
     { icon: '🔴', label: 'Élő közvetítés', link: '/elo-kozvetites' },
     { icon: '📰', label: 'Hírek', link: '/hirek' },
     { icon: '📞', label: 'Kapcsolat', link: '/kapcsolat' },
-    { icon: '💬', label: 'Discord', href: 'https://discord.gg/gTDUpApNae', target: '_blank' }
+    { icon: '🔐', label: 'Bejelentkezés', link: '/login' }
   ];
 
   isExpanded = signal(false);
