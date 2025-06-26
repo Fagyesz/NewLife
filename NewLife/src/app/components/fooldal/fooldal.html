@@ -112,7 +112,7 @@
     <div class="news-preview">
       <div *ngFor="let newsItem of latestNews()" class="news-preview-card" (click)="openNewsModal(newsItem)">
         <div class="news-image-container" *ngIf="newsItem.imageUrl">
-          <img [src]="newsItem.imageUrl" 
+          <img [lazyImg]="newsItem.imageUrl" 
                [alt]="newsItem.title"
                class="news-image"
                (error)="onImageError($event)">
@@ -183,8 +183,8 @@
       <div class="news-author">👤 {{ selectedNews()!.author }}</div>
       
       <div class="news-content">
-        <img *ngIf="selectedNews()!.imageUrl" 
-             [src]="selectedNews()!.imageUrl" 
+        <img *ngIf="selectedNews()?.imageUrl" 
+             [lazyImg]="selectedNews()!.imageUrl!" 
              [alt]="selectedNews()!.title"
              class="news-image"
              (error)="onImageError($event)">

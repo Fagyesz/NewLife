@@ -13,7 +13,7 @@ import { BubblesComponent } from '../../shared/bubbles/bubbles';
   selector: 'app-admin',
   imports: [CommonModule, FormsModule, QuillModule, BubblesComponent],
   templateUrl: './admin.html',
-  styleUrl: './admin.scss'
+  styleUrl: './admin-base.scss'
 })
 export class Admin implements OnInit {
   authService = inject(AuthService);
