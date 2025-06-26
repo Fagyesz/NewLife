@@ -329,44 +329,7 @@ $dark-text: #333333;
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
     }
     
-    .news-image-container {
-      width: 100%;
-      height: 180px;
-      background: linear-gradient(135deg, rgba($primary-green, 0.1) 0%, rgba($primary-blue, 0.1) 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-      
-      .news-preview-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-        
-        &:hover {
-          transform: scale(1.05);
-        }
-      }
-      
-      .news-placeholder {
-        color: rgba($primary-green, 0.6);
-        font-size: 3rem;
-        text-align: center;
-        
-        .placeholder-icon {
-          display: block;
-          margin-bottom: 0.5rem;
-        }
-        
-        .placeholder-text {
-          font-size: 0.9rem;
-          font-weight: 500;
-          opacity: 0.8;
-        }
-      }
-    }
+
     
     .news-content {
       padding: 1.5rem;

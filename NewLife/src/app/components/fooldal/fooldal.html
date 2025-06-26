@@ -114,12 +114,7 @@
     <h2 class="text-center">Legfrissebb hírek</h2>
     <div class="news-preview">
       <div *ngFor="let newsItem of latestNews()" class="news-preview-card" (click)="openNewsModal(newsItem)">
-        <div class="news-image-container" *ngIf="newsItem.imageUrl">
-          <img [lazyImg]="newsItem.imageUrl" 
-               [alt]="newsItem.title"
-               class="news-image"
-               (error)="onImageError($event)">
-        </div>
+
         <div class="news-content">
           <div class="news-date">{{ formatNewsDate(newsItem.publishedAt) }}</div>
           <h4>{{ newsItem.title }}</h4>
