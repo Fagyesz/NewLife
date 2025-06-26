@@ -650,7 +650,7 @@ $dark-text: #333333;
         flex-direction: column;
         gap: 0.5rem;
         
-        .event-date {
+        .event-date-full {
           display: inline-block;
           background: linear-gradient(135deg, $primary-green 0%, $primary-blue 100%);
           color: $white;
@@ -663,8 +663,8 @@ $dark-text: #333333;
         }
         
         .event-type {
-          background: rgba($primary-green, 0.2);
-          color: $primary-green;
+          background: rgba($accent-yellow, 0.2);
+          color: $dark-text;
           padding: 0.3rem 0.8rem;
           border-radius: 15px;
           font-size: 0.8rem;
@@ -753,7 +753,7 @@ $dark-text: #333333;
       }
       
       // Event modal specific content styling
-      .event-location {
+      .event-location-full {
         background: rgba($primary-blue, 0.1);
         color: $primary-blue;
         padding: 0.5rem 1rem;
@@ -764,7 +764,7 @@ $dark-text: #333333;
         margin-bottom: 2rem;
       }
       
-      .event-content {
+      .event-details {
         .event-image {
           width: 100%;
           max-height: 400px;
@@ -774,7 +774,7 @@ $dark-text: #333333;
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
         
-        .event-description {
+        .event-description-full {
           color: #555;
           line-height: 1.8;
           font-size: 1.1rem;
@@ -785,36 +785,50 @@ $dark-text: #333333;
           overflow-wrap: break-word;
         }
         
-        .event-details {
+        .event-attendance-section {
           background: rgba($primary-green, 0.05);
+          border-radius: 15px;
+          padding: 1.5rem;
           border-left: 4px solid $primary-green;
-          padding: 1rem 1.5rem;
-          border-radius: 0 10px 10px 0;
           
-          .event-actions {
+          .attendance-info {
             margin-bottom: 1rem;
+            
+            h3 {
+              color: $primary-green;
+              margin-bottom: 0.5rem;
+              font-size: 1.2rem;
+            }
+            
+            p {
+              color: #666;
+              margin: 0;
+            }
+          }
+          
+          .attendance-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            
+            button {
+              padding: 0.75rem 2rem;
+              font-weight: 600;
+              border-radius: 25px;
+              transition: all 0.3s ease;
+            }
             
             .btn-calendar {
               background: linear-gradient(135deg, #4285f4 0%, #34a853 100%);
               color: white;
               border: none;
-              padding: 0.75rem 2rem;
-              border-radius: 25px;
-              font-weight: 600;
               box-shadow: 0 2px 10px rgba(66, 133, 244, 0.3);
-              transition: all 0.3s ease;
               
               &:hover {
                 transform: translateY(-2px);
                 box-shadow: 0 5px 20px rgba(66, 133, 244, 0.4);
               }
             }
-          }
-          
-          .attendance-info {
-            color: $primary-green;
-            font-weight: 600;
-            font-size: 1rem;
           }
         }
       }
