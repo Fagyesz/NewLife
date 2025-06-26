@@ -32,11 +32,14 @@ export class EventService {
   }
 
   private loadEvents(): void {
+    console.log('🔄 Starting to load events from Firestore...');
     try {
       const eventsRef = collection(this.firestore, 'events');
       const q = query(eventsRef, orderBy('date', 'asc'));
       
+      console.log('📡 Setting up Firestore events listener...');
       onSnapshot(q, (snapshot) => {
+        console.log('📦 Received Firestore snapshot with', snapshot.size, 'documents');
         const events: Event[] = [];
         snapshot.forEach((doc) => {
           const data = doc.data();
@@ -50,15 +53,18 @@ export class EventService {
         });
         this.events.set(events);
         this.firebaseConnected.set(true);
-        console.log('📅 Loaded', events.length, 'events from Firestore');
+        console.log('✅ Successfully loaded', events.length, 'events from Firestore');
       }, (error) => {
-        console.warn('Firebase events listener error, but can still create events:', error);
-        // Don't set firebaseConnected to false, just load fallback for display
+        console.error('❌ Firebase events listener error:', error);
+        console.log('🔄 Loading fallback events...');
         this.loadFallbackEvents();
+        this.firebaseConnected.set(false);
       });
     } catch (error) {
-      console.warn('Failed to initialize events listener, but can still create events:', error);
+      console.error('❌ Failed to initialize events listener:', error);
+      console.log('🔄 Loading fallback events...');
       this.loadFallbackEvents();
+      this.firebaseConnected.set(false);
     }
   }
 

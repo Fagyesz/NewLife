@@ -189,11 +189,14 @@ export class NewsService {
   }
 
   private loadNews(): void {
+    console.log('🔄 Starting to load news from Firestore...');
     try {
       const newsRef = collection(this.firestore, 'news');
       const q = query(newsRef, orderBy('publishedAt', 'desc'));
       
+      console.log('📡 Setting up Firestore news listener...');
       onSnapshot(q, (snapshot) => {
+        console.log('📦 Received Firestore snapshot with', snapshot.size, 'news documents');
         const newsItems: News[] = [];
         snapshot.forEach((doc) => {
           const data = doc.data();
@@ -208,13 +211,15 @@ export class NewsService {
           } as News);
         });
         this.news.set(newsItems);
-        console.log('📰 Loaded', newsItems.length, 'news items from Firestore');
+        console.log('✅ Successfully loaded', newsItems.length, 'news items from Firestore');
       }, (error) => {
-        console.warn('Firebase news listener error, loading fallback:', error);
+        console.error('❌ Firebase news listener error:', error);
+        console.log('🔄 Loading fallback news...');
         this.loadFallbackNews();
       });
     } catch (error) {
-      console.warn('Failed to initialize news listener, loading fallback:', error);
+      console.error('❌ Failed to initialize news listener:', error);
+      console.log('🔄 Loading fallback news...');
       this.loadFallbackNews();
     }
   }

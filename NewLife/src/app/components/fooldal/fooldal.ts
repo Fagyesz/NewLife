@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy, signal } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { EventService, Event } from '../../services/event';
@@ -19,12 +19,12 @@ export class Fooldal implements OnInit, OnDestroy {
   private attendanceService = inject(AttendanceService);
   private newsService = inject(NewsService);
   
-  // Signals for reactive state
-  upcomingEvents = signal<Event[]>([]);
-  nextSundayService = signal<Event | null>(null);
+  // Signals for reactive state - computed from services
+  upcomingEvents = computed(() => this.eventService.getUpcomingEvents().slice(0, 3));
+  nextSundayService = computed(() => this.eventService.getNextSundayService() || null);
   countdownTimer = signal<string>('');
   isLive = signal<boolean>(false);
-  latestNews = signal<News[]>([]);
+  latestNews = computed(() => this.newsService.getRecentNews(2));
   
   // Modal state
   showNewsModal = signal<boolean>(false);
@@ -35,8 +35,6 @@ export class Fooldal implements OnInit, OnDestroy {
   private countdownInterval: any;
 
   ngOnInit(): void {
-    this.loadUpcomingEvents();
-    this.loadLatestNews();
     this.startCountdown();
     this.checkLiveStatus();
   }
@@ -47,21 +45,7 @@ export class Fooldal implements OnInit, OnDestroy {
     }
   }
 
-  private loadUpcomingEvents(): void {
-    // Get next 3 upcoming events for preview
-    const upcoming = this.eventService.getUpcomingEvents().slice(0, 3);
-    this.upcomingEvents.set(upcoming);
-    
-    // Get next Sunday service for countdown
-    const nextService = this.eventService.getNextSundayService();
-    this.nextSundayService.set(nextService || null);
-  }
 
-  private loadLatestNews(): void {
-    // Get latest 2 published news for preview
-    const latest = this.newsService.getRecentNews(2);
-    this.latestNews.set(latest);
-  }
 
   private startCountdown(): void {
     this.updateCountdown();
