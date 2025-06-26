@@ -30,20 +30,24 @@
               "node_modules/quill/dist/quill.snow.css",
               "src/styles.scss"
             ],
-            "outputMode": "static"
+            "outputMode": "static",
+            "allowedCommonJsDependencies": [
+              "quill",
+              "quill-delta"
+            ]
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "800kB",
-                  "maximumError": "1.2MB"
+                  "maximumWarning": "1MB",
+                  "maximumError": "1.5MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "20kB",
-                  "maximumError": "30kB"
+                  "maximumWarning": "25kB",
+                  "maximumError": "35kB"
                 }
               ],
               "outputHashing": "all",

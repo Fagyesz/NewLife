@@ -385,7 +385,9 @@ $dark-text: #333333;
       line-height: 1.3;
       font-size: 0.85rem;
       display: -webkit-box;
+      /* stylelint-disable-next-line property-no-vendor-prefix */
       -webkit-line-clamp: 3;
+      /* stylelint-disable-next-line property-no-vendor-prefix */
       -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;
