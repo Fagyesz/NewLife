@@ -34,10 +34,10 @@ export class AnimateOnScrollDirective implements OnInit, OnDestroy {
     }
     
     this.setupElement();
-    // Small delay to ensure page is fully loaded before checking visibility
+    // Delay to ensure page is fully loaded and rendered before checking visibility
     setTimeout(() => {
       this.createObserver();
-    }, 100);
+    }, 200);
   }
 
   ngOnDestroy() {
@@ -105,13 +105,16 @@ export class AnimateOnScrollDirective implements OnInit, OnDestroy {
       return;
     }
 
-    // Check if element is already visible
+    // Check if element is already visible with a more generous viewport check
     const rect = this.elementRef.nativeElement.getBoundingClientRect();
-    const isInitiallyVisible = rect.top < window.innerHeight && rect.bottom > 0;
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+    const isInitiallyVisible = rect.top < viewportHeight * 0.9 && rect.bottom > 0;
 
     if (isInitiallyVisible) {
-      // If initially visible, animate immediately without observer
-      this.animateElement();
+      // If initially visible, animate with a small delay to ensure page is ready
+      setTimeout(() => {
+        this.animateElement();
+      }, this.animationDelay + 50);
       return;
     }
 
@@ -131,6 +134,13 @@ export class AnimateOnScrollDirective implements OnInit, OnDestroy {
     );
 
     this.observer.observe(this.elementRef.nativeElement);
+    
+    // Fallback: if element is still not animated after 1 second, animate it
+    setTimeout(() => {
+      if (!this.hasAnimated()) {
+        this.animateElement();
+      }
+    }, 1000);
   }
 
   private animateElement() {
