@@ -185,6 +185,9 @@ export class NewsService {
   isLoading = signal(false);
 
   constructor() {
+    // Load fallback data immediately for initial display
+    this.loadFallbackNews();
+    // Then try to load real data from Firebase
     this.loadNews();
   }
 
@@ -207,7 +210,10 @@ export class NewsService {
             updatedAt: data['updatedAt']?.toDate()
           } as News);
         });
-        this.news.set(newsItems);
+        // Only update if we got news items, otherwise keep fallback data
+        if (newsItems.length > 0) {
+          this.news.set(newsItems);
+        }
         console.log('📰 Loaded', newsItems.length, 'news items from Firestore');
       }, (error) => {
         console.warn('Firebase news listener error, loading fallback:', error);
