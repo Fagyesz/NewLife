@@ -4,6 +4,7 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
+    "site": "bapti",
     "public": "dist/NewLife/browser",
     "ignore": [
       "firebase.json",
