@@ -32,17 +32,74 @@ export class Fooldal implements OnInit, OnDestroy {
   showEventModal = signal<boolean>(false);
   selectedEvent = signal<Event | null>(null);
   
+  // Attendance state
+  isLoading = signal(false);
+  attendanceStates = signal<Map<string, boolean>>(new Map());
+  
   private countdownInterval: any;
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.startCountdown();
     this.checkLiveStatus();
+    await this.loadAttendanceStates();
   }
 
   ngOnDestroy(): void {
     if (this.countdownInterval) {
       clearInterval(this.countdownInterval);
     }
+  }
+
+  private async loadAttendanceStates() {
+    const events = this.upcomingEvents();
+    const states = new Map<string, boolean>();
+    
+    for (const event of events) {
+      if (event.id) {
+        const hasAttended = await this.attendanceService.hasMarkedAttendance(event.id);
+        states.set(event.id, hasAttended);
+      }
+    }
+    
+    this.attendanceStates.set(states);
+  }
+
+  async toggleAttendance(event: Event) {
+    if (!event.id) return;
+
+    try {
+      this.isLoading.set(true);
+      const currentState = this.attendanceStates().get(event.id) || false;
+      
+      if (currentState) {
+        await this.attendanceService.removeAttendance(event.id);
+      } else {
+        await this.attendanceService.markAttendance(event.id);
+      }
+      
+      // Update local state
+      const newStates = new Map(this.attendanceStates());
+      newStates.set(event.id, !currentState);
+      this.attendanceStates.set(newStates);
+      
+    } catch (error) {
+      console.error('Error toggling attendance:', error);
+      alert('Hiba történt a részvétel jelzése során: ' + (error as Error).message);
+    } finally {
+      this.isLoading.set(false);
+    }
+  }
+
+  hasMarkedAttendance(eventId: string): boolean {
+    return this.attendanceStates().get(eventId) || false;
+  }
+
+  getAttendanceButtonText(eventId: string): string {
+    return this.hasMarkedAttendance(eventId) ? 'Mégse' : 'Ott leszek';
+  }
+
+  getAttendanceButtonClass(eventId: string): string {
+    return this.hasMarkedAttendance(eventId) ? 'btn btn-secondary' : 'btn btn-primary';
   }
 
 

@@ -240,14 +240,20 @@
             <p>{{ getAttendanceCount(selectedEvent()!.id!) }} fő jelölte meg, hogy részt vesz ezen az eseményen.</p>
           </div>
           
-          <div class="attendance-actions">
-            <button 
-              class="btn btn-calendar"
-              (click)="addToGoogleCalendar(selectedEvent()!)"
-              title="Hozzáadás Google Naptárhoz">
-              📅 Hozzáadás Google Naptárhoz
-            </button>
-          </div>
+                     <div class="attendance-actions">
+             <button 
+               class="btn btn-calendar"
+               (click)="addToGoogleCalendar(selectedEvent()!)"
+               title="Hozzáadás Google Naptárhoz">
+               📅 Hozzáadás Google Naptárhoz
+             </button>
+             <button 
+               [class]="getAttendanceButtonClass(selectedEvent()!.id!)"
+               (click)="toggleAttendance(selectedEvent()!)"
+               [disabled]="isLoading()">
+               {{ getAttendanceButtonText(selectedEvent()!.id!) }}
+             </button>
+           </div>
         </div>
       </div>
     </div>
