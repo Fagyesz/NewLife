@@ -135,10 +135,16 @@ export class AnimateOnScrollDirective implements OnInit, OnDestroy {
 
     this.observer.observe(this.elementRef.nativeElement);
     
-    // Fallback: if element is still not animated after 1 second, animate it
+    // Fallback: if element is visible but still not animated after 1 second, animate it
     setTimeout(() => {
       if (!this.hasAnimated()) {
-        this.animateElement();
+        const rect = this.elementRef.nativeElement.getBoundingClientRect();
+        const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+        const isCurrentlyVisible = rect.top < viewportHeight * 0.9 && rect.bottom > 0;
+        
+        if (isCurrentlyVisible) {
+          this.animateElement();
+        }
       }
     }, 1000);
   }
