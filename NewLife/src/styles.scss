@@ -46,6 +46,22 @@ body, html {
   pointer-events: auto;
 }
 
+// Animation control utilities
+.animation-disabled {
+  animation: none !important;
+  transition: none !important;
+}
+
+.animation-paused {
+  animation-play-state: paused !important;
+}
+
+// Prevent animation conflicts during page transitions
+body.page-transitioning * {
+  animation-duration: 0s !important;
+  transition-duration: 0s !important;
+}
+
 html, body {
   height: 100%;
   font-family: 'Roboto', sans-serif;
@@ -192,11 +208,21 @@ img[lazyImg] {
 .btn {
   &.btn-animated {
     animation: pulse 2s infinite;
+    
+    // Allow disabling animation
+    &.animation-paused {
+      animation-play-state: paused;
+    }
   }
   
   &.btn-glow {
     &:hover {
       animation: glow 1.5s ease-in-out infinite alternate;
+    }
+    
+    // Remove any existing animations when not hovering
+    &:not(:hover) {
+      animation: none;
     }
   }
 }

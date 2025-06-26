@@ -1,10 +1,27 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AnimationStateService {
+  private router = inject(Router);
   private animatedElements = new Set<string>();
+  private currentPath = '';
+
+  constructor() {
+    // Clear animation state on navigation
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      // If navigating to a different page, clear animation state
+      if (this.currentPath && this.currentPath !== event.url) {
+        this.clearAnimationState();
+      }
+      this.currentPath = event.url;
+    });
+  }
 
   isAnimated(elementId: string): boolean {
     return this.animatedElements.has(elementId);
@@ -12,6 +29,26 @@ export class AnimationStateService {
 
   markAsAnimated(elementId: string): void {
     this.animatedElements.add(elementId);
+  }
+
+  clearAnimationState(): void {
+    this.animatedElements.clear();
+  }
+
+  pauseAllAnimations(): void {
+    document.body.classList.add('animation-paused');
+  }
+
+  resumeAllAnimations(): void {
+    document.body.classList.remove('animation-paused');
+  }
+
+  disableAnimations(): void {
+    document.body.classList.add('animation-disabled');
+  }
+
+  enableAnimations(): void {
+    document.body.classList.remove('animation-disabled');
   }
 
   createElementId(element: HTMLElement, animationType: string): string {

@@ -25,6 +25,9 @@ export class AnimateOnScrollDirective implements OnInit, OnDestroy {
       this.animateOnScroll
     );
     
+    // Always reset element state first to prevent conflicts
+    this.resetElement();
+    
     if (this.animationState.isAnimated(this.elementId)) {
       this.setFinalState();
       return;
@@ -40,6 +43,13 @@ export class AnimateOnScrollDirective implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.observer) {
       this.observer.disconnect();
+    }
+    
+    // Clean up any running animations
+    const element = this.elementRef.nativeElement;
+    if (element) {
+      element.style.animation = 'none';
+      element.style.transition = 'none';
     }
   }
 
@@ -123,12 +133,20 @@ export class AnimateOnScrollDirective implements OnInit, OnDestroy {
     this.animationState.markAsAnimated(this.elementId); // Mark globally
     const element = this.elementRef.nativeElement;
     
+    // Clear any existing animations to prevent conflicts
+    element.style.animation = 'none';
+    
     requestAnimationFrame(() => {
       element.style.opacity = '1';
       element.style.transform = this.getFinalTransform();
       
       if (this.animateOnScroll === 'bounceIn') {
         element.style.animation = `bounceIn ${this.animationDuration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+        
+        // Clean up animation after completion
+        setTimeout(() => {
+          element.style.animation = 'none';
+        }, this.animationDuration + 100);
       }
     });
   }
@@ -144,11 +162,20 @@ export class AnimateOnScrollDirective implements OnInit, OnDestroy {
 
 
 
+  private resetElement(): void {
+    const element = this.elementRef.nativeElement;
+    element.style.animation = 'none';
+    element.style.transition = 'none';
+    element.style.transform = '';
+    element.style.opacity = '';
+  }
+
   private setFinalState(): void {
     this.hasAnimated.set(true);
     const element = this.elementRef.nativeElement;
     element.style.opacity = '1';
     element.style.transform = this.getFinalTransform();
     element.style.transition = 'none'; // No transition for already animated elements
+    element.style.animation = 'none'; // Ensure no animations are running
   }
 } 
