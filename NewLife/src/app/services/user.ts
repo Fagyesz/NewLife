@@ -201,6 +201,7 @@ export class NewsService {
             id: doc.id,
             ...data,
             publishedAt: data['publishedAt'].toDate(),
+            scheduledPublishAt: data['scheduledPublishAt']?.toDate(),
             tillDate: data['tillDate']?.toDate(),
             createdAt: data['createdAt']?.toDate(),
             updatedAt: data['updatedAt']?.toDate()
@@ -300,12 +301,12 @@ export class NewsService {
     try {
       this.isLoading.set(true);
       
-      // Handle special case: if tillDate is explicitly set to null, we want to delete the field
+      // Handle special cases: explicitly remove fields when set to null
       const updateData: any = { updatedAt: new Date() };
       
       for (const [key, value] of Object.entries(updates)) {
-        if (key === 'tillDate' && value === null) {
-          // Use Firebase FieldValue.delete() to remove the field
+        if ((key === 'tillDate' || key === 'scheduledPublishAt') && value === null) {
+          // Use null to remove the field from Firebase
           updateData[key] = null;
         } else if (value !== undefined) {
           updateData[key] = value;
@@ -430,9 +431,13 @@ export class NewsService {
     );
   }
 
-  // Get draft news (unpublished content)
+  // Get draft news (unpublished content that is NOT scheduled)
   getDraftNews(): News[] {
-    return this.news().filter(item => item.isDraft);
+    const now = new Date();
+    return this.news().filter(item => 
+      item.isDraft && 
+      (!item.scheduledPublishAt || item.scheduledPublishAt <= now)
+    );
   }
 
   // Get news by tag

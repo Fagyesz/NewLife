@@ -57,7 +57,14 @@ export class AnimateOnScrollDirective implements OnInit, OnDestroy {
     const element = this.elementRef.nativeElement;
     element.style.opacity = '0';
     element.style.transform = this.getInitialTransform();
-    element.style.transition = `all ${this.animationDuration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+    
+    // Use different timing functions for different animation types
+    if (this.animateOnScroll === 'bounceIn') {
+      element.style.transition = `all ${this.animationDuration}ms cubic-bezier(0.68, -0.55, 0.265, 1.55)`;
+    } else {
+      element.style.transition = `all ${this.animationDuration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
+    }
+    
     element.style.transitionDelay = `${this.animationDelay}ms`;
   }
 
@@ -140,14 +147,16 @@ export class AnimateOnScrollDirective implements OnInit, OnDestroy {
       element.style.opacity = '1';
       element.style.transform = this.getFinalTransform();
       
+      // For bounceIn, use the bounce timing function
       if (this.animateOnScroll === 'bounceIn') {
-        element.style.animation = `bounceIn ${this.animationDuration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94)`;
-        
-        // Clean up animation after completion
-        setTimeout(() => {
-          element.style.animation = 'none';
-        }, this.animationDuration + 100);
+        element.style.transition = `all ${this.animationDuration}ms cubic-bezier(0.68, -0.55, 0.265, 1.55)`;
+        element.style.transitionDelay = `${this.animationDelay}ms`;
       }
+      
+      // Clean up transition after animation completes
+      setTimeout(() => {
+        element.style.transition = ''; // Clear inline styles to allow CSS rules
+      }, this.animationDuration + this.animationDelay + 50);
     });
   }
 
@@ -175,7 +184,7 @@ export class AnimateOnScrollDirective implements OnInit, OnDestroy {
     const element = this.elementRef.nativeElement;
     element.style.opacity = '1';
     element.style.transform = this.getFinalTransform();
-    element.style.transition = 'none'; // No transition for already animated elements
-    element.style.animation = 'none'; // Ensure no animations are running
+    element.style.animation = 'none';
+    element.style.transition = ''; // Clear transition to allow CSS rules to take effect
   }
 } 

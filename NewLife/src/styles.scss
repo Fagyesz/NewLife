@@ -56,6 +56,14 @@ body, html {
   animation-play-state: paused !important;
 }
 
+// Prevent conflicts during scroll animations (simplified)
+.scroll-animating {
+  &:hover {
+    transform: none !important;
+    // Temporarily disable hover effects during scroll animation
+  }
+}
+
 // Prevent animation conflicts during page transitions
 body.page-transitioning * {
   animation-duration: 0s !important;

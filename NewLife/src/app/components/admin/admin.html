@@ -141,15 +141,17 @@
           <div *ngFor="let event of upcomingEvents" class="event-item upcoming">
             <div class="event-info">
               <h4>{{ event.title }}</h4>
-              <p>{{ event.description }}</p>
+              <p class="event-description">{{ event.description || 'Nincs leírás megadva' }}</p>
               <div class="event-meta">
                 <span class="date">📅 {{ formatEventDate(event.date) }}</span>
                 <span class="location">📍 {{ event.location }}</span>
-                <span class="type">{{ event.type }}</span>
+                <span class="type">🎯 {{ getEventTypeText(event.type) }}</span>
+                <span *ngIf="event.imageUrl" class="has-image">🖼️ Kép</span>
               </div>
             </div>
-            <div class="event-stats">
-              <span class="attendance">{{ getEventAttendance(event.id || '') }} résztvevő</span>
+            <div class="event-status">
+              <span class="status-badge upcoming">📅 Közelgő</span>
+              <span class="attendance-badge">👥 {{ getEventAttendance(event.id || '') }} résztvevő</span>
             </div>
             <div class="event-actions">
               <button class="btn btn-secondary" (click)="openEventForm(event)">
@@ -171,29 +173,31 @@
       <!-- Past Events -->
       <div class="events-subsection">
         <h3>Múltbeli események ({{ pastEvents.length }})</h3>
-    <div class="events-list">
+        <div class="events-list">
           <div *ngFor="let event of pastEvents" class="event-item past">
-        <div class="event-info">
+            <div class="event-info">
               <h4>{{ event.title }}</h4>
-          <p>{{ event.description }}</p>
-          <div class="event-meta">
-            <span class="date">📅 {{ formatEventDate(event.date) }}</span>
-            <span class="location">📍 {{ event.location }}</span>
-            <span class="type">{{ event.type }}</span>
+              <p class="event-description">{{ event.description || 'Nincs leírás megadva' }}</p>
+              <div class="event-meta">
+                <span class="date">📅 {{ formatEventDate(event.date) }}</span>
+                <span class="location">📍 {{ event.location }}</span>
+                <span class="type">🎯 {{ getEventTypeText(event.type) }}</span>
+                <span *ngIf="event.imageUrl" class="has-image">🖼️ Kép</span>
+              </div>
+            </div>
+            <div class="event-status">
+              <span class="status-badge past">📜 Múltbeli</span>
+              <span class="attendance-badge">👥 {{ getEventAttendance(event.id || '') }} résztvevő</span>
+            </div>
+            <div class="event-actions">
+              <button class="btn btn-secondary" (click)="openEventForm(event)">
+                ✏️ Szerkesztés
+              </button>
+              <button class="btn btn-danger" (click)="deleteEvent(event)" [disabled]="isLoading()">
+                🗑️ Törlés
+              </button>
+            </div>
           </div>
-        </div>
-        <div class="event-stats">
-          <span class="attendance">{{ getEventAttendance(event.id || '') }} résztvevő</span>
-        </div>
-        <div class="event-actions">
-          <button class="btn btn-secondary" (click)="openEventForm(event)">
-            ✏️ Szerkesztés
-          </button>
-          <button class="btn btn-danger" (click)="deleteEvent(event)" [disabled]="isLoading()">
-            🗑️ Törlés
-          </button>
-        </div>
-      </div>
 
           <!-- No Past Events -->
           <div *ngIf="pastEvents.length === 0" class="no-events">
@@ -263,39 +267,7 @@
         </div>
       </div>
 
-      <!-- Unpublished News -->
-      <div class="news-subsection">
-        <h3>Vázlatok ({{ unpublishedNews.length }})</h3>
-        <div class="news-list">
-          <div *ngFor="let newsItem of unpublishedNews" class="news-item draft">
-            <div class="news-info">
-              <h4>{{ newsItem.title }}</h4>
-              <p class="news-summary">{{ newsItem.summary || (newsItem.content | slice:0:100) + '...' }}</p>
-              <div class="news-meta">
-                <span class="date">📅 {{ formatNewsDate(newsItem.publishedAt) }}</span>
-                <span class="author">👤 {{ newsItem.author }}</span>
-                <span class="category">📝 {{ getCategoryText(newsItem.category || 'general') }}</span>
-              </div>
-            </div>
-            <div class="news-status">
-              <span class="status-badge draft">📝 Vázlat</span>
-            </div>
-            <div class="news-actions">
-              <button class="btn btn-secondary" (click)="openNewsForm(newsItem)">
-                ✏️ Szerkesztés
-              </button>
-              <button class="btn btn-danger" (click)="deleteNews(newsItem)" [disabled]="isLoading()">
-                🗑️ Törlés
-              </button>
-            </div>
-          </div>
 
-          <!-- No Unpublished News -->
-          <div *ngIf="unpublishedNews.length === 0" class="no-news">
-            <p>Nincsenek vázlatok.</p>
-          </div>
-        </div>
-      </div>
 
       <!-- Expired News -->
       <div class="news-subsection">
@@ -619,16 +591,17 @@
       </div>
 
       <!-- Scheduling Section -->
-      <div class="form-row">
+      <div class="form-row" *ngIf="newsForm.publishOption === 'schedule'">
         <div class="form-group">
-          <label for="scheduledDate">Ütemezett publikálás</label>
+          <label for="scheduledDate">Ütemezett publikálás dátuma *</label>
           <input 
             type="date" 
             id="scheduledDate" 
             [(ngModel)]="newsForm.scheduledPublishAt" 
             name="scheduledDate" 
-            class="form-control">
-          <small class="form-help">Ha kitölti, a hír automatikusan megjelenik a megadott napon</small>
+            class="form-control"
+            [required]="newsForm.publishOption === 'schedule'">
+          <small class="form-help">A hír automatikusan megjelenik a megadott napon</small>
         </div>
 
         <div class="form-group">
@@ -699,28 +672,38 @@
          </div>
 
         <div class="form-group">
-          <div class="checkbox-group">
-            <label for="newsPublished" class="checkbox-label">
+          <label class="form-label">Publikálási opciók</label>
+          <div class="radio-group">
+            <label class="radio-label">
               <input 
-                type="checkbox" 
-                id="newsPublished" 
-                [(ngModel)]="newsForm.isPublished" 
-                name="newsPublished">
-              <span class="checkbox-text">Azonnal publikálás</span>
+                type="radio" 
+                [(ngModel)]="newsForm.publishOption" 
+                name="publishOption" 
+                value="draft"
+                (change)="onPublishOptionChange()">
+              <span class="radio-text">📝 Mentés vázlatként</span>
             </label>
-            <label for="newsDraft" class="checkbox-label">
+            <label class="radio-label">
               <input 
-                type="checkbox" 
-                id="newsDraft" 
-                [(ngModel)]="newsForm.isDraft" 
-                name="newsDraft">
-              <span class="checkbox-text">Mentés vázlatként</span>
+                type="radio" 
+                [(ngModel)]="newsForm.publishOption" 
+                name="publishOption" 
+                value="publish"
+                (change)="onPublishOptionChange()">
+              <span class="radio-text">🚀 Azonnali publikálás</span>
+            </label>
+            <label class="radio-label">
+              <input 
+                type="radio" 
+                [(ngModel)]="newsForm.publishOption" 
+                name="publishOption" 
+                value="schedule"
+                (change)="onPublishOptionChange()">
+              <span class="radio-text">⏰ Ütemezett publikálás</span>
             </label>
           </div>
           <small class="form-help">
-            • Ha "Azonnal publikálás" be van jelölve: a hír rögtön megjelenik<br>
-            • Ha "Mentés vázlatként" be van jelölve: a hír vázlatként kerül mentésre<br>
-            • Ha "Ütemezett publikálás" ki van töltve: a hír az adott napon jelenik meg
+            Válassza ki, hogy a hír hogyan kerüljön mentésre és publikálásra
           </small>
         </div>
       </div>

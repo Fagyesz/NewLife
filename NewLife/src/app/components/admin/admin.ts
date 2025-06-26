@@ -13,7 +13,7 @@ import { BubblesComponent } from '../../shared/bubbles/bubbles';
   selector: 'app-admin',
   imports: [CommonModule, FormsModule, QuillModule, BubblesComponent],
   templateUrl: './admin.html',
-  styleUrl: './admin-base.scss'
+  styleUrl: './admin.scss'
 })
 export class Admin implements OnInit {
   authService = inject(AuthService);
@@ -77,7 +77,8 @@ export class Admin implements OnInit {
     category: 'general' as News['category'],
     tags: [] as string[],
     tagInput: '',
-    priority: 'normal' as News['priority']
+    priority: 'normal' as News['priority'],
+    publishOption: 'draft' as 'draft' | 'publish' | 'schedule'
   };
 
   ngOnInit() {
@@ -137,9 +138,7 @@ export class Admin implements OnInit {
     );
   }
 
-  get unpublishedNews() {
-    return this.news.filter(item => !item.isPublished);
-  }
+
 
   get expiredNews() {
     return this.newsService.getExpiredNews();
@@ -177,6 +176,17 @@ export class Admin implements OnInit {
   openNewsForm(news?: News) {
     if (news) {
       this.editingNews.set(news);
+      // Determine publishOption based on existing news state
+      let publishOption: 'draft' | 'publish' | 'schedule' = 'draft';
+      const now = new Date();
+      if (news.scheduledPublishAt && news.isDraft && news.scheduledPublishAt > now) {
+        publishOption = 'schedule';
+      } else if (news.isPublished && !news.isDraft) {
+        publishOption = 'publish';
+      } else {
+        publishOption = 'draft';
+      }
+      
       this.newsForm = {
         title: news.title,
         content: news.content,
@@ -192,7 +202,8 @@ export class Admin implements OnInit {
         category: news.category,
         tags: [...news.tags],
         tagInput: '',
-        priority: news.priority || 'normal'
+        priority: news.priority || 'normal',
+        publishOption: publishOption
       };
     } else {
       this.editingNews.set(null);
@@ -317,6 +328,12 @@ export class Admin implements OnInit {
       return;
     }
 
+    // Validate scheduled publishing
+    if (this.newsForm.publishOption === 'schedule' && !this.newsForm.scheduledPublishAt) {
+      alert('Kérjük, adja meg az ütemezett publikálás dátumát!');
+      return;
+    }
+
     try {
       this.isLoading.set(true);
       
@@ -330,8 +347,32 @@ export class Admin implements OnInit {
       
       // Handle scheduled publishing
       let scheduledPublishAt: Date | undefined = undefined;
-      if (this.newsForm.scheduledPublishAt) {
+      if (this.newsForm.publishOption === 'schedule' && this.newsForm.scheduledPublishAt) {
         scheduledPublishAt = new Date(this.newsForm.scheduledPublishAt + 'T09:00:00');
+      }
+
+      // Set publish flags based on publishOption
+      let isPublished: boolean;
+      let isDraft: boolean;
+      
+      switch (this.newsForm.publishOption) {
+        case 'publish':
+          isPublished = true;
+          isDraft = false;
+          // Clear scheduled date when publishing immediately
+          scheduledPublishAt = undefined;
+          break;
+        case 'schedule':
+          isPublished = false;
+          isDraft = true;
+          break;
+        case 'draft':
+        default:
+          isPublished = false;
+          isDraft = true;
+          // Clear scheduled date when switching to draft
+          scheduledPublishAt = undefined;
+          break;
       }
 
       const newsData = {
@@ -343,9 +384,9 @@ export class Admin implements OnInit {
         publishedAt: publishDate,
         scheduledPublishAt: scheduledPublishAt,
         tillDate: tillDate,
-        isPublished: this.newsForm.isPublished,
+        isPublished: isPublished,
         isActive: this.newsForm.isActive,
-        isDraft: this.newsForm.isDraft,
+        isDraft: isDraft,
         category: this.newsForm.category,
         tags: this.newsForm.tags,
         priority: this.newsForm.priority
@@ -353,15 +394,20 @@ export class Admin implements OnInit {
 
       const editingNews = this.editingNews();
       if (editingNews?.id) {
-        // Special handling for updates - if tillDate field is empty, remove it
+        // Special handling for updates - need to explicitly remove fields when switching modes
+        const updateData = { ...newsData };
+        
+        // Remove tillDate if form field is empty but news had a tillDate
         if (!this.newsForm.tillDate && editingNews.tillDate) {
-          await this.newsService.updateNews(editingNews.id, {
-            ...newsData,
-            tillDate: null as any
-          });
-        } else {
-          await this.newsService.updateNews(editingNews.id, newsData);
+          updateData.tillDate = null as any;
         }
+        
+        // Remove scheduledPublishAt when switching away from schedule mode
+        if (this.newsForm.publishOption !== 'schedule' && editingNews.scheduledPublishAt) {
+          updateData.scheduledPublishAt = null as any;
+        }
+        
+        await this.newsService.updateNews(editingNews.id, updateData);
       } else {
         await this.newsService.createNews(newsData);
       }
@@ -556,13 +602,14 @@ export class Admin implements OnInit {
       publishedAt: new Date().toISOString().split('T')[0],
       scheduledPublishAt: '',
       tillDate: '',
-      isPublished: true,
+      isPublished: false,
       isActive: true,
-      isDraft: false,
+      isDraft: true,
       category: 'general',
       tags: [],
       tagInput: '',
-      priority: 'normal'
+      priority: 'normal',
+      publishOption: 'draft'
     };
   }
 
@@ -583,6 +630,13 @@ export class Admin implements OnInit {
     if (event.key === 'Enter') {
       event.preventDefault();
       this.addTag();
+    }
+  }
+
+  onPublishOptionChange(): void {
+    // Clear scheduled date when switching away from schedule mode
+    if (this.newsForm.publishOption !== 'schedule') {
+      this.newsForm.scheduledPublishAt = '';
     }
   }
 
