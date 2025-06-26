@@ -696,6 +696,8 @@ $dark-text: #333333;
         font-size: 2rem;
         margin-bottom: 1rem;
         line-height: 1.3;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
       }
       
       .news-author {
@@ -728,6 +730,8 @@ $dark-text: #333333;
           font-style: italic;
           font-size: 1.1rem;
           color: $dark-text;
+          word-wrap: break-word;
+          overflow-wrap: break-word;
         }
         
         .news-text {
@@ -735,6 +739,9 @@ $dark-text: #333333;
           line-height: 1.8;
           font-size: 1.1rem;
           white-space: pre-wrap;
+          word-wrap: break-word;
+          word-break: break-word;
+          overflow-wrap: break-word;
           
           p {
             margin-bottom: 1.5rem;
@@ -770,6 +777,9 @@ $dark-text: #333333;
           font-size: 1.1rem;
           margin-bottom: 2rem;
           white-space: pre-wrap;
+          word-wrap: break-word;
+          word-break: break-word;
+          overflow-wrap: break-word;
         }
         
         .event-details {
