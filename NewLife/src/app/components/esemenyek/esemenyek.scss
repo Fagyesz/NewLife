@@ -97,6 +97,9 @@ $dark-text: #333333;
         color: #666;
         margin-bottom: 1rem;
         line-height: 1.6;
+        word-wrap: break-word;
+        word-break: break-word;
+        overflow-wrap: break-word;
       }
       
       .event-location {
@@ -205,6 +208,9 @@ $dark-text: #333333;
           color: $primary-green;
           margin: 0;
           font-size: 1.3rem;
+          word-wrap: break-word;
+          word-break: break-word;
+          overflow-wrap: break-word;
         }
         
         .event-type {
@@ -221,6 +227,9 @@ $dark-text: #333333;
         color: #666;
         margin-bottom: 0.75rem;
         line-height: 1.6;
+        word-wrap: break-word;
+        word-break: break-word;
+        overflow-wrap: break-word;
       }
       
       .event-location {
