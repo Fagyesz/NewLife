@@ -28,9 +28,6 @@ export class EventService {
   private firebaseConnected = signal(true); // Start with true, only set false if real issues
 
   constructor() {
-    // Load fallback data immediately for initial display
-    this.loadFallbackEvents();
-    // Then try to load real data from Firebase
     this.loadEvents();
   }
 
@@ -51,10 +48,7 @@ export class EventService {
             updatedAt: data['updatedAt']?.toDate()
           } as Event);
         });
-        // Only update if we got events, otherwise keep fallback data
-        if (events.length > 0) {
-          this.events.set(events);
-        }
+        this.events.set(events);
         this.firebaseConnected.set(true);
         console.log('📅 Loaded', events.length, 'events from Firestore');
       }, (error) => {

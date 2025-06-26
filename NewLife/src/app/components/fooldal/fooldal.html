@@ -48,10 +48,17 @@
 </section>
 
 <!-- Upcoming Events Preview -->
-<section class="section upcoming-events" *ngIf="upcomingEvents().length > 0">
+<section class="section upcoming-events">
   <div class="container">
     <h2 class="text-center" animateOnScroll="fadeInDown">Közelgő események</h2>
-    <div class="events-preview">
+    
+    <!-- Loading state -->
+    <div *ngIf="upcomingEvents().length === 0" class="text-center" style="padding: 2rem;">
+      <p style="color: #666; font-size: 1.1rem;">📅 Események betöltése...</p>
+    </div>
+    
+    <!-- Events content -->
+    <div *ngIf="upcomingEvents().length > 0" class="events-preview">
       <div *ngFor="let event of upcomingEvents(); let i = index" 
            class="event-preview-card" 
            animateOnScroll="slideInLeft" 
@@ -73,7 +80,8 @@
         </div>
       </div>
     </div>
-    <div class="text-center" animateOnScroll="fadeInUp" [animationDelay]="800">
+    
+    <div *ngIf="upcomingEvents().length > 0" class="text-center" animateOnScroll="fadeInUp" [animationDelay]="800">
       <a routerLink="/esemenyek" class="btn btn-outline">Összes esemény megtekintése →</a>
     </div>
   </div>
@@ -108,12 +116,18 @@
 </section>
 
 <!-- Latest News Preview -->
-<section class="section latest-news" *ngIf="latestNews().length > 0">
+<section class="section latest-news">
   <div class="container">
     <h2 class="text-center">Legfrissebb hírek</h2>
-    <div class="news-preview">
+    
+    <!-- Loading state -->
+    <div *ngIf="latestNews().length === 0" class="text-center" style="padding: 2rem;">
+      <p style="color: #666; font-size: 1.1rem;">📰 Hírek betöltése...</p>
+    </div>
+    
+    <!-- News content -->
+    <div *ngIf="latestNews().length > 0" class="news-preview">
       <div *ngFor="let newsItem of latestNews()" class="news-preview-card" (click)="openNewsModal(newsItem)">
-
         <div class="news-content">
           <div class="news-date">{{ formatNewsDate(newsItem.publishedAt) }}</div>
           <h4>{{ newsItem.title }}</h4>
@@ -122,10 +136,11 @@
             {{ getCategoryIcon(newsItem.category || 'general') }} {{ getCategoryText(newsItem.category || 'general') }}
           </span>
           <span class="read-more">Részletek →</span>
-      </div>
+        </div>
       </div>
     </div>
-    <div class="text-center">
+    
+    <div *ngIf="latestNews().length > 0" class="text-center">
       <a routerLink="/hirek" class="btn btn-outline">Összes hír megtekintése →</a>
     </div>
   </div>
