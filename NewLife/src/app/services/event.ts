@@ -13,6 +13,9 @@ export interface Event {
   createdBy: string;
   createdAt?: Date;
   updatedAt?: Date;
+  // Attendance data
+  attendees?: string[]; // Array of device IDs or user IDs
+  attendanceCount?: number; // Computed field for quick access
 }
 
 @Injectable({
@@ -208,5 +211,74 @@ export class EventService {
 
   isFirebaseConnected(): boolean {
     return this.firebaseConnected();
+  }
+
+  // Attendance methods - storing attendance directly in events
+  async markAttendance(eventId: string, deviceId: string): Promise<void> {
+    try {
+      const eventRef = doc(this.firestore, 'events', eventId);
+      const event = this.getEventById(eventId);
+      
+      if (!event) {
+        throw new Error('Event not found');
+      }
+
+      // Get current attendees array or create empty one
+      const currentAttendees = event.attendees || [];
+      
+      // Add deviceId if not already present
+      if (!currentAttendees.includes(deviceId)) {
+        const updatedAttendees = [...currentAttendees, deviceId];
+        
+        await updateDoc(eventRef, {
+          attendees: updatedAttendees,
+          attendanceCount: updatedAttendees.length,
+          updatedAt: new Date()
+        });
+        
+        console.log('✅ Attendance marked for event:', eventId);
+      }
+    } catch (error) {
+      console.error('❌ Error marking attendance:', error);
+      throw new Error('Hiba történt a részvétel jelzése során: ' + (error as Error).message);
+    }
+  }
+
+  async removeAttendance(eventId: string, deviceId: string): Promise<void> {
+    try {
+      const eventRef = doc(this.firestore, 'events', eventId);
+      const event = this.getEventById(eventId);
+      
+      if (!event) {
+        throw new Error('Event not found');
+      }
+
+      // Get current attendees array
+      const currentAttendees = event.attendees || [];
+      
+      // Remove deviceId if present
+      const updatedAttendees = currentAttendees.filter(id => id !== deviceId);
+      
+      await updateDoc(eventRef, {
+        attendees: updatedAttendees,
+        attendanceCount: updatedAttendees.length,
+        updatedAt: new Date()
+      });
+      
+      console.log('✅ Attendance removed for event:', eventId);
+    } catch (error) {
+      console.error('❌ Error removing attendance:', error);
+      throw new Error('Hiba történt a részvétel törlése során: ' + (error as Error).message);
+    }
+  }
+
+  hasMarkedAttendance(eventId: string, deviceId: string): boolean {
+    const event = this.getEventById(eventId);
+    return event?.attendees?.includes(deviceId) || false;
+  }
+
+  getAttendanceCount(eventId: string): number {
+    const event = this.getEventById(eventId);
+    return event?.attendanceCount || event?.attendees?.length || 0;
   }
 }
