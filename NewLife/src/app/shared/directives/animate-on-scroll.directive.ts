@@ -1,4 +1,5 @@
 import { Directive, ElementRef, Input, OnInit, OnDestroy, inject, signal } from '@angular/core';
+import { AnimationStateService } from '../../services/animation-state';
 
 @Directive({
   selector: '[animateOnScroll]',
@@ -12,10 +13,23 @@ export class AnimateOnScrollDirective implements OnInit, OnDestroy {
   @Input() rootMargin: string = '0px 0px -50px 0px';
 
   private elementRef = inject(ElementRef);
+  private animationState = inject(AnimationStateService);
   private observer?: IntersectionObserver;
   private hasAnimated = signal(false);
+  private elementId: string = '';
 
   ngOnInit() {
+    // Create element ID and check if already animated
+    this.elementId = this.animationState.createElementId(
+      this.elementRef.nativeElement, 
+      this.animateOnScroll
+    );
+    
+    if (this.animationState.isAnimated(this.elementId)) {
+      this.setFinalState();
+      return;
+    }
+    
     this.setupElement();
     // Small delay to ensure page is fully loaded before checking visibility
     setTimeout(() => {
@@ -106,6 +120,7 @@ export class AnimateOnScrollDirective implements OnInit, OnDestroy {
     if (this.hasAnimated()) return;
     
     this.hasAnimated.set(true); // Mark as animated immediately
+    this.animationState.markAsAnimated(this.elementId); // Mark globally
     const element = this.elementRef.nativeElement;
     
     requestAnimationFrame(() => {
@@ -125,5 +140,15 @@ export class AnimateOnScrollDirective implements OnInit, OnDestroy {
       default:
         return 'translateX(0) translateY(0) scale(1)';
     }
+  }
+
+
+
+  private setFinalState(): void {
+    this.hasAnimated.set(true);
+    const element = this.elementRef.nativeElement;
+    element.style.opacity = '1';
+    element.style.transform = this.getFinalTransform();
+    element.style.transition = 'none'; // No transition for already animated elements
   }
 } 

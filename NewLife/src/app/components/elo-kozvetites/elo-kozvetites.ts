@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { BubblesComponent } from '../../shared/bubbles/bubbles';
+import { AnimateOnScrollDirective } from '../../shared/directives/animate-on-scroll.directive';
 
 @Component({
   selector: 'app-elo-kozvetites',
-  imports: [CommonModule, BubblesComponent],
+  imports: [CommonModule, BubblesComponent, AnimateOnScrollDirective],
   templateUrl: './elo-kozvetites.html',
   styleUrl: './elo-kozvetites.scss'
 })

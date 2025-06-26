@@ -2,8 +2,8 @@
 <section class="page-header">
   <app-bubbles></app-bubbles>
   <div class="container">
-    <h1>Élő közvetítés</h1>
-    <p>Csatlakozzon online istentiszteleteinkhez</p>
+    <h1 animateOnScroll="fadeInDown" [animationDelay]="200">Élő közvetítés</h1>
+    <p animateOnScroll="fadeInUp" [animationDelay]="400">Csatlakozzon online istentiszteleteinkhez</p>
   </div>
 </section>
 
@@ -11,14 +11,14 @@
 <section class="section stream-section">
   <div class="container">
     <!-- Current Status -->
-    <div class="stream-status offline">
+    <div class="stream-status offline" animateOnScroll="bounceIn" [animationDelay]="600">
       <div class="status-indicator"></div>
       <span class="status-text">Jelenleg nincs élő közvetítés</span>
       <span class="next-stream">Következő közvetítés: Vasárnap 10:00</span>
     </div>
 
     <!-- Countdown Timer -->
-    <div class="countdown-container">
+    <div class="countdown-container" animateOnScroll="zoomIn" [animationDelay]="800">
       <h3>🕐 Következő istentiszteletig:</h3>
       <div class="countdown-timer">
         <div class="time-unit">
@@ -41,7 +41,7 @@
     </div>
 
     <!-- Notification Subscription -->
-    <div class="notification-section">
+    <div class="notification-section" animateOnScroll="slideInLeft" [animationDelay]="1000">
       <div class="notification-card">
         <h4>🔔 Értesítések</h4>
         <p>Szeretne értesítést kapni a közvetítések kezdete előtt?</p>
@@ -63,7 +63,7 @@
     </div>
 
     <!-- Video Player Placeholder -->
-    <div class="video-container">
+    <div class="video-container" animateOnScroll="fadeInUp" [animationDelay]="1200">
       <div class="video-placeholder">
         <div class="placeholder-content">
           <div class="play-icon">▶</div>
@@ -80,7 +80,7 @@
     </div>
 
     <!-- Stream Info -->
-    <div class="stream-info">
+    <div class="stream-info" animateOnScroll="slideInRight" [animationDelay]="1400">
       <div class="info-grid">
         <div class="info-card">
           <h4>📅 Közvetítési időpontok</h4>
@@ -140,25 +140,25 @@
 <!-- Technical Info -->
 <section class="section tech-info">
   <div class="container">
-    <div class="tech-content">
+    <div class="tech-content" animateOnScroll="fadeInDown" [animationDelay]="200">
       <h2>Technikai információk</h2>
       <div class="tech-grid">
-        <div class="tech-card">
+        <div class="tech-card" animateOnScroll="bounceIn" [animationDelay]="400">
           <h4>🎥 Videóminőség</h4>
           <p>HD 1080p minőségben közvetítünk a legjobb élmény érdekében</p>
         </div>
         
-        <div class="tech-card">
+        <div class="tech-card" animateOnScroll="bounceIn" [animationDelay]="600">
           <h4>🔊 Hang</h4>
           <p>Tiszta hangminőség professzionális mikrofonrendszerrel</p>
         </div>
         
-        <div class="tech-card">
+        <div class="tech-card" animateOnScroll="bounceIn" [animationDelay]="800">
           <h4>📱 Mobil</h4>
           <p>Mobilbarát lejátszó minden okoseszközön</p>
         </div>
         
-        <div class="tech-card">
+        <div class="tech-card" animateOnScroll="bounceIn" [animationDelay]="1000">
           <h4>💾 Utólag</h4>
           <p>Minden közvetítés elérhető marad a YouTube csatornán</p>
         </div>
