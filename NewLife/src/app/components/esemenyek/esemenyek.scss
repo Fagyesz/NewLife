@@ -540,6 +540,15 @@ $dark-text: #333333;
       }
       
       .event-details {
+        .event-image {
+          width: 100%;
+          max-height: 400px;
+          object-fit: cover;
+          border-radius: 15px;
+          margin-bottom: 2rem;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
         .event-description-full {
           color: #555;
           line-height: 1.8;

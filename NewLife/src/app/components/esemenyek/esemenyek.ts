@@ -5,10 +5,11 @@ import { AttendanceService } from '../../services/attendance';
 import { AuthService } from '../../services/auth';
 import { BubblesComponent } from '../../shared/bubbles/bubbles';
 import { AnimateOnScrollDirective } from '../../shared/directives/animate-on-scroll.directive';
+import { LazyImgDirective } from '../../shared/directives/lazy-img.directive';
 
 @Component({
   selector: 'app-esemenyek',
-  imports: [CommonModule, BubblesComponent, AnimateOnScrollDirective],
+  imports: [CommonModule, BubblesComponent, AnimateOnScrollDirective, LazyImgDirective],
   templateUrl: './esemenyek.html',
   styleUrl: './esemenyek.scss'
 })
@@ -156,5 +157,12 @@ export class Esemenyek implements OnInit {
   closeEventModal(): void {
     this.showEventModal.set(false);
     this.selectedEvent.set(null);
+  }
+
+  onImageError(event: any): void {
+    const imgElement = event.target as HTMLImageElement;
+    if (imgElement) {
+      imgElement.style.display = 'none';
+    }
   }
 }

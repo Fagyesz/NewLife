@@ -179,6 +179,12 @@
       <div class="event-location-full">📍 {{ selectedEvent()!.location }}</div>
       
       <div class="event-details">
+        <img *ngIf="selectedEvent()?.imageUrl" 
+             [lazyImg]="selectedEvent()!.imageUrl!" 
+             [alt]="selectedEvent()!.title"
+             class="event-image"
+             (error)="onImageError($event)">
+        
         <p class="event-description-full">{{ selectedEvent()!.description }}</p>
         
                  <div class="event-attendance-section" *ngIf="selectedEvent()!.id">

@@ -117,7 +117,7 @@
         <div class="news-content">
           <div class="news-date">{{ formatNewsDate(newsItem.publishedAt) }}</div>
           <h4>{{ newsItem.title }}</h4>
-          <p>{{ newsItem.summary || (newsItem.content | slice:0:120) + '...' }}</p>
+          <p>{{ getNewsExcerpt(newsItem.summary || newsItem.content, 100) }}</p>
           <span class="news-category">
             {{ getCategoryIcon(newsItem.category || 'general') }} {{ getCategoryText(newsItem.category || 'general') }}
           </span>
