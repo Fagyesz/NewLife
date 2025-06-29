@@ -502,7 +502,6 @@ $dark-gray: #343a40;
             color: #dc3545;
           }
         }
-        
       }
       
       .news-actions {
@@ -742,38 +741,7 @@ $dark-gray: #343a40;
 // User Management Styles
 .users-section {
   padding: 3rem 0;
-  background: $light-gray;
   
-  .section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-    
-    @media (max-width: 768px) {
-      flex-direction: column;
-      gap: 1rem;
-      text-align: center;
-    }
-    
-    h2 {
-      color: $dark-gray;
-      margin: 0;
-      font-size: 2rem;
-      font-weight: 600;
-    }
-    
-    .header-actions {
-      display: flex;
-      gap: 1rem;
-      
-      @media (max-width: 480px) {
-        flex-direction: column;
-        width: 100%;
-      }
-    }
-  
-  }
   .user-stats {
     display: flex;
     gap: 1rem;
