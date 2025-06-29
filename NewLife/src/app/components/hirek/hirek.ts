@@ -1,5 +1,5 @@
-import { Component, signal, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, signal, inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NewsService, News } from '../../services/user';
@@ -14,6 +14,7 @@ import { AnimateOnScrollDirective } from '../../shared/directives/animate-on-scr
 })
 export class Hirek implements OnInit {
   private newsService = inject(NewsService);
+  private platformId = inject(PLATFORM_ID);
   
   isSubscribing = signal(false);
   newsletterEmail = signal('');
@@ -125,8 +126,22 @@ export class Hirek implements OnInit {
   }
 
   getNewsExcerpt(content: string, length: number = 150): string {
-    if (content.length <= length) return content;
-    return content.substring(0, length) + '...';
+    if (!content) {
+      return '';
+    }
+
+    if (isPlatformBrowser(this.platformId)) {
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = content;
+      const text = tempDiv.textContent || tempDiv.innerText || '';
+      if (text.length <= length) return text;
+      return text.substring(0, length) + '...';
+    } else {
+      // Basic fallback for SSR
+      const plainText = content.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ');
+      if (plainText.length <= length) return plainText;
+      return plainText.substring(0, length) + '...';
+    }
   }
 
   openNewsModal(newsItem: News): void {

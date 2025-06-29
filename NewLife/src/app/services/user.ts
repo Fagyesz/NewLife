@@ -7,7 +7,7 @@ export interface UserProfile {
   email: string;
   displayName: string;
   photoURL?: string;
-  role: 'admin' | 'staff' | 'member' | 'dev';
+  role: 'admin' | 'staff' | 'member' | 'dev' | 'guest';
   isAuthorized: boolean;
   lastLogin: Date;
   createdAt: Date;
@@ -43,6 +43,7 @@ export interface UserStats {
     staff: number;
     member: number;
     dev: number;
+    guest: number;
   };
   authorized: number;
   unauthorized: number;
@@ -59,7 +60,7 @@ export class UserService {
   users = signal<UserProfile[]>([]);
   stats = signal<UserStats>({
     total: 0,
-    byRole: { admin: 0, staff: 0, member: 0, dev: 0 },
+    byRole: { admin: 0, staff: 0, member: 0, dev: 0, guest: 0 },
     authorized: 0,
     unauthorized: 0,
     activeToday: 0
@@ -104,7 +105,7 @@ export class UserService {
     
     const stats: UserStats = {
       total: users.length,
-      byRole: { admin: 0, staff: 0, member: 0, dev: 0 },
+      byRole: { admin: 0, staff: 0, member: 0, dev: 0, guest: 0 },
       authorized: 0,
       unauthorized: 0,
       activeToday: 0

@@ -58,6 +58,8 @@ export class Navigation {
       case 'admin': return 'Adminisztrátor';
       case 'staff': return 'Személyzet';
       case 'dev': return 'Fejlesztő';
+      case 'member': return 'Tag';
+      case 'guest': return 'Vendég';
       default: return 'Tag';
     }
   }

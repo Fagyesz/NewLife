@@ -103,7 +103,7 @@
             <h3>{{ event.title }}</h3>
             <span class="event-type">{{ getEventTypeIcon(event.type) }} {{ getEventTypeText(event.type) }}</span>
           </div>
-          <p class="event-description">{{ event.description }}</p>
+          <p class="event-description" [innerHTML]="event.description"></p>
           <div class="event-location">
             <span>📍 {{ event.location }}</span>
           </div>
@@ -191,7 +191,7 @@
              class="event-image"
              (error)="onImageError($event)">
         
-        <p class="event-description-full">{{ selectedEvent()!.description }}</p>
+        <div class="event-description-full" [innerHTML]="selectedEvent()!.description"></div>
         
                  <div class="event-attendance-section" *ngIf="selectedEvent()!.id">
            <div class="attendance-info">

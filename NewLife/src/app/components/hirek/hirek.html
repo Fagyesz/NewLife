@@ -105,7 +105,7 @@
              (error)="onImageError($event)">
         
         <p *ngIf="selectedNews()!.summary" class="news-summary">{{ selectedNews()!.summary }}</p>
-        <div class="news-text">{{ selectedNews()!.content }}</div>
+        <div class="news-text" [innerHTML]="selectedNews()!.content"></div>
       </div>
     </div>
   </div>

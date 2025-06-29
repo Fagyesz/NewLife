@@ -1,9 +1,10 @@
-import { Component, inject, OnInit, OnDestroy, signal, computed } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit, OnDestroy, signal, computed, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { EventService, Event } from '../../services/event';
 import { AttendanceService } from '../../services/attendance';
 import { NewsService, News } from '../../services/user';
+import { LiveStreamService } from '../../services/live-stream';
 import { BubblesComponent } from '../../shared/bubbles/bubbles';
 import { LazyImgDirective } from '../../shared/directives/lazy-img.directive';
 import { AnimateOnScrollDirective } from '../../shared/directives/animate-on-scroll.directive';
@@ -18,12 +19,15 @@ export class Fooldal implements OnInit, OnDestroy {
   private eventService = inject(EventService);
   private attendanceService = inject(AttendanceService);
   private newsService = inject(NewsService);
+  private liveStreamService = inject(LiveStreamService);
+  private platformId = inject(PLATFORM_ID);
   
   // Signals for reactive state - computed from services
   upcomingEvents = computed(() => this.eventService.getUpcomingEvents().slice(0, 3));
   nextSundayService = computed(() => this.eventService.getNextSundayService() || null);
   countdownTimer = signal<string>('');
-  isLive = signal<boolean>(false);
+  isLive = computed(() => this.liveStreamService.isCurrentlyLive());
+  liveStreamStatus = computed(() => this.liveStreamService.getCurrentStatus());
   latestNews = computed(() => this.newsService.getRecentNews(2));
   
   // Modal state
@@ -153,12 +157,8 @@ export class Fooldal implements OnInit, OnDestroy {
   }
 
   private checkLiveStatus(): void {
-    // Simple live check - in real app this would connect to YouTube API
-    const now = new Date();
-    const isSunday = now.getDay() === 0;
-    const isServiceTime = now.getHours() >= 10 && now.getHours() < 12;
-    
-    this.isLive.set(isSunday && isServiceTime);
+    // Live status is now handled by LiveStreamService
+    // No need to manually set the status - it's computed from the service
   }
 
   // Helper methods for template
@@ -295,8 +295,54 @@ export class Fooldal implements OnInit, OnDestroy {
   }
 
   getNewsExcerpt(content: string, maxLength: number = 150): string {
-    if (content.length <= maxLength) return content;
-    return content.substring(0, maxLength) + '...';
+    if (!content) {
+      return '';
+    }
+    if (isPlatformBrowser(this.platformId)) {
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = content;
+      const text = tempDiv.textContent || tempDiv.innerText || '';
+      if (text.length <= maxLength) return text;
+      return text.substring(0, maxLength) + '...';
+    } else {
+      // Basic fallback for SSR
+      const plainText = content.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ');
+      if (plainText.length <= maxLength) return plainText;
+      return plainText.substring(0, maxLength) + '...';
+    }
+  }
+
+  // Live stream helper methods
+  getLiveStreamTitle(): string {
+    return this.liveStreamService.getStreamTitle();
+  }
+
+  getLiveViewerCount(): number {
+    return this.liveStreamService.getViewerCount();
+  }
+
+  getLiveStreamDuration(): string | null {
+    return this.liveStreamService.getTimeSinceStart();
+  }
+
+  getLiveStatusText(): string {
+    if (this.isLive()) {
+      const viewers = this.getLiveViewerCount();
+      const duration = this.getLiveStreamDuration();
+      let text = 'Élő közvetítés';
+      if (viewers > 0) {
+        text += ` • ${viewers} néző`;
+      }
+      if (duration) {
+        text += ` • ${duration}`;
+      }
+      return text;
+    }
+    return 'Nincs élő közvetítés';
+  }
+
+  refreshLiveStatus(): void {
+    this.liveStreamService.forceRefresh();
   }
 
   // Google Calendar integration

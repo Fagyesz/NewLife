@@ -8,32 +8,43 @@
 </section>
 
 <!-- Dashboard Stats -->
-<section class="section stats-section">
+<section class="section stats-section" *ngIf="authService.isStaff()">
   <div class="container">
     <div class="stats-grid">
+      <!-- Total Attendance -->
       <div class="stat-card">
         <h3>{{ attendanceStats.total }}</h3>
         <p>Összes részvétel</p>
       </div>
+
+      <!-- Weekly Attendance -->
       <div class="stat-card">
         <h3>{{ attendanceStats.thisWeek }}</h3>
-        <p>Ezen a héten</p>
+        <p>Részvétel (ezen a héten)</p>
       </div>
+      
+      <!-- Unique Devices -->
       <div class="stat-card">
         <h3>{{ attendanceStats.uniqueDevices }}</h3>
-        <p>Egyedi eszközök</p>
+        <p>Egyedi látogatók</p>
       </div>
+
+      <!-- Active Events -->
       <div class="stat-card">
-        <h3>{{ events.length }}</h3>
+        <h3>{{ upcomingEvents.length }}</h3>
         <p>Aktív események</p>
       </div>
+
+      <!-- Registered Users -->
       <div class="stat-card">
         <h3>{{ userStats.total }}</h3>
         <p>Regisztrált felhasználó</p>
       </div>
+
+      <!-- Active News -->
       <div class="stat-card">
-        <h3>{{ userStats.activeToday }}</h3>
-        <p>Aktív ma</p>
+        <h3>{{ publishedNews.length }}</h3>
+        <p>Aktív hírek</p>
       </div>
     </div>
   </div>

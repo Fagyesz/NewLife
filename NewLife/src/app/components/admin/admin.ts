@@ -315,10 +315,12 @@ export class Admin implements OnInit {
 
   getRoleText(role: string): string {
     switch (role) {
-      case 'admin': return 'Admin';
+      case 'admin': return 'Adminisztrátor';
       case 'staff': return 'Személyzet';
       case 'dev': return 'Fejlesztő';
-      default: return 'Tag';
+      case 'member': return 'Tag';
+      case 'guest': return 'Vendég';
+      default: return 'Ismeretlen';
     }
   }
 

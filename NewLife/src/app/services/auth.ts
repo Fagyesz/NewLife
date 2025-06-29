@@ -120,8 +120,8 @@ export class AuthService {
       return 'staff';
     }
     
-    // Default to member
-    return 'member';
+    // Default to guest
+    return 'guest';
   }
 
   async signInWithGoogle(): Promise<void> {

@@ -11,30 +11,30 @@
 <section class="section stream-section">
   <div class="container">
     <!-- Current Status -->
-    <div class="stream-status offline" animateOnScroll="bounceIn" [animationDelay]="600">
-      <div class="status-indicator"></div>
-      <span class="status-text">Jelenleg nincs élő közvetítés</span>
-      <span class="next-stream">Következő közvetítés: Vasárnap 10:00</span>
+    <div class="stream-status" [class]="getStreamStatusClass()" animateOnScroll="bounceIn" [animationDelay]="600">
+      <div class="status-indicator" [class.pulse]="isStreamLive()"></div>
+      <span class="status-text">{{ getStreamStatus() }}</span>
+      <span class="next-stream">{{ getNextStreamText() }}</span>
     </div>
 
     <!-- Countdown Timer -->
-    <div class="countdown-container" animateOnScroll="zoomIn" [animationDelay]="800">
+    <div class="countdown-container" *ngIf="!isStreamLive()" animateOnScroll="zoomIn" [animationDelay]="800">
       <h3>🕐 Következő istentiszteletig:</h3>
       <div class="countdown-timer">
         <div class="time-unit">
-          <span class="number" id="days">0</span>
+          <span class="number" id="days">{{ timeUntilService().days.toString().padStart(2, '0') }}</span>
           <span class="label">nap</span>
         </div>
         <div class="time-unit">
-          <span class="number" id="hours">0</span>
+          <span class="number" id="hours">{{ timeUntilService().hours.toString().padStart(2, '0') }}</span>
           <span class="label">óra</span>
         </div>
         <div class="time-unit">
-          <span class="number" id="minutes">0</span>
+          <span class="number" id="minutes">{{ timeUntilService().minutes.toString().padStart(2, '0') }}</span>
           <span class="label">perc</span>
         </div>
         <div class="time-unit">
-          <span class="number" id="seconds">0</span>
+          <span class="number" id="seconds">{{ timeUntilService().seconds.toString().padStart(2, '0') }}</span>
           <span class="label">mp</span>
         </div>
       </div>
@@ -123,13 +123,44 @@
 </section>
 
 <!-- Live Stream Feed -->
-<section class="section live-feed" *ngIf="isStreamLive">
+<section class="section live-feed" *ngIf="isStreamLive()">
   <div class="container">
-    <h2 class="text-center mb-3">🔴 Élő közvetítés</h2>
-    <div class="live-stream-embed">
-      <!-- YouTube embed would go here when live -->
-      <div class="embed-placeholder">
-        <p>YouTube élő közvetítés lesz itt megjelenítve</p>
+    <h2 class="text-center mb-3" animateOnScroll="bounceIn">🔴 Élő közvetítés</h2>
+    <div class="live-stream-embed" animateOnScroll="zoomIn" [animationDelay]="400">
+      <!-- YouTube Live Stream Embed -->
+      <div class="youtube-embed">
+        <iframe 
+          width="100%" 
+          height="450" 
+          src="https://www.youtube.com/@ujeletbaptistagyulekezet/live"
+          title="Új Élet Baptista Gyülekezet - Élő közvetítés"
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen
+          style="border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.3);">
+        </iframe>
+      </div>
+      
+      <!-- Chat or Additional Live Features -->
+      <div class="live-features" animateOnScroll="slideInUp" [animationDelay]="600">
+        <div class="live-chat-info">
+          <h4>💬 Élő beszélgetés</h4>
+          <p>Csatlakozzon a beszélgetéshez a YouTube chat-ben, vagy Discord szerverünkön!</p>
+          <div class="live-actions">
+            <a href="https://discord.gg/gTDUpApNae" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="btn btn-discord">
+              💬 Discord chat
+            </a>
+            <a href="https://www.youtube.com/@ujeletbaptistagyulekezet" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="btn btn-youtube">
+              📺 YouTube csatorna
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </div>

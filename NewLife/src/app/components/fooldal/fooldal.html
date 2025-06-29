@@ -59,30 +59,23 @@
     
     <!-- Events content -->
     <div *ngIf="upcomingEvents().length > 0" class="events-preview">
-      <div *ngFor="let event of upcomingEvents(); let i = index" 
-           class="event-preview-card" 
-           animateOnScroll="slideInLeft" 
-           [animationDelay]="i * 200 + 300"
-           (click)="openEventModal(event)">
+      <div class="event-card" *ngFor="let event of upcomingEvents()" (click)="openEventModal(event)" animateOnScroll="bounceIn" [animationDelay]="300">
         <div class="event-date">
-          <span class="event-icon">{{ getEventTypeIcon(event.type) }}</span>
-          <span class="event-time">{{ formatEventDate(event.date) }}</span>
+          <span>{{ formatEventDate(event.date) }}</span>
         </div>
         <div class="event-info">
           <h4>{{ event.title }}</h4>
-          <p>{{ event.description }}</p>
+          <p class="event-description" [innerHTML]="getNewsExcerpt(event.description, 100)"></p>
           <div class="event-meta">
             <span class="location">📍 {{ event.location }}</span>
-            <span class="attendance" *ngIf="event.id">
-              {{ getAttendanceCount(event.id) }} résztvevő
-            </span>
+            <span class="attendance">👥 {{ getAttendanceCount(event.id!) }}</span>
           </div>
         </div>
       </div>
     </div>
     
-    <div *ngIf="upcomingEvents().length > 0" class="text-center" animateOnScroll="fadeInUp" [animationDelay]="800">
-      <a routerLink="/esemenyek" class="btn btn-outline">Összes esemény megtekintése →</a>
+    <div class="all-events-link" *ngIf="upcomingEvents().length > 0">
+      <a routerLink="/esemenyek" class="btn btn-secondary">Összes esemény megtekintése →</a>
     </div>
   </div>
 </section>
@@ -232,7 +225,7 @@
              class="event-image"
              (error)="onImageError($event)">
         
-        <p class="event-description-full">{{ selectedEvent()!.description }}</p>
+        <div class="event-description-full" [innerHTML]="selectedEvent()!.description"></div>
         
         <div class="event-attendance-section" *ngIf="selectedEvent()!.id">
           <div class="attendance-info">
