@@ -7,6 +7,51 @@
   </div>
 </section>
 
+<!-- Live Stream Feed -->
+<section class="section live-feed" *ngIf="isStreamLive()">
+  <div class="container">
+    <h2 class="text-center mb-3" animateOnScroll="bounceIn">🔴 Élő közvetítés</h2>
+    <div class="live-stream-embed" animateOnScroll="zoomIn" [animationDelay]="400">
+      <!-- YouTube Live Stream Embed -->
+      <div class="youtube-embed">
+        <iframe 
+          width="100%" 
+          height="450" 
+          src="https://www.youtube.com/@ujeletbaptistagyulekezet/live"
+          title="Új Élet Baptista Gyülekezet - Élő közvetítés"
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+          allowfullscreen
+          style="border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.3);">
+        </iframe>
+      </div>
+      
+      <!-- Chat or Additional Live Features -->
+      <div class="live-features" animateOnScroll="slideInUp" [animationDelay]="600">
+        <div class="live-chat-info">
+          <h4>💬 Élő beszélgetés</h4>
+          <p>Csatlakozzon a beszélgetéshez a YouTube chat-ben, vagy Discord szerverünkön!</p>
+          <div class="live-actions">
+            <a href="https://discord.gg/gTDUpApNae" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="btn btn-discord">
+              💬 Discord chat
+            </a>
+            <a href="https://www.youtube.com/@ujeletbaptistagyulekezet" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="btn btn-youtube">
+              📺 YouTube csatorna
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 <!-- Live Stream Section -->
 <section class="section stream-section">
   <div class="container">
@@ -121,51 +166,6 @@
     </div>
   </div>
 </section>
-
-<!-- Live Stream Feed -->
-<section class="section live-feed" *ngIf="isStreamLive()">
-  <div class="container">
-    <h2 class="text-center mb-3" animateOnScroll="bounceIn">🔴 Élő közvetítés</h2>
-    <div class="live-stream-embed" animateOnScroll="zoomIn" [animationDelay]="400">
-      <!-- YouTube Live Stream Embed -->
-      <div class="youtube-embed">
-        <iframe 
-          width="100%" 
-          height="450" 
-          src="https://www.youtube.com/@ujeletbaptistagyulekezet/live"
-          title="Új Élet Baptista Gyülekezet - Élő közvetítés"
-          frameborder="0" 
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-          allowfullscreen
-          style="border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.3);">
-        </iframe>
-      </div>
-      
-      <!-- Chat or Additional Live Features -->
-      <div class="live-features" animateOnScroll="slideInUp" [animationDelay]="600">
-        <div class="live-chat-info">
-          <h4>💬 Élő beszélgetés</h4>
-          <p>Csatlakozzon a beszélgetéshez a YouTube chat-ben, vagy Discord szerverünkön!</p>
-          <div class="live-actions">
-            <a href="https://discord.gg/gTDUpApNae" 
-               target="_blank" 
-               rel="noopener noreferrer" 
-               class="btn btn-discord">
-              💬 Discord chat
-            </a>
-            <a href="https://www.youtube.com/@ujeletbaptistagyulekezet" 
-               target="_blank" 
-               rel="noopener noreferrer" 
-               class="btn btn-youtube">
-              📺 YouTube csatorna
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 
 
 <!-- Technical Info -->
