@@ -10,7 +10,7 @@ export const environment = {
     measurementId: "YOUR_MEASUREMENT_ID"
   },
   liveStream: {
-    workerUrl: "https://YOUR_WORKER_NAME.YOUR_SUBDOMAIN.workers.dev",
-    fallbackUrl: "https://YOUR_WORKER_NAME.YOUR_SUBDOMAIN.workers.dev"
+    workerUrl: "https://status.bapti.hu/api/live",
+    fallbackUrl: "https://status.bapti.hu/api/live"
   }
 }; 

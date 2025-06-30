@@ -1,6 +1,6 @@
 import { ApplicationConfig, provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter, withViewTransitions, withInMemoryScrolling } from '@angular/router';
-import { provideClientHydration } from '@angular/platform-browser';
+import { provideClientHydration, withNoHttpTransferCache } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
@@ -20,16 +20,17 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withInMemoryScrolling({
       scrollPositionRestoration: 'top'
     })), 
-    provideClientHydration(),
+    provideClientHydration(withNoHttpTransferCache()),
     provideAnimations(),
     provideHttpClient(withFetch()),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-    provideAnalytics(() => getAnalytics()),
-    importProvidersFrom(QuillModule.forRoot()), provideServiceWorker('ngsw-worker.js', {
-            enabled: !isDevMode(),
-            registrationStrategy: 'registerWhenStable:30000'
-          })
+    ...(environment.production ? [provideAnalytics(() => getAnalytics())] : []),
+    importProvidersFrom(QuillModule.forRoot()), 
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ]
 };

@@ -43,8 +43,11 @@ export class Fooldal implements OnInit, OnDestroy {
   private countdownInterval: any;
 
   async ngOnInit(): Promise<void> {
-    this.startCountdown();
-    this.checkLiveStatus();
+    // Only start client-side features in the browser
+    if (isPlatformBrowser(this.platformId)) {
+      this.startCountdown();
+      this.checkLiveStatus();
+    }
     await this.loadAttendanceStates();
   }
 
