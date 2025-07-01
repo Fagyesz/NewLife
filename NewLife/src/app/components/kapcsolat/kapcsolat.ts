@@ -22,6 +22,34 @@ export class Kapcsolat {
     message: ''
   };
 
+  // FAQ items displayed on the page
+  faqList = [
+    {
+      q: 'Mikor tartjátok az istentiszteleteket?',
+      a: 'Vasárnap reggelente 10:00 órakor. Szerda este 19:00-kor bibliaórát, péntek este 18:30-kor imaórát tartunk.'
+    },
+    {
+      q: 'Szükséges előzetesen bejelentkezni?',
+      a: 'Nem, egyszerűen jöjjön el! Szeretettel várjuk minden alkalomra a látogatókat.'
+    },
+    {
+      q: 'Van parkolási lehetőség?',
+      a: 'Igen, ingyenes parkolás elérhető az épület mellett és a környező utcákban.'
+    },
+    {
+      q: 'Milyen öltözékben jöjjek?',
+      a: 'Nincs szigorú dress code. Jöjjön kényelmesen, ahogy van!'
+    },
+    {
+      q: 'Hozhatom a gyermekeimet?',
+      a: 'Természetesen! Gyermekfelügyelet biztosított a vasárnapi istentiszteletek alatt.'
+    },
+    {
+      q: 'Hogyan tudok keresztelkedni?',
+      a: 'Vegye fel a kapcsolatot lelkipásztorunkkal, aki szívesen megbeszéli Önnel a részleteket.'
+    }
+  ];
+
   async sendMessage() {
     if (!this.contactData.name || !this.contactData.email || !this.contactData.message) {
       alert('Kérjük, töltse ki az összes kötelező mezőt!');

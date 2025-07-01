@@ -11,7 +11,7 @@
 <section class="section contact-info">
   <div class="container">
     <div class="contact-grid">
-      <div class="contact-card">
+      <div class="contact-card" animateOnScroll="zoomIn" [animationDelay]="200">
         <div class="contact-icon">📍</div>
         <h3>Címünk</h3>
         <p>
@@ -21,7 +21,7 @@
         </p>
       </div>
       
-      <div class="contact-card">
+      <div class="contact-card" animateOnScroll="zoomIn" [animationDelay]="300">
         <div class="contact-icon">📞</div>
         <h3>Telefonszám</h3>
         <p>
@@ -31,7 +31,7 @@
         </p>
       </div>
       
-      <div class="contact-card">
+      <div class="contact-card" animateOnScroll="zoomIn" [animationDelay]="400">
         <div class="contact-icon">✉️</div>
         <h3>E-mail</h3>
         <p>
@@ -40,7 +40,7 @@
         </p>
       </div>
       
-      <div class="contact-card">
+      <div class="contact-card" animateOnScroll="zoomIn" [animationDelay]="500">
         <div class="contact-icon">🕐</div>
         <h3>Nyitvatartás</h3>
         <p>
@@ -50,7 +50,7 @@
         </p>
       </div>
       
-      <div class="contact-card social-card">
+      <div class="contact-card social-card" animateOnScroll="zoomIn" [animationDelay]="600">
         <div class="contact-icon">🌐</div>
         <h3>Közösségi média</h3>
         <p>Kövessen minket az online térben is!</p>
@@ -92,7 +92,7 @@
     <h2 class="text-center">Helyszín</h2>
     <div class="map-container">
       <!-- Google Maps Embed -->
-      <div class="google-map">
+      <div class="google-map" animateOnScroll="fadeIn" [animationDelay]="200">
         <iframe 
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2697.0346982397!2d19.924793815825064!3d47.78327637918967!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47405a0ec1d5ac5d%3A0xe0ab0cce65d8b30e!2s%C3%9Aj%20%C3%89let%20Baptista%20Gy%C3%BClekezet!5e0!3m2!1sen!2shu!4v1704658800000!5m2!1sen!2shu"
           width="100%" 
@@ -105,7 +105,7 @@
       </div>
       
       <!-- Map Info -->
-      <div class="map-info">
+      <div class="map-info" animateOnScroll="fadeInUp" [animationDelay]="400">
         <div class="map-details">
           <h3>🗺️ Térképes elérhetőség</h3>
           <p><strong>Új Élet Baptista Gyülekezet</strong></p>
@@ -139,34 +139,9 @@
   <div class="container">
     <h2 class="text-center">Gyakran Ismételt Kérdések</h2>
     <div class="faq-grid">
-      <div class="faq-item">
-        <h4>Mikor tartjátok az istentiszteleteket?</h4>
-        <p>Vasárnap reggelente 10:00 órakor. Szerda este 19:00-kor bibliaórát, péntek este 18:30-kor imaórát tartunk.</p>
-      </div>
-      
-      <div class="faq-item">
-        <h4>Szükséges előzetesen bejelentkezni?</h4>
-        <p>Nem, egyszerűen jöjjön el! Szeretettel várjuk minden alkalomra a látogatókat.</p>
-      </div>
-      
-      <div class="faq-item">
-        <h4>Van parkolási lehetőség?</h4>
-        <p>Igen, ingyenes parkolás elérhető az épület mellett és a környező utcákban.</p>
-      </div>
-      
-      <div class="faq-item">
-        <h4>Milyen öltözékben jöjjek?</h4>
-        <p>Nincs szigorú dress code. Jöjjön kényelmesen, ahogy van!</p>
-      </div>
-      
-      <div class="faq-item">
-        <h4>Hozhatom a gyermekeimet?</h4>
-        <p>Természetesen! Gyermekfelügyelet biztosított a vasárnapi istentiszteletek alatt.</p>
-      </div>
-      
-      <div class="faq-item">
-        <h4>Hogyan tudok keresztelkedni?</h4>
-        <p>Vegye fel a kapcsolatot lelkipásztorunkal, aki szívesen megbeszéli Önnel a részleteket.</p>
+      <div class="faq-item" *ngFor="let qa of faqList; let idx = index" animateOnScroll="fadeInUp" [animationDelay]="200 + idx * 100">
+        <h4>{{ qa.q }}</h4>
+        <p>{{ qa.a }}</p>
       </div>
     </div>
   </div>
