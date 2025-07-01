@@ -11,6 +11,7 @@
   "categories": ["social", "lifestyle", "education"],
   "lang": "hu",
   "dir": "ltr",
+  "version": "1.0.2",
   "icons": [
     {
       "src": "icons/icon-72x72.png",
@@ -55,7 +56,7 @@
       "purpose": "maskable any"
     },
     {
-      "src": "assets/img/logo/logo-512x512.png",
+      "src": "icons/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable any"
