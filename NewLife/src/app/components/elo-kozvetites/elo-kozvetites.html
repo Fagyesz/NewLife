@@ -38,7 +38,7 @@
                class="btn btn-discord">
               💬 Discord chat
             </a>
-            <a href="https://www.youtube.com/@ujeletbaptistagyulekezet" 
+            <a [href]="youtubeChannelUrl()" 
                target="_blank" 
                rel="noopener noreferrer" 
                class="btn btn-youtube">
@@ -91,7 +91,7 @@
         <h4>🔔 Értesítések</h4>
         <p>Szeretne értesítést kapni a közvetítések kezdete előtt?</p>
         <div class="notification-options">
-          <a href="https://www.youtube.com/@ujeletbaptistagyulekezet?sub_confirmation=1" 
+          <a [href]="youtubeChannelUrl() + '?sub_confirmation=1'" 
              target="_blank" 
              rel="noopener noreferrer" 
              class="btn btn-notification youtube">
@@ -114,7 +114,7 @@
           <div class="play-icon">▶</div>
           <h3>Vasárnapi istentisztelet élő közvetítése</h3>
           <p>Csatlakozzon online közösségünkhöz minden vasárnap 10:00 órakor</p>
-          <a href="https://www.youtube.com/@ujeletbaptistagyulekezet" 
+          <a [href]="youtubeChannelUrl()" 
              target="_blank" 
              rel="noopener noreferrer" 
              class="btn btn-primary">

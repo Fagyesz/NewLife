@@ -35,6 +35,10 @@ export class EloKozvetites implements OnInit, OnDestroy {
   // YouTube stream configuration
   youtubeChannelId = 'UC3GbgMOUrfVnipHXvXQYFkA'; // Default: Új Élet Baptista Gyülekezet
   youtubeEmbedUrl = signal<SafeResourceUrl | null>(null);
+  // Human-readable handle of current channel (starts with "@")
+  youtubeChannelHandle = signal<string>('@ujeletbaptistagyulekezet');
+  // Public channel page URL that points directly to the live tab
+  youtubeChannelUrl = signal<string>('https://www.youtube.com/@ujeletbaptistagyulekezet/live');
   
   private countdownInterval: any;
   private statusUpdateInterval: any;
@@ -53,9 +57,17 @@ export class EloKozvetites implements OnInit, OnDestroy {
       
       if (status.testMode && channels?.test.id) {
         this.youtubeChannelId = channels.test.id;
+        if (channels.test.handle) {
+          this.youtubeChannelHandle.set(channels.test.handle.startsWith('@') ? channels.test.handle : '@' + channels.test.handle);
+        }
       } else if (channels?.production.id) {
         this.youtubeChannelId = channels.production.id;
+        if (channels.production.handle) {
+          this.youtubeChannelHandle.set(channels.production.handle.startsWith('@') ? channels.production.handle : '@' + channels.production.handle);
+        }
       }
+      // Update derived URLs after channel information changes
+      this.youtubeChannelUrl.set(`https://www.youtube.com/${this.youtubeChannelHandle()}/live`);
       
       this.updateEmbedUrl();
     });
