@@ -34,7 +34,7 @@ export class EloKozvetites implements OnInit, OnDestroy {
   
   // YouTube stream configuration
   youtubeChannelId = 'UC3GbgMOUrfVnipHXvXQYFkA'; // Default: Új Élet Baptista Gyülekezet
-  youtubeEmbedUrl: SafeResourceUrl;
+  youtubeEmbedUrl = signal<SafeResourceUrl | null>(null);
   
   private countdownInterval: any;
   private statusUpdateInterval: any;
@@ -44,7 +44,7 @@ export class EloKozvetites implements OnInit, OnDestroy {
     private sanitizer: DomSanitizer
   ) {
     // Initial placeholder URL
-    this.youtubeEmbedUrl = this.sanitizer.bypassSecurityTrustResourceUrl('');
+    this.youtubeEmbedUrl.set(this.sanitizer.bypassSecurityTrustResourceUrl(''));
 
     // React to test mode changes
     effect(() => {
@@ -85,7 +85,7 @@ export class EloKozvetites implements OnInit, OnDestroy {
 
   private updateEmbedUrl(): void {
     const embedUrl = `https://www.youtube.com/embed/live_stream?channel=${this.youtubeChannelId}`;
-    this.youtubeEmbedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl);
+    this.youtubeEmbedUrl.set(this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl));
     console.log(`Live stream URL updated for channel: ${this.youtubeChannelId}`);
   }
 

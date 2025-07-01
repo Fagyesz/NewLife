@@ -1,7 +1,8 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, inject, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, tap, of } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { LiveStreamService } from './live-stream';
 
 export interface TestModeStatus {
   testMode: boolean;
@@ -25,6 +26,7 @@ export interface WorkerHealth {
 })
 export class TestModeService {
   private http = inject(HttpClient);
+  private liveStreamService = inject(LiveStreamService);
   
   // Worker URLs from environment
   private readonly TEST_MODE_URL = environment.liveStream.testModeUrl;
@@ -39,6 +41,19 @@ export class TestModeService {
   workerHealth = signal<WorkerHealth | null>(null);
   isLoading = signal(false);
   error = signal<string | null>(null);
+
+  // Derived signals for convenient access in templates/components
+  /**
+   * `true` when Cloudflare Worker is in test-mode.
+   * Usage example (template):
+   * <code>{{ testModeService.isTestMode() ? 'Aktív' : 'Inaktív' }}</code>
+   */
+  isTestMode = computed(() => this.testModeStatus().testMode);
+
+  /**
+   * Currently active YouTube channel (id or human-readable).
+   */
+  activeChannelSignal = computed(() => this.testModeStatus().activeChannel);
 
   constructor() {
     // Initial data fetch is now handled by the component that injects the service.
@@ -61,6 +76,8 @@ export class TestModeService {
         this.testModeStatus.set(status);
         console.log('🧪 Test mode status:', status.testMode ? 'ENABLED' : 'DISABLED');
         console.log('📺 Active channel:', status.activeChannel);
+        // Refresh live status immediately after any change
+        this.liveStreamService.checkLiveStatus();
       }),
       catchError(error => {
         console.error('Failed to check test mode status:', error);
@@ -112,6 +129,8 @@ export class TestModeService {
         this.testModeStatus.set(response);
         console.log('🧪 Test mode changed:', response.testMode ? 'ENABLED' : 'DISABLED');
         console.log('📺 Active channel:', response.activeChannel);
+        // Immediately refresh live status to reflect new channel
+        this.liveStreamService.checkLiveStatus();
       }),
       catchError(error => {
         console.error('Failed to set test mode:', error);

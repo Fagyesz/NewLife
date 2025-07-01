@@ -51,10 +51,18 @@ export class LiveStreamService {
     this.checkLiveStatus();
   }
 
+  /**
+   * Add a cache-busting query string to avoid Cloudflare / browser caching issues.
+   */
+  private withCacheBuster(url: string): string {
+    const separator = url.includes('?') ? '&' : '?';
+    return `${url}${separator}_=${Date.now()}`;
+  }
+
   checkLiveStatus(): void {
     this.isLoading.set(true);
     
-    this.http.get<LiveStreamStatus>(this.WORKER_URL).pipe(
+    this.http.get<LiveStreamStatus>(this.withCacheBuster(this.WORKER_URL)).pipe(
       tap(status => {
         this.liveStatus.set({
           ...status,
@@ -67,7 +75,7 @@ export class LiveStreamService {
         console.warn('⚠️ Primary URL failed, trying fallback...', error.message);
         
         // Try fallback URL
-        return this.http.get<LiveStreamStatus>(this.FALLBACK_URL).pipe(
+        return this.http.get<LiveStreamStatus>(this.withCacheBuster(this.FALLBACK_URL)).pipe(
           tap(status => {
             this.liveStatus.set({
               ...status,
