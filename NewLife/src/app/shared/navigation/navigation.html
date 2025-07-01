@@ -2,8 +2,15 @@
   <div class="navbar-container">
     <div class="navbar-brand">
       <a routerLink="/" class="brand-link" (click)="onNavigate()">
-        <span class="brand-text">Új Élet Baptista Gyülekezet</span>
-        <span class="brand-location">Gyöngyös</span>
+        <!-- Logo (SVG) -->
+        <span class="brand-logo">
+          <img src="/assets/img/logo/logo.svg" alt="Logo" class="logo" loading="lazy" />
+        </span>
+        <!-- Text container -->
+        <span class="brand-text-container">
+          <span class="brand-text">Új Élet Baptista Gyülekezet</span>
+          <span class="brand-location">Gyöngyös</span>
+        </span>
       </a>
     </div>
     
