@@ -1,4 +1,5 @@
 import { Injectable, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { Firestore, collection, query, where, orderBy, onSnapshot, doc, updateDoc, getDocs, addDoc, deleteDoc } from '@angular/fire/firestore';
 import { AuthService } from './auth';
 
@@ -180,6 +181,7 @@ export class UserService {
 export class NewsService {
   private firestore = inject(Firestore);
   private authService = inject(AuthService);
+  private router = inject(Router);
 
   // Signals for reactive state
   news = signal<News[]>([]);
@@ -462,18 +464,15 @@ export class NewsService {
 
   // Get all unique tags
   getAllTags(): string[] {
-    const allTags = this.news().flatMap(item => item.tags);
-    return [...new Set(allTags)].sort();
+    const allTags = new Set<string>();
+    this.news().forEach(item => item.tags.forEach(tag => allTags.add(tag)));
+    return Array.from(allTags);
   }
 
   // Check if news should be auto-published
   async checkAndPublishScheduledNews(): Promise<void> {
+    const scheduledNews = this.getScheduledNews();
     const now = new Date();
-    const scheduledNews = this.news().filter(item => 
-      item.isDraft && 
-      item.scheduledPublishAt && 
-      item.scheduledPublishAt <= now
-    );
 
     for (const newsItem of scheduledNews) {
       if (newsItem.id) {
@@ -503,5 +502,9 @@ export class NewsService {
       publishedAt: new Date(),
       scheduledPublishAt: undefined
     });
+  }
+
+  loadMoreNews(): void {
+    this.router.navigate(['/hirek']);
   }
 }

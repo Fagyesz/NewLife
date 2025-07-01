@@ -354,44 +354,33 @@ export class Fooldal implements OnInit, OnDestroy {
   }
 
   getLiveStatusText(): string {
-    if (this.isLive()) {
-      const viewers = this.getLiveViewerCount();
-      const duration = this.getLiveStreamDuration();
-      let text = 'Élő közvetítés';
-      if (viewers > 0) {
-        text += ` • ${viewers} néző`;
-      }
-      if (duration) {
-        text += ` • ${duration}`;
-      }
-      return text;
+    const status = this.liveStreamStatus();
+    if (status.isLive) {
+      return `Élőben ${this.getLiveStreamDuration() || ''}`;
     }
-    return 'Nincs élő közvetítés';
+    return 'Jelenleg nincs élő közvetítés';
   }
 
-  refreshLiveStatus(): void {
-    this.liveStreamService.forceRefresh();
+  refreshLiveStatus() {
+    this.liveStreamService.checkLiveStatus();
   }
 
   // Google Calendar integration
   addToGoogleCalendar(event: Event): void {
-    const startDate = new Date(event.date);
-    const endDate = new Date(startDate.getTime() + 2 * 60 * 60 * 1000); // Default 2 hours duration
-
     const formatDate = (date: Date) => {
-      return date.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+      return date.toISOString().replace(/-|:|\.\d+/g, '');
     };
-
-    const params = new URLSearchParams({
-      action: 'TEMPLATE',
-      text: event.title,
-      dates: `${formatDate(startDate)}/${formatDate(endDate)}`,
-      details: event.description || '',
-      location: event.location || 'Új Élet Baptista Gyülekezet',
-      trp: 'false' // Don't show popup
-    });
-
-    const googleCalendarUrl = `https://calendar.google.com/calendar/render?${params.toString()}`;
+    
+    const startTime = formatDate(event.date);
+    // Assume event is 2 hours long
+    const endTime = formatDate(new Date(event.date.getTime() + 2 * 60 * 60 * 1000));
+    
+    const googleCalendarUrl = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.title)}&dates=${startTime}/${endTime}&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(event.location)}`;
+    
     window.open(googleCalendarUrl, '_blank');
+  }
+
+  loadMoreNews() {
+    this.newsService.loadMoreNews();
   }
 }

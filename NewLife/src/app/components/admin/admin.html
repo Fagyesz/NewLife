@@ -7,6 +7,81 @@
   </div>
 </section>
 
+<!-- Developer Zone -->
+<section class="section dev-zone" *ngIf="authService.isDev()">
+  <div class="container">
+    <div class="section-header">
+      <h2>Fejlesztői zóna</h2>
+    </div>
+    <div class="dev-controls">
+      <h4>Élő közvetítés Worker</h4>
+      
+      <!-- Loading State -->
+      <div *ngIf="testModeService.isLoading()" class="loading-indicator">
+        <p>Státusz frissítése...</p>
+      </div>
+
+      <!-- Error State -->
+      <div *ngIf="testModeService.error() as error" class="error-message">
+        <p>Hiba: {{ error }}</p>
+        <button class="btn btn-sm btn-secondary" (click)="testModeService.clearError()">Bezár</button>
+      </div>
+      
+      <!-- Status Display -->
+      <div *ngIf="!testModeService.isLoading() && !testModeService.error()" class="status-display">
+        <div class="status-item">
+          <span class="label">Worker állapot:</span>
+          <span class="value" [class.healthy]="testModeService.workerHealth()?.status === 'healthy'"
+                               [class.unhealthy]="testModeService.workerHealth()?.status !== 'healthy'">
+            {{ testModeService.workerHealth()?.status || 'Ismeretlen' }}
+            <span *ngIf="testModeService.workerHealth()?.status === 'healthy'">✅</span>
+            <span *ngIf="testModeService.workerHealth()?.status !== 'healthy'">❌</span>
+          </span>
+        </div>
+        <div class="status-item">
+          <span class="label">Élő közvetítés:</span>
+          <span class="value" [class.live]="liveStreamService.liveStatus().isLive"
+                               [class.offline]="!liveStreamService.liveStatus().isLive">
+            {{ liveStreamService.liveStatus().isLive ? 'ÉLŐ' : 'OFFLINE' }}
+            <span *ngIf="liveStreamService.liveStatus().isLive">🔴</span>
+            <span *ngIf="!liveStreamService.liveStatus().isLive">⚫️</span>
+          </span>
+        </div>
+        <div class="status-item">
+          <span class="label">Teszt mód:</span>
+          <span class="value" [class.test-mode-active]="testModeService.testModeStatus().testMode">
+            {{ testModeService.testModeStatus().testMode ? 'Aktív' : 'Inaktív' }}
+          </span>
+        </div>
+        <div class="status-item">
+          <span class="label">Aktív csatorna:</span>
+          <span class="value">{{ testModeService.testModeStatus().activeChannel }}</span>
+        </div>
+      </div>
+      
+      <!-- Action Buttons -->
+      <div class="actions">
+        <button class="btn" 
+                [class.btn-danger]="testModeService.testModeStatus().testMode"
+                [class.btn-success]="!testModeService.testModeStatus().testMode"
+                (click)="testModeService.toggleTestMode()"
+                [disabled]="testModeService.isLoading()">
+          {{ testModeService.testModeStatus().testMode ? '🔴 Teszt mód kikapcsolása' : '🟢 Teszt mód bekapcsolása' }}
+        </button>
+        <button class="btn btn-secondary" (click)="testModeService.checkStatus()" [disabled]="testModeService.isLoading()">
+          🔄 Státusz frissítése
+        </button>
+        <button class="btn btn-secondary" (click)="liveStreamService.checkLiveStatus()" [disabled]="liveStreamService.isLoading()">
+          🔄 Élő állapot frissítése
+        </button>
+        <button class="btn btn-info" (click)="testModeService.checkHealth()" [disabled]="testModeService.isLoading()">
+          ❤️ Worker állapotellenőrzés
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Dashboard Stats -->
 <section class="section stats-section" *ngIf="authService.isStaff()">
   <div class="container">

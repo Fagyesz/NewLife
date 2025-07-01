@@ -1,8 +1,10 @@
-import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID, signal, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID, signal, inject, effect } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { BubblesComponent } from '../../shared/bubbles/bubbles';
 import { AnimateOnScrollDirective } from '../../shared/directives/animate-on-scroll.directive';
 import { LiveStreamService } from '../../services/live-stream';
+import { TestModeService } from '../../services/test-mode';
 
 @Component({
   selector: 'app-elo-kozvetites',
@@ -12,6 +14,7 @@ import { LiveStreamService } from '../../services/live-stream';
 })
 export class EloKozvetites implements OnInit, OnDestroy {
   private liveStreamService = inject(LiveStreamService);
+  private testModeService = inject(TestModeService);
   
   // Signals for reactive state - now using the live stream service
   isStreamLive = signal(false);
@@ -30,16 +33,38 @@ export class EloKozvetites implements OnInit, OnDestroy {
   lastChecked = signal<Date>(new Date());
   
   // YouTube stream configuration
-  youtubeChannelId = 'UC3GbgMOUrfVnipHXvXQYFkA'; // Új Élet Baptista Gyülekezet
-  youtubeEmbedUrl = 'https://www.youtube.com/embed/live_stream?channel=UC3GbgMOUrfVnipHXvXQYFkA';
+  youtubeChannelId = 'UC3GbgMOUrfVnipHXvXQYFkA'; // Default: Új Élet Baptista Gyülekezet
+  youtubeEmbedUrl: SafeResourceUrl;
   
   private countdownInterval: any;
   private statusUpdateInterval: any;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private sanitizer: DomSanitizer
+  ) {
+    // Initial placeholder URL
+    this.youtubeEmbedUrl = this.sanitizer.bypassSecurityTrustResourceUrl('');
+
+    // React to test mode changes
+    effect(() => {
+      const status = this.testModeService.testModeStatus();
+      const channels = this.testModeService.getChannels();
+      
+      if (status.testMode && channels?.test.id) {
+        this.youtubeChannelId = channels.test.id;
+      } else if (channels?.production.id) {
+        this.youtubeChannelId = channels.production.id;
+      }
+      
+      this.updateEmbedUrl();
+    });
+  }
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
+      this.testModeService.checkStatus();
+      
       this.startLiveStatusMonitoring();
       this.startCountdown();
       
@@ -56,6 +81,12 @@ export class EloKozvetites implements OnInit, OnDestroy {
     if (this.statusUpdateInterval) {
       clearInterval(this.statusUpdateInterval);
     }
+  }
+
+  private updateEmbedUrl(): void {
+    const embedUrl = `https://www.youtube.com/embed/live_stream?channel=${this.youtubeChannelId}`;
+    this.youtubeEmbedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl);
+    console.log(`Live stream URL updated for channel: ${this.youtubeChannelId}`);
   }
 
   private startLiveStatusMonitoring(): void {
@@ -238,8 +269,8 @@ export class EloKozvetites implements OnInit, OnDestroy {
     }
   }
 
-  refreshLiveStatus(): void {
-    this.liveStreamService.forceRefresh();
+  refreshStatus() {
+    this.liveStreamService.checkLiveStatus();
   }
 
   // Test method - you can call this from browser console to test live mode

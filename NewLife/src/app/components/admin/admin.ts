@@ -7,6 +7,8 @@ import { AuthService } from '../../services/auth';
 import { EventService, Event } from '../../services/event';
 import { AttendanceService } from '../../services/attendance';
 import { UserService, NewsService, News } from '../../services/user';
+import { TestModeService } from '../../services/test-mode';
+import { LiveStreamService } from '../../services/live-stream';
 import { BubblesComponent } from '../../shared/bubbles/bubbles';
 
 @Component({
@@ -17,6 +19,8 @@ import { BubblesComponent } from '../../shared/bubbles/bubbles';
 })
 export class Admin implements OnInit {
   authService = inject(AuthService);
+  testModeService = inject(TestModeService);
+  liveStreamService = inject(LiveStreamService);
   private eventService = inject(EventService);
   private attendanceService = inject(AttendanceService);
   userService = inject(UserService);
@@ -86,6 +90,11 @@ export class Admin implements OnInit {
       this.router.navigate(['/']);
       return;
     }
+    if (this.authService.isDev()) {
+      this.testModeService.checkStatus();
+      this.testModeService.checkHealth();
+      this.liveStreamService.checkLiveStatus();
+    }
   }
 
   get events() {
@@ -137,8 +146,6 @@ export class Admin implements OnInit {
       this.newsService.isNewsActive(item)
     );
   }
-
-
 
   get expiredNews() {
     return this.newsService.getExpiredNews();

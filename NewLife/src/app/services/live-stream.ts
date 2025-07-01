@@ -40,7 +40,7 @@ export class LiveStreamService {
   private startLiveStatusPolling(): void {
     // Check every 30 seconds
     interval(30000).pipe(
-      switchMap(() => this.checkLiveStatus()),
+      tap(() => this.checkLiveStatus()),
       catchError(error => {
         console.error('Live status polling error:', error);
         return of(null);
@@ -48,13 +48,13 @@ export class LiveStreamService {
     ).subscribe();
     
     // Initial check
-    this.checkLiveStatus().subscribe();
+    this.checkLiveStatus();
   }
 
-  private checkLiveStatus() {
+  checkLiveStatus(): void {
     this.isLoading.set(true);
     
-    return this.http.get<LiveStreamStatus>(this.WORKER_URL).pipe(
+    this.http.get<LiveStreamStatus>(this.WORKER_URL).pipe(
       tap(status => {
         this.liveStatus.set({
           ...status,
@@ -88,7 +88,7 @@ export class LiveStreamService {
         );
       }),
       tap(() => this.isLoading.set(false))
-    );
+    ).subscribe();
   }
 
   // Public methods
@@ -98,10 +98,6 @@ export class LiveStreamService {
 
   isCurrentlyLive(): boolean {
     return this.liveStatus().isLive;
-  }
-
-  forceRefresh(): void {
-    this.checkLiveStatus().subscribe();
   }
 
   getStreamTitle(): string {

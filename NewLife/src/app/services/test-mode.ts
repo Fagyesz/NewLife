@@ -41,22 +41,22 @@ export class TestModeService {
   error = signal<string | null>(null);
 
   constructor() {
-    this.checkStatus();
+    // Initial data fetch is now handled by the component that injects the service.
   }
 
   /**
    * Check current test mode status
    */
-  checkStatus() {
+  checkStatus(): void {
     if (!this.TEST_MODE_URL) {
       console.warn('Test mode URL not configured');
-      return of(null);
+      return;
     }
 
     this.isLoading.set(true);
     this.error.set(null);
     
-    return this.http.get<TestModeStatus>(this.TEST_MODE_URL).pipe(
+    this.http.get<TestModeStatus>(this.TEST_MODE_URL).pipe(
       tap(status => {
         this.testModeStatus.set(status);
         console.log('🧪 Test mode status:', status.testMode ? 'ENABLED' : 'DISABLED');
@@ -68,38 +68,38 @@ export class TestModeService {
         return of(null);
       }),
       tap(() => this.isLoading.set(false))
-    );
+    ).subscribe();
   }
 
   /**
    * Enable test mode
    */
-  enableTestMode() {
-    return this.setTestMode(true);
+  enableTestMode(): void {
+    this.setTestMode(true);
   }
 
   /**
    * Disable test mode
    */
-  disableTestMode() {
-    return this.setTestMode(false);
+  disableTestMode(): void {
+    this.setTestMode(false);
   }
 
   /**
    * Toggle test mode
    */
-  toggleTestMode() {
+  toggleTestMode(): void {
     const currentStatus = this.testModeStatus();
-    return this.setTestMode(!currentStatus.testMode);
+    this.setTestMode(!currentStatus.testMode);
   }
 
   /**
    * Set test mode state
    */
-  private setTestMode(enable: boolean) {
+  private setTestMode(enable: boolean): void {
     if (!this.TEST_MODE_URL) {
       console.error('Test mode URL not configured');
-      return of(null);
+      return;
     }
 
     this.isLoading.set(true);
@@ -107,7 +107,7 @@ export class TestModeService {
     
     const body = { enable };
     
-    return this.http.post<TestModeStatus>(this.TEST_MODE_URL, body).pipe(
+    this.http.post<TestModeStatus>(this.TEST_MODE_URL, body).pipe(
       tap(response => {
         this.testModeStatus.set(response);
         console.log('🧪 Test mode changed:', response.testMode ? 'ENABLED' : 'DISABLED');
@@ -119,19 +119,22 @@ export class TestModeService {
         return of(null);
       }),
       tap(() => this.isLoading.set(false))
-    );
+    ).subscribe();
   }
 
   /**
    * Check worker health
    */
-  checkHealth() {
+  checkHealth(): void {
     if (!this.HEALTH_URL) {
       console.warn('Health URL not configured');
-      return of(null);
+      return;
     }
 
-    return this.http.get<WorkerHealth>(this.HEALTH_URL).pipe(
+    this.isLoading.set(true);
+    this.error.set(null);
+
+    this.http.get<WorkerHealth>(this.HEALTH_URL).pipe(
       tap(health => {
         this.workerHealth.set(health);
         console.log('❤️ Worker health:', health.status);
@@ -141,8 +144,9 @@ export class TestModeService {
         this.workerHealth.set(null);
         this.error.set('Worker health check failed');
         return of(null);
-      })
-    );
+      }),
+      tap(() => this.isLoading.set(false))
+    ).subscribe();
   }
 
   /**
