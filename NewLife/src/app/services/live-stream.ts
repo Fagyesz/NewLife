@@ -2,6 +2,7 @@ import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { interval, catchError, of, switchMap, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { AuthService } from './auth';
 
 export interface LiveStreamStatus {
   isLive: boolean;
@@ -19,6 +20,7 @@ export interface LiveStreamStatus {
 })
 export class LiveStreamService {
   private http = inject(HttpClient);
+  private authService = inject(AuthService);
   
   // Cloudflare Worker endpoints - configured in environment
   private readonly WORKER_URL = environment.liveStream.workerUrl;
@@ -69,7 +71,9 @@ export class LiveStreamService {
           lastChecked: new Date(),
           startedAt: status.startedAt ? new Date(status.startedAt) : undefined
         });
-        console.log('🎥 Live status updated (primary):', status.isLive ? 'LIVE' : 'OFFLINE');
+        if (this.authService.isDev()) {
+          console.log('🎥 Live status updated (primary):', status.isLive ? 'LIVE' : 'OFFLINE');
+        }
       }),
       catchError(error => {
         console.warn('⚠️ Primary URL failed, trying fallback...', error.message);
@@ -82,10 +86,14 @@ export class LiveStreamService {
               lastChecked: new Date(),
               startedAt: status.startedAt ? new Date(status.startedAt) : undefined
             });
-            console.log('🎥 Live status updated (fallback):', status.isLive ? 'LIVE' : 'OFFLINE');
+            if (this.authService.isDev()) {
+              console.log('🎥 Live status updated (fallback):', status.isLive ? 'LIVE' : 'OFFLINE');
+            }
           }),
           catchError(fallbackError => {
-            console.error('❌ Both primary and fallback URLs failed:', fallbackError);
+            if (this.authService.isDev()) {
+              console.error('❌ Both primary and fallback URLs failed:', fallbackError);
+            }
             this.liveStatus.set({
               isLive: false,
               lastChecked: new Date(),

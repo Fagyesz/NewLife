@@ -5,6 +5,7 @@ import { BubblesComponent } from '../../shared/bubbles/bubbles';
 import { AnimateOnScrollDirective } from '../../shared/directives/animate-on-scroll.directive';
 import { LiveStreamService } from '../../services/live-stream';
 import { TestModeService } from '../../services/test-mode';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-elo-kozvetites',
@@ -15,6 +16,7 @@ import { TestModeService } from '../../services/test-mode';
 export class EloKozvetites implements OnInit, OnDestroy {
   private liveStreamService = inject(LiveStreamService);
   private testModeService = inject(TestModeService);
+  private authService = inject(AuthService);
   
   // Signals for reactive state - now using the live stream service
   isStreamLive = signal(false);
@@ -80,9 +82,10 @@ export class EloKozvetites implements OnInit, OnDestroy {
       this.startLiveStatusMonitoring();
       this.startCountdown();
       
-      // For testing - expose component to global scope
-      (window as any).liveStreamComponent = this;
-      console.log('🎥 Live Stream component loaded. Test with: liveStreamComponent.simulateLiveMode()');
+      if (this.authService.isDev()) {
+        (window as any).liveStreamComponent = this;
+        console.log('🎥 Live Stream component loaded. Test with: liveStreamComponent.simulateLiveMode()');
+      }
     }
   }
 
@@ -98,7 +101,9 @@ export class EloKozvetites implements OnInit, OnDestroy {
   private updateEmbedUrl(): void {
     const embedUrl = `https://www.youtube.com/embed/live_stream?channel=${this.youtubeChannelId}`;
     this.youtubeEmbedUrl.set(this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl));
-    console.log(`Live stream URL updated for channel: ${this.youtubeChannelId}`);
+    if (this.authService.isDev()) {
+      console.log(`Live stream URL updated for channel: ${this.youtubeChannelId}`);
+    }
   }
 
   private startLiveStatusMonitoring(): void {

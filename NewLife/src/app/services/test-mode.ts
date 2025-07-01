@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, tap, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { LiveStreamService } from './live-stream';
+import { AuthService } from './auth';
 
 export interface TestModeStatus {
   testMode: boolean;
@@ -27,6 +28,7 @@ export interface WorkerHealth {
 export class TestModeService {
   private http = inject(HttpClient);
   private liveStreamService = inject(LiveStreamService);
+  private authService = inject(AuthService);
   
   // Worker URLs from environment
   private readonly TEST_MODE_URL = environment.liveStream.testModeUrl;
@@ -74,8 +76,10 @@ export class TestModeService {
     this.http.get<TestModeStatus>(this.TEST_MODE_URL).pipe(
       tap(status => {
         this.testModeStatus.set(status);
-        console.log('🧪 Test mode status:', status.testMode ? 'ENABLED' : 'DISABLED');
-        console.log('📺 Active channel:', status.activeChannel);
+        if (this.authService.isDev()) {
+          console.log('🧪 Test mode status:', status.testMode ? 'ENABLED' : 'DISABLED');
+          console.log('📺 Active channel:', status.activeChannel);
+        }
         // Refresh live status immediately after any change
         this.liveStreamService.checkLiveStatus();
       }),
@@ -127,8 +131,10 @@ export class TestModeService {
     this.http.post<TestModeStatus>(this.TEST_MODE_URL, body).pipe(
       tap(response => {
         this.testModeStatus.set(response);
-        console.log('🧪 Test mode changed:', response.testMode ? 'ENABLED' : 'DISABLED');
-        console.log('📺 Active channel:', response.activeChannel);
+        if (this.authService.isDev()) {
+          console.log('🧪 Test mode changed:', response.testMode ? 'ENABLED' : 'DISABLED');
+          console.log('📺 Active channel:', response.activeChannel);
+        }
         // Immediately refresh live status to reflect new channel
         this.liveStreamService.checkLiveStatus();
       }),
@@ -156,7 +162,9 @@ export class TestModeService {
     this.http.get<WorkerHealth>(this.HEALTH_URL).pipe(
       tap(health => {
         this.workerHealth.set(health);
-        console.log('❤️ Worker health:', health.status);
+        if (this.authService.isDev()) {
+          console.log('❤️ Worker health:', health.status);
+        }
       }),
       catchError(error => {
         console.error('Worker health check failed:', error);
