@@ -53,12 +53,20 @@
     <h2 class="text-center" animateOnScroll="fadeInDown">Közelgő események</h2>
     
     <!-- Loading state -->
-    <div *ngIf="upcomingEvents().length === 0" class="text-center" style="padding: 2rem;">
-      <p style="color: #666; font-size: 1.1rem;">📅 Események betöltése...</p>
+    <div *ngIf="eventsLoading()">
+      <app-loading-spinner 
+        message="Események betöltése..." 
+        animationType="pulse">
+      </app-loading-spinner>
+    </div>
+    
+    <!-- No events state -->
+    <div *ngIf="!eventsLoading() && upcomingEvents().length === 0" class="text-center" style="padding: 2rem;">
+      <p style="color: #666; font-size: 1.1rem;">📅 Nincsenek közelgő események</p>
     </div>
     
     <!-- Events content -->
-    <div *ngIf="upcomingEvents().length > 0" class="events-preview">
+    <div *ngIf="!eventsLoading() && upcomingEvents().length > 0" class="events-preview">
       <div class="event-card" *ngFor="let event of upcomingEvents()" (click)="openEventModal(event)" animateOnScroll="bounceIn" [animationDelay]="300">
         <div class="event-date">
           <span>{{ formatEventDate(event.date) }}</span>
@@ -74,7 +82,7 @@
       </div>
     </div>
     
-    <div class="all-events-link" *ngIf="upcomingEvents().length > 0">
+    <div class="all-events-link" *ngIf="!eventsLoading() && upcomingEvents().length > 0">
       <a routerLink="/esemenyek" class="btn btn-secondary">Összes esemény megtekintése →</a>
     </div>
   </div>
@@ -114,12 +122,20 @@
     <h2 class="text-center">Legfrissebb hírek</h2>
     
     <!-- Loading state -->
-    <div *ngIf="latestNews().length === 0" class="text-center" style="padding: 2rem;">
-      <p style="color: #666; font-size: 1.1rem;">📰 Hírek betöltése...</p>
+    <div *ngIf="newsLoading()">
+      <app-loading-spinner 
+        message="Hírek betöltése..." 
+        animationType="sway">
+      </app-loading-spinner>
+    </div>
+    
+    <!-- No news state -->
+    <div *ngIf="!newsLoading() && latestNews().length === 0" class="text-center" style="padding: 2rem;">
+      <p style="color: #666; font-size: 1.1rem;">📰 Nincsenek friss hírek</p>
     </div>
     
     <!-- News content -->
-    <div *ngIf="latestNews().length > 0" class="news-preview">
+    <div *ngIf="!newsLoading() && latestNews().length > 0" class="news-preview">
       <div *ngFor="let newsItem of latestNews()" class="news-preview-card" (click)="openNewsModal(newsItem)">
         <div class="news-content">
           <div class="news-date">{{ formatNewsDate(newsItem.publishedAt) }}</div>
@@ -133,7 +149,7 @@
       </div>
     </div>
     
-    <div *ngIf="latestNews().length > 0" class="text-center">
+    <div *ngIf="!newsLoading() && latestNews().length > 0" class="text-center">
       <a routerLink="/hirek" class="btn btn-outline">Összes hír megtekintése →</a>
     </div>
   </div>

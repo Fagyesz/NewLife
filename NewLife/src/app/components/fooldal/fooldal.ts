@@ -8,10 +8,11 @@ import { LiveStreamService } from '../../services/live-stream';
 import { BubblesComponent } from '../../shared/bubbles/bubbles';
 import { LazyImgDirective } from '../../shared/directives/lazy-img.directive';
 import { AnimateOnScrollDirective } from '../../shared/directives/animate-on-scroll.directive';
+import { LoadingSpinnerComponent } from '../../shared/components/loading-spinner';
 
 @Component({
   selector: 'app-fooldal',
-  imports: [CommonModule, RouterModule, BubblesComponent, LazyImgDirective, AnimateOnScrollDirective],
+  imports: [CommonModule, RouterModule, BubblesComponent, LazyImgDirective, AnimateOnScrollDirective, LoadingSpinnerComponent],
   templateUrl: './fooldal.html',
   styleUrl: './fooldal.scss'
 })
@@ -40,6 +41,10 @@ export class Fooldal implements OnInit, OnDestroy {
   isLoading = signal(false);
   attendanceStates = signal<Map<string, boolean>>(new Map());
   
+  // Loading states for different sections
+  eventsLoading = signal(false);
+  newsLoading = signal(false);
+  
   private countdownInterval: any;
 
   async ngOnInit(): Promise<void> {
@@ -48,7 +53,27 @@ export class Fooldal implements OnInit, OnDestroy {
       this.startCountdown();
       this.checkLiveStatus();
     }
-    await this.loadAttendanceStates();
+    await this.loadInitialData();
+  }
+
+  private async loadInitialData(): Promise<void> {
+    // Simulate loading with animated logo
+    this.eventsLoading.set(true);
+    this.newsLoading.set(true);
+    
+    try {
+      // Add small delay to show the animated logo
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      await this.loadAttendanceStates();
+      
+      this.eventsLoading.set(false);
+      this.newsLoading.set(false);
+    } catch (error) {
+      console.error('Error loading initial data:', error);
+      this.eventsLoading.set(false);
+      this.newsLoading.set(false);
+    }
   }
 
   ngOnDestroy(): void {

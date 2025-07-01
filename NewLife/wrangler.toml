@@ -5,4 +5,14 @@ compatibility_date = "2024-03-01"
 # KV namespace for caching live status
 [[kv_namespaces]]
 binding = "LIVE_STATUS_CACHE"
-id = "e03c580a8f524dcd82ec942f89e8db8f" 
+id = "e03c580a8f524dcd82ec942f89e8db8f"
+
+# Environment variables (secrets)
+[vars]
+# Public variables can go here
+
+# Secrets (set these manually using wrangler secret put)
+# YOUTUBE_API_KEY = "your-youtube-api-key"
+
+# Routes for custom domain
+route = { pattern = "status.bapti.hu/*", zone_name = "bapti.hu" } 

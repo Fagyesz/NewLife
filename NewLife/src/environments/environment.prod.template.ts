@@ -11,6 +11,13 @@ export const environment = {
   },
   liveStream: {
     workerUrl: "https://status.bapti.hu/api/live",
-    fallbackUrl: "https://status.bapti.hu/api/live"
+    fallbackUrl: "https://status.bapti.hu/api/live",
+    testModeUrl: "https://status.bapti.hu/api/test",
+    healthUrl: "https://status.bapti.hu/api/health"
+  },
+  youtube: {
+    mainChannelId: "UC3GbgMOUrfVnipHXvXQYFkA", // @ujeletbaptistagyulekezet
+    testChannelId: "UCftu1qQJZjQKHIXAjhDvFkw", // @fagyi3970
+    apiKey: "YOUR_YOUTUBE_API_KEY_HERE"
   }
 }; 

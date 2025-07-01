@@ -14,6 +14,7 @@ export class Navigation {
   isMenuOpen = signal(false);
   authService = inject(AuthService);
   private viewportScroller = inject(ViewportScroller);
+  logoError = signal(false);
 
   toggleMenu() {
     this.isMenuOpen.set(!this.isMenuOpen());
@@ -66,5 +67,13 @@ export class Navigation {
 
   private closeMenu() {
     this.isMenuOpen.set(false);
+  }
+
+  onLogoError(event: any) {
+    console.log('Logo failed to load, using fallback');
+    this.logoError.set(true);
+    // Set fallback image
+    event.target.src = 'assets/img/logo/csak-logo.png';
+    event.target.onerror = null; // Prevent infinite loop
   }
 }
