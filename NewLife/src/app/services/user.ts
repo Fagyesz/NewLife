@@ -133,7 +133,13 @@ export class UserService {
     try {
       const userRef = doc(this.firestore, 'users', uid);
       await updateDoc(userRef, { role });
-      console.log('✅ User role updated:', uid, role);
+
+      // Optimistically update local signal so UI reflects change immediately
+      const updatedUsers = this.users().map(u => u.uid === uid ? { ...u, role } : u);
+      this.users.set(updatedUsers);
+      this.updateStats(updatedUsers);
+
+      console.log('✅ User role updated (local & remote):', uid, role);
     } catch (error) {
       console.error('❌ Error updating user role:', error);
       throw error;

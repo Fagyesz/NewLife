@@ -1,6 +1,6 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { Auth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged, User } from '@angular/fire/auth';
-import { Firestore, doc, setDoc, getDoc, updateDoc } from '@angular/fire/firestore';
+import { Firestore, doc, setDoc, getDoc, updateDoc, onSnapshot } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { UserProfile } from './user';
 
@@ -17,15 +17,27 @@ export class AuthService {
   userProfile = signal<UserProfile | null>(null);
   isLoading = signal(false);
 
+  /** Unsubscribe function for the realtime user-profile listener */
+  private profileUnsubscribe: (() => void) | null = null;
+
   constructor() {
     // Initialize auth state listener
     onAuthStateChanged(this.auth, async (user) => {
       this.user.set(user);
       
       if (user) {
+        // Ensure we are listening to realtime changes on this profile
+        this.startUserProfileListener(user.uid);
+
+        // Load (or create) the document once so fields like loginCount are updated
         await this.loadOrCreateUserProfile(user);
       } else {
         this.userProfile.set(null);
+        // Cleanup listener when signed out
+        if (this.profileUnsubscribe) {
+          this.profileUnsubscribe();
+          this.profileUnsubscribe = null;
+        }
       }
     });
   }
@@ -230,5 +242,36 @@ export class AuthService {
       case 'dev': return 'Fejlesztő';
       default: return 'Ismeretlen';
     }
+  }
+
+  /**
+   * Listen to realtime changes of the signed-in user's document so role / authorization
+   * updates made directly in Firestore Console reflect instantly in the app.
+   */
+  private startUserProfileListener(uid: string): void {
+    // Tear down any previous listener first
+    if (this.profileUnsubscribe) {
+      this.profileUnsubscribe();
+      this.profileUnsubscribe = null;
+    }
+
+    const userDocRef = doc(this.firestore, 'users', uid);
+    this.profileUnsubscribe = onSnapshot(userDocRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const data = snapshot.data();
+        // Convert Firestore Timestamps to Date where necessary
+        const updatedProfile: UserProfile = {
+          uid,
+          ...data,
+          lastLogin: data['lastLogin']?.toDate?.() || new Date(data['lastLogin'] ?? Date.now()),
+          createdAt: data['createdAt']?.toDate?.() || new Date(data['createdAt'] ?? Date.now())
+        } as UserProfile;
+
+        this.userProfile.set(updatedProfile);
+        console.log('🔄 User profile updated via realtime listener:', updatedProfile.role);
+      }
+    }, (error) => {
+      console.error('❌ Realtime user-profile listener error:', error);
+    });
   }
 }
