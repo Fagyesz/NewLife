@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, OnInit, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EventService, Event } from '../../services/event';
 import { AttendanceService } from '../../services/attendance';
@@ -26,6 +26,16 @@ export class Esemenyek implements OnInit {
   // Event modal state
   showEventModal = signal<boolean>(false);
   selectedEvent = signal<Event | null>(null);
+
+  constructor() {
+    // Reactively update attendance states whenever the events signal changes
+    effect(() => {
+      // Accessing the signal registers the dependency
+      void this.events();
+      // Fire-and-forget async refresh
+      this.loadAttendanceStates();
+    });
+  }
 
   async ngOnInit() {
     await this.loadAttendanceStates();
