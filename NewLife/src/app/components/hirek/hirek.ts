@@ -5,10 +5,11 @@ import { RouterModule } from '@angular/router';
 import { NewsService, News } from '../../services/user';
 import { BubblesComponent } from '../../shared/bubbles/bubbles';
 import { AnimateOnScrollDirective } from '../../shared/directives/animate-on-scroll.directive';
+import { ReverseNamePipe } from '../../shared/pipes/reverse-name.pipe';
 
 @Component({
   selector: 'app-hirek',
-  imports: [CommonModule, FormsModule, RouterModule, BubblesComponent, AnimateOnScrollDirective],
+  imports: [CommonModule, FormsModule, RouterModule, BubblesComponent, AnimateOnScrollDirective, ReverseNamePipe],
   templateUrl: './hirek.html',
   styleUrl: './hirek.scss'
 })

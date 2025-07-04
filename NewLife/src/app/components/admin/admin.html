@@ -164,7 +164,7 @@
                  alt="Avatar" class="user-avatar" 
                  onerror="this.src='/icons/icon-128x128-v2.png'">
             <div class="user-details">
-              <h4>{{ user.displayName }}</h4>
+              <h4>{{ reverseName(user.displayName) }}</h4>
               <p>{{ user.email }}</p>
               <div class="user-meta">
                 <span class="login-count">{{ user.loginCount || 0 }} bejelentkezés</span>

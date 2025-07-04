@@ -1,7 +1,8 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,7 @@ import { AuthService } from '../../services/auth';
   templateUrl: './login.html',
   styleUrl: './login.scss'
 })
-export class Login {
+export class Login implements OnInit {
   authService = inject(AuthService);
   private router = inject(Router);
 
@@ -24,6 +25,20 @@ export class Login {
 
   /** LocalStorage key where we remember the visitor's decision */
   private readonly cookieStorageKey = 'login-cookie-accepted';
+
+  private platformId = inject(PLATFORM_ID);
+
+  ngOnInit() {
+    // In SSR the constructor runs on the server where localStorage is undefined.
+    // When the component hydrates in the browser, re-sync the value from
+    // localStorage so the checkbox state is correct.
+    if (isPlatformBrowser(this.platformId)) {
+      const stored = this.loadStoredCookieAcceptance();
+      if (stored !== this.loginCookieAccepted()) {
+        this.loginCookieAccepted.set(stored);
+      }
+    }
+  }
 
   async signInWithGoogle() {
     if (!this.loginCookieAccepted()) {

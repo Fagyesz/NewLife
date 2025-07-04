@@ -235,7 +235,12 @@ export class AuthService {
   // Get user display info
   getUserDisplayName(): string {
     const profile = this.userProfile();
-    return profile?.displayName || 'Ismeretlen felhasználó';
+    const name = profile?.displayName;
+    if (!name) return 'Ismeretlen felhasználó';
+    const parts = name.trim().split(/\s+/);
+    if (parts.length <= 1) return name;
+    const last = parts.pop();
+    return `${last} ${parts.join(' ')}`.trim();
   }
 
   getUserEmail(): string {

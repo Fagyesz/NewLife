@@ -703,4 +703,13 @@ export class Admin implements OnInit {
     imgEl.onerror = null; // avoid infinite loop
     imgEl.src = '/icons/icon-128x128-v2.png';
   }
+
+  /** Returns display name with last name first */
+  reverseName(name: string | undefined | null): string {
+    if (!name) return '';
+    const parts = name.trim().split(/\s+/);
+    if (parts.length <= 1) return name;
+    const last = parts.pop();
+    return `${last} ${parts.join(' ')}`.trim();
+  }
 }

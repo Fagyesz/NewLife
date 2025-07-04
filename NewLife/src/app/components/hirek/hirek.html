@@ -18,7 +18,7 @@
         <h2>{{ featuredNews()!.title }}</h2>
         <p>{{ featuredNews()!.summary || getNewsExcerpt(featuredNews()!.content, 200) }}</p>
         <div class="news-meta">
-          <span class="news-author">👤 {{ featuredNews()!.author }}</span>
+          <span class="news-author">👤 {{ featuredNews()!.author | reverseName }}</span>
         </div>
         <div class="news-footer">
           <span class="news-category">
@@ -35,7 +35,7 @@
         <h3>{{ newsItem.title }}</h3>
         <p>{{ newsItem.summary || getNewsExcerpt(newsItem.content, 150) }}</p>
         <div class="news-meta">
-          <span class="news-author">👤 {{ newsItem.author }}</span>
+          <span class="news-author">👤 {{ newsItem.author | reverseName }}</span>
         </div>
         <div class="news-footer">
           <span class="news-category">
@@ -95,7 +95,7 @@
     
     <div class="modal-body">
       <h1>{{ selectedNews()!.title }}</h1>
-      <div class="news-author">👤 {{ selectedNews()!.author }}</div>
+      <div class="news-author">👤 {{ selectedNews()!.author | reverseName }}</div>
       
       <div class="news-content">
         <img *ngIf="selectedNews()!.imageUrl" 
