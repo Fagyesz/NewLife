@@ -12,7 +12,7 @@
   <div class="container">
     <div class="news-grid">
       <!-- Featured News -->
-      <article *ngIf="featuredNews()" class="news-card featured" (click)="openNewsModal(featuredNews()!)" animateOnScroll="zoomIn" [animationDelay]="300">
+      <article *ngIf="featuredNews()" class="news-card" (click)="openNewsModal(featuredNews()!)" animateOnScroll="zoomIn" [animationDelay]="300">
 
         <div class="news-date">{{ formatNewsDate(featuredNews()!.publishedAt) }}</div>
         <h2>{{ featuredNews()!.title }}</h2>
