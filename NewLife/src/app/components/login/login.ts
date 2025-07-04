@@ -37,6 +37,14 @@ export class Login {
       
       await this.authService.signInWithGoogle();
       
+      // If sign-in succeeds we can assume the visitor accepts the required
+      // technical cookies. Persist that so the checkbox is pre-checked next
+      // time they open the page.
+      this.loginCookieAccepted.set(true);
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem(this.cookieStorageKey, 'true');
+      }
+
       // Redirect will be handled by the auth service
     } catch (error: any) {
       console.error('Login error:', error);
