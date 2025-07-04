@@ -188,6 +188,13 @@ $dark-text: #333333;
         }
       }
     }
+
+    // Ensure words never split inside the headline or summary
+    h2, h3, p {
+      word-break: normal !important;   // allow breaks at spaces
+      overflow-wrap: break-word !important; // break very long words if necessary
+      hyphens: none !important;        // disable auto-hyphenation
+    }
   }
   
   .no-news {
