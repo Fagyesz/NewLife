@@ -494,7 +494,7 @@ export class NewsService {
   // Get news by tag
   getNewsByTag(tag: string): News[] {
     return this.news().filter(item => 
-      item.tags.includes(tag)
+      item.tags && Array.isArray(item.tags) && item.tags.includes(tag)
     );
   }
 
@@ -508,7 +508,18 @@ export class NewsService {
   // Get all unique tags
   getAllTags(): string[] {
     const allTags = new Set<string>();
-    this.news().forEach(item => item.tags.forEach(tag => allTags.add(tag)));
+    const newsItems = this.news();
+    if (newsItems && Array.isArray(newsItems)) {
+      newsItems.forEach(item => {
+        if (item.tags && Array.isArray(item.tags)) {
+          item.tags.forEach(tag => {
+            if (tag && typeof tag === 'string') {
+              allTags.add(tag);
+            }
+          });
+        }
+      });
+    }
     return Array.from(allTags);
   }
 

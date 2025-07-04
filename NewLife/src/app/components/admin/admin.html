@@ -631,7 +631,7 @@
         </div>
         
         <!-- Suggested Tags -->
-        <div class="suggested-tags" *ngIf="availableTags.length > 0">
+        <div class="suggested-tags" *ngIf="availableTags && availableTags.length > 0">
           <small class="form-help">Meglévő címkék:</small>
           <div class="tags-list">
             <span *ngFor="let tag of availableTags" 
@@ -648,9 +648,9 @@
         <quill-editor 
           [(ngModel)]="newsForm.content" 
           [modules]="quillConfig"
-          name="newsContent" 
-          [style]="{ height: '300px' }"
-          placeholder="Írja be a hír tartalmát...">
+          name="newsContent"
+          placeholder="Írja be a hír tartalmát..."
+          class="auto-resize-quill">
         </quill-editor>
       </div>
 

@@ -37,7 +37,7 @@ export class Admin implements OnInit {
   editingNews = signal<News | null>(null);
   isLoading = signal(false);
 
-  // Quill editor configuration
+  // Quill editor configuration 
   quillConfig = {
     toolbar: [
       ['bold', 'italic', 'underline', 'strike'],
@@ -52,7 +52,10 @@ export class Admin implements OnInit {
       [{ 'align': [] }],
       ['clean'],
       ['link']
-    ]
+    ],
+    theme: 'snow',
+    bounds: document.body,
+    scrollingContainer: null
   };
 
   // Form data
@@ -650,15 +653,31 @@ export class Admin implements OnInit {
   }
 
   get availableTags(): string[] {
-    return this.newsService.getAllTags();
+    try {
+      const tags = this.newsService?.getAllTags?.();
+      return Array.isArray(tags) ? tags : [];
+    } catch (error) {
+      console.warn('Error getting available tags:', error);
+      return [];
+    }
   }
 
   get scheduledNews() {
-    return this.newsService.getScheduledNews();
+    try {
+      return this.newsService.getScheduledNews() || [];
+    } catch (error) {
+      console.warn('Error getting scheduled news:', error);
+      return [];
+    }
   }
 
   get draftNews() {
-    return this.newsService.getDraftNews();
+    try {
+      return this.newsService.getDraftNews() || [];
+    } catch (error) {
+      console.warn('Error getting draft news:', error);
+      return [];
+    }
   }
 
   async publishScheduledNews(newsItem: News): Promise<void> {
@@ -712,4 +731,6 @@ export class Admin implements OnInit {
     const last = parts.pop();
     return `${last} ${parts.join(' ')}`.trim();
   }
+
+
 }

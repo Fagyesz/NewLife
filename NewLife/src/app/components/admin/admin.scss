@@ -620,6 +620,8 @@ $dark-gray: #343a40;
     resize: both;
     min-width: 600px;
     min-height: 500px;
+    position: relative;
+    z-index: 1001;
     
     @media (max-width: 768px) {
       max-width: 95vw;
@@ -691,6 +693,39 @@ $dark-gray: #343a40;
           opacity: 0.7;
           margin-top: 0.25rem;
           display: block;
+        }
+
+        // Specific styling for Quill editor container
+        quill-editor {
+          display: block;
+          width: 100%;
+          border: 2px solid $light-gray;
+          border-radius: 8px;
+          transition: border-color 0.3s ease;
+          background: $white;
+          position: relative;
+          z-index: 1002;
+
+          &:focus-within {
+            border-color: $primary-green;
+          }
+        }
+
+        // Auto-resize Quill editor
+        .auto-resize-quill {
+          .ql-container {
+            min-height: 200px !important;
+            height: auto !important;
+            max-height: 500px !important;
+            overflow-y: auto;
+          }
+
+          .ql-editor {
+            min-height: 200px !important;
+            height: auto !important;
+            padding: 12px 15px;
+            line-height: 1.6;
+          }
         }
       }
       
@@ -1186,34 +1221,100 @@ $dark-gray: #343a40;
 
 // Rich Text Editor Enhancements
 ::ng-deep {
-  .ql-editor {
-    min-height: 200px;
-    font-family: inherit;
-    font-size: 1rem;
-    line-height: 1.6;
+  .modal-content {
+    .ql-editor {
+      min-height: 200px;
+      font-family: inherit;
+      font-size: 1rem;
+      line-height: 1.6;
+      background: $white;
+      color: $dark-gray;
+      border: none;
 
-    &.ql-blank::before {
-      font-style: italic;
-      color: #adb5bd;
+      &.ql-blank::before {
+        font-style: italic;
+        color: #adb5bd;
+        content: attr(data-placeholder);
+      }
     }
-  }
 
-  .ql-toolbar {
-    border-top: 1px solid #e9ecef;
-    border-left: 1px solid #e9ecef;
-    border-right: 1px solid #e9ecef;
-    background: #f8f9fa;
-  }
+    .ql-toolbar {
+      border-top: 1px solid #e9ecef;
+      border-left: 1px solid #e9ecef;
+      border-right: 1px solid #e9ecef;
+      background: #f8f9fa;
+      border-radius: 8px 8px 0 0;
+      padding: 8px;
+    }
 
-  .ql-container {
-    border-bottom: 1px solid #e9ecef;
-    border-left: 1px solid #e9ecef;
-    border-right: 1px solid #e9ecef;
-    font-family: inherit;
-  }
+    .ql-container {
+      border-bottom: 1px solid #e9ecef;
+      border-left: 1px solid #e9ecef;
+      border-right: 1px solid #e9ecef;
+      font-family: inherit;
+      border-radius: 0 0 8px 8px;
+      background: $white;
+    }
 
-  .ql-toolbar .ql-formats {
-    margin-right: 15px;
+    .ql-toolbar .ql-formats {
+      margin-right: 15px;
+    }
+
+    // Ensure Quill editor is visible and properly sized
+    quill-editor {
+      display: block !important;
+      width: 100% !important;
+      margin-bottom: 1rem;
+
+      .ql-container {
+        min-height: 200px;
+        height: auto;
+        overflow-y: auto;
+      }
+
+      .ql-editor {
+        min-height: 200px;
+        height: auto;
+        overflow-y: visible;
+      }
+    }
+
+    // Auto-resize specific styling
+    .auto-resize-quill {
+      .ql-container {
+        height: auto !important;
+        min-height: 200px !important;
+        max-height: 500px !important;
+        overflow-y: auto;
+      }
+
+      .ql-editor {
+        height: auto !important;
+        min-height: 200px !important;
+        overflow-y: visible;
+        resize: vertical;
+      }
+    }
+
+    // Fix any potential z-index issues
+    .ql-tooltip {
+      z-index: 1100;
+    }
+
+    // Ensure toolbar buttons are visible
+    .ql-toolbar .ql-picker-label,
+    .ql-toolbar .ql-picker-options,
+    .ql-toolbar button {
+      color: $dark-gray;
+    }
+
+    .ql-toolbar button:hover {
+      color: $primary-green;
+    }
+
+    .ql-toolbar .ql-active {
+      color: $primary-green !important;
+    }
   }
 }
 
