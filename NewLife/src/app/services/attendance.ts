@@ -17,6 +17,17 @@ export class AttendanceService {
     // Only load localStorage in browser environment
     if (isPlatformBrowser(this.platformId)) {
       this.loadLocalAttendance();
+      // Attempt to sync any locally-saved attendance that hasn't yet
+      // reached Firebase if we are already online.
+      if (navigator.onLine) {
+        // Fire and forget
+        this.syncOfflineAttendance();
+      }
+      // When the browser regains network connectivity, push any
+      // queued attendance records to Firestore.
+      window.addEventListener('online', () => {
+        this.syncOfflineAttendance();
+      });
     }
   }
 
@@ -62,6 +73,35 @@ export class AttendanceService {
     return deviceId;
   }
 
+  /**
+   * Push locally cached attendance markers to Firebase once we have
+   * connectivity again. Runs silently; failures are logged but do not
+   * interrupt the user. Safe to call multiple times.
+   */
+  private async syncOfflineAttendance(): Promise<void> {
+    // Guard against non-browser or Firestore still unavailable
+    if (!isPlatformBrowser(this.platformId) || !navigator.onLine) {
+      return;
+    }
+
+    // Only attempt if we think Firebase is reachable
+    if (!this.eventService.isFirebaseConnected()) {
+      return;
+    }
+
+    const localMap = this.localAttendance();
+    for (const [eventId, attended] of localMap) {
+      if (!attended) continue;
+      try {
+        // If the event already contains our device ID this will resolve quickly
+        await this.eventService.markAttendance(eventId, this.getDeviceId());
+      } catch (err) {
+        console.warn('⚠️  Failed to sync offline attendance for event', eventId);
+        // Keep it in the queue; we will retry on next online event
+      }
+    }
+  }
+
   async markAttendance(eventId: string, userId?: string): Promise<void> {
     const deviceId = this.getDeviceId();
     
@@ -84,7 +124,11 @@ export class AttendanceService {
       localMap.set(eventId, true);
       this.localAttendance.set(localMap);
       this.saveLocalAttendance();
-      throw error; // Re-throw to show error to user
+      // Only notify callers if we are actually online – when offline we
+      // treat the action as queued rather than failed.
+      if (typeof navigator !== 'undefined' && navigator.onLine) {
+        throw error; // Re-throw so UI can show error
+      }
     } finally {
       this.isLoading.set(false);
     }
@@ -112,7 +156,10 @@ export class AttendanceService {
       localMap.delete(eventId);
       this.localAttendance.set(localMap);
       this.saveLocalAttendance();
-      throw error; // Re-throw to show error to user
+      // Only re-throw when online so UI can show error
+      if (typeof navigator !== 'undefined' && navigator.onLine) {
+        throw error;
+      }
     } finally {
       this.isLoading.set(false);
     }

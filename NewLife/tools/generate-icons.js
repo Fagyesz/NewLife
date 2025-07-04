@@ -21,12 +21,32 @@ if (!fs.existsSync(targetDir)) {
 
 (async () => {
   for (const size of sizes) {
-    const output = join(targetDir, `icon-${size}x${size}.png`);
-    await sharp(sourceSvg)
-      .resize(size, size, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+    // ---- create white background (maskable) default icon ----
+    const inner = Math.round(size * 0.8);
+    const pad = Math.round((size - inner) / 2);
+    const logoWhite = await sharp(sourceSvg)
+      .resize(inner, inner, { fit: 'contain', background: { r: 255, g: 255, b: 255, alpha: 1 } })
+      .flatten({ background: '#ffffff' })
       .png({ compressionLevel: 9 })
-      .toFile(output);
-    console.log('Created', output);
+      .toBuffer();
+
+    await sharp({ create: { width: size, height: size, channels: 4, background: '#ffffff' } })
+      .composite([{ input: logoWhite, left: pad, top: pad }])
+      .png({ compressionLevel: 9 })
+      .toFile(join(targetDir, `icon-${size}x${size}-v3.png`));
+
+    // ---- create transparent (any) icon with padding ----
+    const logoTransparent = await sharp(sourceSvg)
+      .resize(inner, inner, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+      .png({ compressionLevel: 9 })
+      .toBuffer();
+
+    await sharp({ create: { width: size, height: size, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } })
+      .composite([{ input: logoTransparent, left: pad, top: pad }])
+      .png({ compressionLevel: 9 })
+      .toFile(join(targetDir, `icon-${size}x${size}.png`));
+
+    console.log('Created set for size', size);
   }
-  console.log('✔ All icons generated successfully');
+  console.log('✔ All icons (white + transparent) generated');
 })(); 

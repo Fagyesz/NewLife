@@ -71,13 +71,8 @@
     <h2 class="text-center mb-3" animateOnScroll="fadeInDown" [animationDelay]="200">Közelgő események</h2>
     
     
-    <!-- Loading State -->
-    <div *ngIf="isLoading()" class="text-center">
-      <p>Események betöltése...</p>
-    </div>
-    
     <!-- Events List -->
-    <div class="upcoming-events-list" *ngIf="!isLoading()">
+    <div class="upcoming-events-list">
       <!-- Dynamic Events from Firebase -->
       <div *ngFor="let event of getUpcomingEvents(); trackBy: trackByEventId; let i = index" 
            class="upcoming-event-card" 
