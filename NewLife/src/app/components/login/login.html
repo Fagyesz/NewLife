@@ -55,7 +55,7 @@
         <div class="logged-in-state">
           <div class="user-info">
             @if (authService.getUserPhotoUrl()) {
-              <img [src]="authService.getUserPhotoUrl()" alt="Profilkép" class="user-avatar">
+              <img [src]="authService.getUserPhotoUrl()" alt="Profilkép" class="user-avatar" (error)="onImgError($event)">
             }
             <div class="user-details">
               <h3>{{ authService.getUserDisplayName() }}</h3>

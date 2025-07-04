@@ -76,4 +76,15 @@ export class Navigation {
     event.target.src = 'assets/img/logo/csak-logo.png';
     event.target.onerror = null; // Prevent infinite loop
   }
+
+  /**
+   * Fallback handler for user avatars – switches to a local icon if the
+   * remote (e.g. Google) image can't be loaded.
+   */
+  onImgError(event: Event) {
+    const imgEl = (event as any).target as HTMLImageElement;
+    // Prevent recursive error handling in case the fallback also fails
+    imgEl.onerror = null;
+    imgEl.src = '/icons/icon-128x128-v2.png';
+  }
 }

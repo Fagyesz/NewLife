@@ -35,9 +35,7 @@
         } @else {
           <div class="user-section">
             <div class="user-info">
-              @if (authService.getUserPhotoUrl()) {
-                <img [src]="authService.getUserPhotoUrl()" alt="Profilkép" class="user-avatar">
-              }
+              <img [src]="authService.getUserPhotoUrl()" alt="Profilkép" class="user-avatar" (error)="onImgError($event)">
               <div class="user-details">
                 <span class="user-name">{{ authService.getUserDisplayName() }}</span>
                 <span class="user-role" [class.dev]="authService.isDev()">{{ getUserRoleText() }}</span>

@@ -79,14 +79,19 @@ export class UserService {
       
       onSnapshot(q, (snapshot) => {
         const users: UserProfile[] = [];
-        snapshot.forEach((doc) => {
-          const data = doc.data();
-          users.push({
-            uid: doc.id,
+        snapshot.forEach((docSnap) => {
+          const data: any = docSnap.data();
+
+          // Normalise legacy photo field names so templates can always rely on photoURL
+          const normalised: UserProfile = {
+            uid: docSnap.id,
             ...data,
-            lastLogin: data['lastLogin']?.toDate() || new Date(),
-            createdAt: data['createdAt']?.toDate() || new Date()
-          } as UserProfile);
+            photoURL: data.photoURL || data.photoUrl || undefined,
+            lastLogin: data['lastLogin']?.toDate?.() || new Date(),
+            createdAt: data['createdAt']?.toDate?.() || new Date()
+          } as UserProfile;
+
+          users.push(normalised);
         });
         
         this.users.set(users);

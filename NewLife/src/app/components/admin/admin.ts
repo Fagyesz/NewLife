@@ -692,4 +692,15 @@ export class Admin implements OnInit {
     // Reset the tracking
     this.mouseDownTarget = null;
   }
+
+  /**
+   * Ensures every user avatar has a valid source. If the remote URL fails to
+   * load we replace it with a local fallback.
+   */
+  onUserImgError(event: Event): void {
+    const imgEl = (event as any).target as (HTMLImageElement | null);
+    if (!imgEl) return;
+    imgEl.onerror = null; // avoid infinite loop
+    imgEl.src = '/icons/icon-128x128-v2.png';
+  }
 }

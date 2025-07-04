@@ -20,12 +20,19 @@ export class AuthService {
   /** Unsubscribe function for the realtime user-profile listener */
   private profileUnsubscribe: (() => void) | null = null;
 
+  // Key used to cache the user profile in localStorage so we can display
+  // the Google avatar and name instantly without waiting for Firestore.
+  private static readonly LS_USER_PROFILE_KEY = 'cached-user-profile';
+
   constructor() {
     // Initialize auth state listener
     onAuthStateChanged(this.auth, async (user) => {
       this.user.set(user);
       
       if (user) {
+        // Try to populate profile from cache for instant UI feedback.
+        this.loadCachedUserProfile(user.uid);
+
         // Ensure we are listening to realtime changes on this profile
         this.startUserProfileListener(user.uid);
 
@@ -33,6 +40,7 @@ export class AuthService {
         await this.loadOrCreateUserProfile(user);
       } else {
         this.userProfile.set(null);
+        this.clearCachedUserProfile();
         // Cleanup listener when signed out
         if (this.profileUnsubscribe) {
           this.profileUnsubscribe();
@@ -48,12 +56,15 @@ export class AuthService {
       const userDoc = await getDoc(userRef);
       
       if (userDoc.exists()) {
-        // Update existing user
+        // Support both "photoURL" and legacy "photoUrl" field names
+        const rawData = userDoc.data() as any;
         const existingProfile = {
-          ...userDoc.data(),
+          ...rawData,
           uid: user.uid,
           lastLogin: new Date(),
-          createdAt: userDoc.data()['createdAt']?.toDate() || new Date()
+          createdAt: rawData['createdAt']?.toDate?.() || new Date(),
+          // Normalise the field so downstream code can safely use photoURL
+          photoURL: rawData.photoURL || rawData.photoUrl || undefined
         } as UserProfile;
         
         // Increment login count
@@ -67,13 +78,16 @@ export class AuthService {
         });
         
         // Update local profile
-        this.userProfile.set({
+        const updatedProfileLocal: UserProfile = {
           ...existingProfile,
           displayName: user.displayName || existingProfile.displayName,
           photoURL: user.photoURL || existingProfile.photoURL,
           lastLogin: new Date(),
           loginCount: newLoginCount
-        });
+        };
+        
+        this.userProfile.set(updatedProfileLocal);
+        this.cacheUserProfile(updatedProfileLocal);
         
         console.log('👤 User profile updated:', user.email, 'Login count:', newLoginCount);
       } else {
@@ -93,6 +107,7 @@ export class AuthService {
         
         await setDoc(userRef, newProfile);
         this.userProfile.set(newProfile);
+        this.cacheUserProfile(newProfile);
         
         console.log('🆕 New user profile created:', user.email, 'Role:', newProfile.role);
       }
@@ -228,9 +243,19 @@ export class AuthService {
     return profile?.email || '';
   }
 
-  getUserPhotoUrl(): string | undefined {
-    const profile = this.userProfile();
-    return profile?.photoURL;
+  /**
+   * Returns the most appropriate avatar image for the currently signed-in user.
+   * Order of preference:
+   *   1. Photo URL stored in the user profile document (keeps updates made in Firestore)
+   *   2. photoURL coming directly from the authenticated Firebase user object
+   *   3. Local fallback image placed in public/icons/
+   */
+  getUserPhotoUrl(): string {
+    const profilePhoto = this.userProfile()?.photoURL;
+    const authPhoto = this.user()?.photoURL;
+    // Some older documents might store the field as "photoUrl" (lowercase l).
+    const legacyPhoto = (this.userProfile() as any)?.photoUrl as string | undefined;
+    return profilePhoto || legacyPhoto || authPhoto || '/icons/icon-128x128-v2.png';
   }
 
   getUserRole(): string {
@@ -268,10 +293,43 @@ export class AuthService {
         } as UserProfile;
 
         this.userProfile.set(updatedProfile);
+        this.cacheUserProfile(updatedProfile);
         console.log('🔄 User profile updated via realtime listener:', updatedProfile.role);
       }
     }, (error) => {
       console.error('❌ Realtime user-profile listener error:', error);
     });
+  }
+
+  /** Loads a cached profile from localStorage (if any) to provide an immediate
+   *  user experience while Firestore fetches fresh data. */
+  private loadCachedUserProfile(uid: string): void {
+    if (typeof localStorage === 'undefined') return;
+    try {
+      const raw = localStorage.getItem(AuthService.LS_USER_PROFILE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw) as UserProfile;
+        if (parsed && parsed.uid === uid) {
+          this.userProfile.set(parsed);
+        }
+      }
+    } catch {
+      // Ignore JSON errors
+    }
+  }
+
+  /** Persists the given profile to localStorage for quick retrieval next time. */
+  private cacheUserProfile(profile: UserProfile): void {
+    if (typeof localStorage === 'undefined') return;
+    try {
+      localStorage.setItem(AuthService.LS_USER_PROFILE_KEY, JSON.stringify(profile));
+    } catch {
+      // Quota or other errors – ignore, not critical
+    }
+  }
+
+  private clearCachedUserProfile(): void {
+    if (typeof localStorage === 'undefined') return;
+    localStorage.removeItem(AuthService.LS_USER_PROFILE_KEY);
   }
 }

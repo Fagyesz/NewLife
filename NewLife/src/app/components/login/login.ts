@@ -88,4 +88,14 @@ export class Login {
     if (typeof localStorage === 'undefined') return false;
     return localStorage.getItem(this.cookieStorageKey) === 'true';
   }
+
+  /**
+   * Handles image errors for the user avatar shown after signing in.
+   * Falls back to a local icon to avoid broken images.
+   */
+  onImgError(event: Event) {
+    const imgEl = (event as any).target as HTMLImageElement;
+    imgEl.onerror = null; // prevent infinite loop
+    imgEl.src = '/icons/icon-128x128-v2.png';
+  }
 }
