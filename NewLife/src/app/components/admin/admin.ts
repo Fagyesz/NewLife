@@ -732,5 +732,32 @@ export class Admin implements OnInit {
     return `${last} ${parts.join(' ')}`.trim();
   }
 
+  /** Extracts clean text from HTML content for display in cards */
+  getCleanTextSummary(newsItem: News): string {
+    if (newsItem.summary) {
+      return newsItem.summary;
+    }
+    
+    if (!newsItem.content) {
+      return 'Nincs tartalom...';
+    }
+    
+    // Create a temporary DOM element to parse HTML
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = newsItem.content;
+    
+    // Get text content and clean it up
+    let textContent = tempDiv.textContent || tempDiv.innerText || '';
+    
+    // Remove extra whitespace and line breaks
+    textContent = textContent.replace(/\s+/g, ' ').trim();
+    
+    // Limit to 100 characters
+    if (textContent.length > 100) {
+      textContent = textContent.substring(0, 100) + '...';
+    }
+    
+    return textContent || 'Nincs tartalom...';
+  }
 
 }

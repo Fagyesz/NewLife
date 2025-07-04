@@ -323,7 +323,7 @@
           <div *ngFor="let newsItem of publishedNews" class="news-item published">
             <div class="news-info">
               <h4>{{ newsItem.title }}</h4>
-              <p class="news-summary">{{ newsItem.summary || (newsItem.content | slice:0:100) + '...' }}</p>
+              <p class="news-summary">{{ getCleanTextSummary(newsItem) }}</p>
               <div class="news-meta">
                 <span class="date">📅 {{ formatNewsDate(newsItem.publishedAt) }}</span>
                 <span class="author">👤 {{ newsItem.author }}</span>
@@ -362,7 +362,7 @@
           <div *ngFor="let newsItem of expiredNews" class="news-item expired">
             <div class="news-info">
               <h4>{{ newsItem.title }}</h4>
-              <p class="news-summary">{{ newsItem.summary || (newsItem.content | slice:0:100) + '...' }}</p>
+              <p class="news-summary">{{ getCleanTextSummary(newsItem) }}</p>
               <div class="news-meta">
                 <span class="date">📅 {{ formatNewsDate(newsItem.publishedAt) }}</span>
                 <span class="author">👤 {{ newsItem.author }}</span>
@@ -418,7 +418,7 @@
           <div *ngFor="let newsItem of inactiveNews" class="news-item inactive">
             <div class="news-info">
               <h4>{{ newsItem.title }}</h4>
-              <p class="news-summary">{{ newsItem.summary || (newsItem.content | slice:0:100) + '...' }}</p>
+              <p class="news-summary">{{ getCleanTextSummary(newsItem) }}</p>
               <div class="news-meta">
                 <span class="date">📅 {{ formatNewsDate(newsItem.publishedAt) }}</span>
                 <span class="author">👤 {{ newsItem.author }}</span>
@@ -457,7 +457,7 @@
           <div *ngFor="let newsItem of scheduledNews" class="news-item scheduled">
             <div class="news-info">
               <h4>{{ newsItem.title }}</h4>
-              <p class="news-summary">{{ newsItem.summary || (newsItem.content | slice:0:100) + '...' }}</p>
+              <p class="news-summary">{{ getCleanTextSummary(newsItem) }}</p>
               <div class="news-meta">
                 <span class="date">📅 Ütemezve: {{ formatNewsDate(newsItem.scheduledPublishAt!) }}</span>
                 <span class="author">👤 {{ newsItem.author }}</span>
@@ -500,7 +500,7 @@
           <div *ngFor="let newsItem of draftNews" class="news-item draft">
             <div class="news-info">
               <h4>{{ newsItem.title }}</h4>
-              <p class="news-summary">{{ newsItem.summary || (newsItem.content | slice:0:100) + '...' }}</p>
+              <p class="news-summary">{{ getCleanTextSummary(newsItem) }}</p>
               <div class="news-meta">
                 <span class="date">📅 Létrehozva: {{ formatNewsDate(newsItem.createdAt || newsItem.publishedAt) }}</span>
                 <span class="author">👤 {{ newsItem.author }}</span>
