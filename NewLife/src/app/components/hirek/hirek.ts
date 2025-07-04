@@ -1,4 +1,4 @@
-import { Component, signal, inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, signal, inject, OnInit, PLATFORM_ID, computed } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -19,27 +19,22 @@ export class Hirek implements OnInit {
   
   isSubscribing = signal(false);
   newsletterEmail = signal('');
-  allNews = signal<News[]>([]);
-  featuredNews = signal<News | null>(null);
-  regularNews = signal<News[]>([]);
+
+  // Reactive news signals that automatically update when NewsService data changes
+  allNews = computed(() => this.newsService.getPublishedNews());
+
+  featuredNews = computed(() => {
+    const news = this.allNews();
+    return news.length > 0 ? news[0] : null;
+  });
+
+  regularNews = computed(() => this.allNews().slice(1));
+
   selectedNews = signal<News | null>(null);
   showNewsModal = signal(false);
 
   ngOnInit(): void {
-    this.loadNews();
-  }
-
-  private loadNews(): void {
-    const publishedNews = this.newsService.getPublishedNews();
-    this.allNews.set(publishedNews);
-    
-    // Set featured news (latest news)
-    const featured = publishedNews.length > 0 ? publishedNews[0] : null;
-    this.featuredNews.set(featured);
-    
-    // Set regular news (remaining news)
-    const regular = publishedNews.slice(1);
-    this.regularNews.set(regular);
+    /* Intentionally left blank */
   }
 
   async subscribeToNewsletter() {
