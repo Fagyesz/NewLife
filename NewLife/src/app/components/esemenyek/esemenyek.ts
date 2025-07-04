@@ -2,21 +2,22 @@ import { Component, inject, signal, OnInit, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EventService, Event } from '../../services/event';
 import { AttendanceService } from '../../services/attendance';
-import { AuthService } from '../../services/auth';
 import { BubblesComponent } from '../../shared/bubbles/bubbles';
 import { AnimateOnScrollDirective } from '../../shared/directives/animate-on-scroll.directive';
 import { LazyImgDirective } from '../../shared/directives/lazy-img.directive';
+import { ConsentService } from '../../services/consent';
+import { CookieConsentModal } from '../../shared/components/cookie-consent-modal';
 
 @Component({
   selector: 'app-esemenyek',
-  imports: [CommonModule, BubblesComponent, AnimateOnScrollDirective, LazyImgDirective],
+  imports: [CommonModule, BubblesComponent, AnimateOnScrollDirective, LazyImgDirective, CookieConsentModal],
   templateUrl: './esemenyek.html',
   styleUrl: './esemenyek.scss'
 })
 export class Esemenyek implements OnInit {
   private eventService = inject(EventService);
   private attendanceService = inject(AttendanceService);
-  private authService = inject(AuthService);
+  private consentService = inject(ConsentService);
 
   // Signals for reactive UI
   events = this.eventService.events;
@@ -26,6 +27,7 @@ export class Esemenyek implements OnInit {
   // Event modal state
   showEventModal = signal<boolean>(false);
   selectedEvent = signal<Event | null>(null);
+  showConsentModal = signal(false);
 
   constructor() {
     // Reactively update attendance states whenever the events signal changes
@@ -58,6 +60,11 @@ export class Esemenyek implements OnInit {
   async toggleAttendance(event: Event) {
     if (!event.id) return;
 
+    if (!this.consentService.hasAnalyticsConsent()) {
+      this.showConsentModal.set(true);
+      return;
+    }
+
     try {
       this.isLoading.set(true);
       const currentState = this.attendanceStates().get(event.id) || false;
@@ -75,7 +82,11 @@ export class Esemenyek implements OnInit {
       
     } catch (error) {
       console.error('Error toggling attendance:', error);
-      alert('Hiba történt a részvétel jelzése során: ' + (error as Error).message);
+      if ((error as Error).message.includes('sütiket')) {
+        this.showConsentModal.set(true);
+      } else {
+        alert('Hiba történt a részvétel jelzése során: ' + (error as Error).message);
+      }
     } finally {
       this.isLoading.set(false);
     }
@@ -90,10 +101,16 @@ export class Esemenyek implements OnInit {
   }
 
   getAttendanceButtonText(eventId: string): string {
+    if (!this.consentService.hasAnalyticsConsent()) {
+      return 'Fogadja el a sütiket';
+    }
     return this.hasMarkedAttendance(eventId) ? 'Mégse' : 'Ott leszek';
   }
 
   getAttendanceButtonClass(eventId: string): string {
+    if (!this.consentService.hasAnalyticsConsent()) {
+      return 'btn btn-secondary disabled';
+    }
     return this.hasMarkedAttendance(eventId) ? 'btn btn-secondary' : 'btn btn-primary';
   }
 
@@ -196,5 +213,13 @@ export class Esemenyek implements OnInit {
 
     const googleCalendarUrl = `https://calendar.google.com/calendar/render?${params.toString()}`;
     window.open(googleCalendarUrl, '_blank');
+  }
+
+  onConsentAccepted() {
+    this.showConsentModal.set(false);
+  }
+
+  closeConsentModal() {
+    this.showConsentModal.set(false);
   }
 }

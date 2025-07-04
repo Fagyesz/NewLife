@@ -4,10 +4,12 @@ import { Navigation } from './shared/navigation/navigation';
 import { FloatingButtonComponent } from './shared/components/floating-button';
 import { ViewportScroller } from '@angular/common';
 import { filter } from 'rxjs/operators';
+import { ConsentBanner } from './shared/components/consent-banner';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navigation, FloatingButtonComponent],
+  standalone: true,
+  imports: [RouterOutlet, Navigation, FloatingButtonComponent, ConsentBanner],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

@@ -372,3 +372,35 @@
     transform: scale(0.7);
   }
 }
+
+// ---------------------------------------------------------------------------
+// Cookie consent checkbox – rebuilt from scratch
+// ---------------------------------------------------------------------------
+
+.cookie-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0 1.5rem;
+  font-size: 0.9rem;
+  color: #435160;
+
+  input[type='checkbox'] {
+    /* Use the browser-native checkbox but brand its accent colour */
+    accent-color: #399344;
+    width: 18px;   // base size so hit-area remains correct
+    height: 18px;
+    cursor: pointer;
+
+    /* Visually scale up the checkbox for better visibility */
+    transform: scale(1.35);
+    transform-origin: left center;
+    margin-right: 0.1rem;  // compensate slight shift due to scaling
+  }
+
+  span {
+    line-height: 1.4;
+    user-select: none;
+    font-weight: 500;
+  }
+}

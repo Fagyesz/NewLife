@@ -15,8 +15,22 @@ export class Login {
 
   isLoading = signal(false);
   errorMessage = signal<string | null>(null);
+  /**
+   * Tracks whether the visitor has accepted the technical cookies that are
+   * required for signing in. The initial value is loaded from localStorage so
+   * the user only needs to accept once.
+   */
+  loginCookieAccepted = signal(this.loadStoredCookieAcceptance());
+
+  /** LocalStorage key where we remember the visitor's decision */
+  private readonly cookieStorageKey = 'login-cookie-accepted';
 
   async signInWithGoogle() {
+    if (!this.loginCookieAccepted()) {
+      this.errorMessage.set('Kérjük fogadja el a bejelentkezéshez szükséges sütiket.');
+      return;
+    }
+
     try {
       this.isLoading.set(true);
       this.errorMessage.set(null);
@@ -54,5 +68,24 @@ export class Login {
       case 'dev': return 'Fejlesztő';
       default: return 'Tag';
     }
+  }
+
+  /**
+   * Persists the checkbox state so returning visitors don't have to accept it
+   * again. Runs only in the browser.
+   */
+  toggleCookieAccepted(event: Event) {
+    const checked = (event.target as HTMLInputElement).checked;
+    this.loginCookieAccepted.set(checked);
+
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem(this.cookieStorageKey, String(checked));
+    }
+  }
+
+  /** Reads the saved consent value (if any) from localStorage. */
+  private loadStoredCookieAcceptance(): boolean {
+    if (typeof localStorage === 'undefined') return false;
+    return localStorage.getItem(this.cookieStorageKey) === 'true';
   }
 }

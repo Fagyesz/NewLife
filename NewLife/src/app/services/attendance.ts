@@ -1,21 +1,26 @@
 import { Injectable, inject, signal, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { EventService } from './event';
+import { ConsentService } from './consent';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AttendanceService {
   private eventService = inject(EventService);
+  private consentService = inject(ConsentService);
   private platformId = inject(PLATFORM_ID);
   
   // Signals for reactive state
   isLoading = signal(false);
   private localAttendance = signal<Map<string, boolean>>(new Map());
 
+  /** Holds a non-persistent device ID for sessions where consent is denied */
+  private sessionDeviceId: string | null = null;
+
   constructor() {
-    // Only load localStorage in browser environment
-    if (isPlatformBrowser(this.platformId)) {
+    // Only load localStorage in browser environment and after consent
+    if (isPlatformBrowser(this.platformId) && this.consentService.hasAnalyticsConsent()) {
       this.loadLocalAttendance();
       // Attempt to sync any locally-saved attendance that hasn't yet
       // reached Firebase if we are already online.
@@ -32,7 +37,7 @@ export class AttendanceService {
   }
 
   private loadLocalAttendance(): void {
-    if (!isPlatformBrowser(this.platformId)) {
+    if (!isPlatformBrowser(this.platformId) || !this.consentService.hasAnalyticsConsent()) {
       return; // Skip localStorage operations on server
     }
 
@@ -52,7 +57,7 @@ export class AttendanceService {
   }
 
   private saveLocalAttendance(): void {
-    if (!isPlatformBrowser(this.platformId)) {
+    if (!isPlatformBrowser(this.platformId) || !this.consentService.hasAnalyticsConsent()) {
       return; // Skip localStorage operations on server
     }
 
@@ -61,14 +66,21 @@ export class AttendanceService {
   }
 
   private getDeviceId(): string {
-    if (!isPlatformBrowser(this.platformId)) {
-      return 'server-fallback-' + Math.random().toString(36).substring(2, 15);
+    // If consent denied or we are on server, use an in-memory device id that is
+    // stable for the current session but not persisted.
+    if (!isPlatformBrowser(this.platformId) || !this.consentService.hasAnalyticsConsent()) {
+      if (!this.sessionDeviceId) {
+        this.sessionDeviceId = 'session-' + Math.random().toString(36).substring(2, 15);
+      }
+      return this.sessionDeviceId;
     }
 
     let deviceId = localStorage.getItem('church-device-id');
     if (!deviceId) {
       deviceId = 'device-' + Math.random().toString(36).substring(2, 15);
-      localStorage.setItem('church-device-id', deviceId);
+      if (this.consentService.hasAnalyticsConsent()) {
+        localStorage.setItem('church-device-id', deviceId);
+      }
     }
     return deviceId;
   }
@@ -103,6 +115,10 @@ export class AttendanceService {
   }
 
   async markAttendance(eventId: string, userId?: string): Promise<void> {
+    if (!this.consentService.hasAnalyticsConsent()) {
+      throw new Error('A részvétel jelzéséhez kérjük fogadja el a sütiket / analytics használatát.');
+    }
+
     const deviceId = this.getDeviceId();
     
     try {
@@ -135,6 +151,10 @@ export class AttendanceService {
   }
 
   async removeAttendance(eventId: string): Promise<void> {
+    if (!this.consentService.hasAnalyticsConsent()) {
+      throw new Error('A részvétel visszavonásához kérjük fogadja el a sütiket / analytics használatát.');
+    }
+
     const deviceId = this.getDeviceId();
     
     try {
@@ -166,6 +186,10 @@ export class AttendanceService {
   }
 
   async hasMarkedAttendance(eventId: string): Promise<boolean> {
+    if (!this.consentService.hasAnalyticsConsent()) {
+      return false;
+    }
+
     const deviceId = this.getDeviceId();
     
     // Check local storage first (faster and works offline)

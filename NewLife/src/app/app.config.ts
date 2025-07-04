@@ -6,7 +6,6 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
-import { provideAnalytics, getAnalytics } from '@angular/fire/analytics';
 import { importProvidersFrom, isDevMode } from '@angular/core';
 import { QuillModule } from 'ngx-quill';
 import { environment } from '../environments/environment';
@@ -26,7 +25,6 @@ export const appConfig: ApplicationConfig = {
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-    ...(environment.production ? [provideAnalytics(() => getAnalytics())] : []),
     importProvidersFrom(QuillModule.forRoot()), 
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),

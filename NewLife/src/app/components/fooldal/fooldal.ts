@@ -3,22 +3,25 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { EventService, Event } from '../../services/event';
 import { AttendanceService } from '../../services/attendance';
+import { ConsentService } from '../../services/consent';
 import { NewsService, News } from '../../services/user';
 import { LiveStreamService } from '../../services/live-stream';
 import { BubblesComponent } from '../../shared/bubbles/bubbles';
 import { LazyImgDirective } from '../../shared/directives/lazy-img.directive';
 import { AnimateOnScrollDirective } from '../../shared/directives/animate-on-scroll.directive';
 import { LoadingSpinnerComponent } from '../../shared/components/loading-spinner';
+import { CookieConsentModal } from '../../shared/components/cookie-consent-modal';
 
 @Component({
   selector: 'app-fooldal',
-  imports: [CommonModule, RouterModule, BubblesComponent, LazyImgDirective, AnimateOnScrollDirective, LoadingSpinnerComponent],
+  imports: [CommonModule, RouterModule, BubblesComponent, LazyImgDirective, AnimateOnScrollDirective, LoadingSpinnerComponent, CookieConsentModal],
   templateUrl: './fooldal.html',
   styleUrl: './fooldal.scss'
 })
 export class Fooldal implements OnInit, OnDestroy {
   private eventService = inject(EventService);
   private attendanceService = inject(AttendanceService);
+  private consentService = inject(ConsentService);
   private newsService = inject(NewsService);
   private liveStreamService = inject(LiveStreamService);
   private platformId = inject(PLATFORM_ID);
@@ -44,6 +47,9 @@ export class Fooldal implements OnInit, OnDestroy {
   // Loading states for different sections
   eventsLoading = signal(false);
   newsLoading = signal(false);
+  
+  // Consent modal state
+  showConsentModal = signal(false);
   
   private countdownInterval: any;
 
@@ -99,6 +105,11 @@ export class Fooldal implements OnInit, OnDestroy {
   async toggleAttendance(event: Event) {
     if (!event.id) return;
 
+    if (!this.consentService.hasAnalyticsConsent()) {
+      this.showConsentModal.set(true);
+      return;
+    }
+
     try {
       this.isLoading.set(true);
       const currentState = this.attendanceStates().get(event.id) || false;
@@ -127,14 +138,18 @@ export class Fooldal implements OnInit, OnDestroy {
   }
 
   getAttendanceButtonText(eventId: string): string {
+    if (!this.consentService.hasAnalyticsConsent()) {
+      return 'Fogadja el a sütiket';
+    }
     return this.hasMarkedAttendance(eventId) ? 'Mégse' : 'Ott leszek';
   }
 
   getAttendanceButtonClass(eventId: string): string {
+    if (!this.consentService.hasAnalyticsConsent()) {
+      return 'btn btn-secondary disabled';
+    }
     return this.hasMarkedAttendance(eventId) ? 'btn btn-secondary' : 'btn btn-primary';
   }
-
-
 
   private startCountdown(): void {
     this.updateCountdown();
@@ -382,5 +397,14 @@ export class Fooldal implements OnInit, OnDestroy {
 
   loadMoreNews() {
     this.newsService.loadMoreNews();
+  }
+
+  // Consent modal handlers
+  onConsentAccepted() {
+    this.showConsentModal.set(false);
+  }
+
+  closeConsentModal() {
+    this.showConsentModal.set(false);
   }
 }

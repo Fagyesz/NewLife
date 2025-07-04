@@ -30,7 +30,7 @@
           <button 
             class="google-signin-btn"
             (click)="signInWithGoogle()"
-            [disabled]="isLoading()">
+            [disabled]="isLoading() || !loginCookieAccepted()">
             @if (isLoading()) {
               <div class="loading-spinner"></div>
               <span>Bejelentkezés...</span>
@@ -39,6 +39,11 @@
               <span>Google bejelentkezés</span>
             }
           </button>
+
+          <label class="cookie-checkbox">
+            <input type="checkbox" (change)="toggleCookieAccepted($event)" [checked]="loginCookieAccepted()">
+            <span>Elfogadom a bejelentkezéshez szükséges technikai sütik használatát</span>
+          </label>
 
           @if (errorMessage()) {
             <div class="error-message">

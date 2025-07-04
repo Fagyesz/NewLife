@@ -269,4 +269,7 @@
   </div>
 </div>
 
+<!-- Modal components -->
+<app-cookie-consent-modal *ngIf="showConsentModal()" (accepted)="onConsentAccepted()" (closed)="closeConsentModal()"></app-cookie-consent-modal>
+
 

@@ -1,6 +1,6 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { Firestore, collection, query, where, orderBy, onSnapshot, doc, updateDoc, getDocs, addDoc, deleteDoc } from '@angular/fire/firestore';
+import { Firestore, collection, query, where, orderBy, onSnapshot, doc, updateDoc, getDocs, addDoc, deleteDoc, getDoc } from '@angular/fire/firestore';
 import { AuthService } from './auth';
 
 export interface UserProfile {
@@ -178,6 +178,38 @@ export class UserService {
     cutoff.setDate(cutoff.getDate() - days);
     
     return this.users().filter(user => user.lastLogin >= cutoff);
+  }
+
+  // ---------------------------------------------------------------------------
+  // GDPR helpers for data portability / erasure
+  // ---------------------------------------------------------------------------
+
+  /**
+   * Returns a JSON-serialisable snapshot of the currently signed-in user's data
+   * (profile + any other collections you decide to add later).
+   */
+  async exportCurrentUserData(): Promise<any> {
+    const user = this.authService.user();
+    if (!user) throw new Error('Nincs bejelentkezve felhasználó');
+
+    const profileSnap = await getDoc(doc(this.firestore, 'users', user.uid));
+    const profile = profileSnap.exists() ? profileSnap.data() : null;
+
+    return { profile };
+  }
+
+  /**
+   * Permanently deletes the user's account and profile document. Note: Firebase
+   * Auth may require recent login – handle re-authentication at call-site.
+   */
+  async deleteCurrentUserAccount(): Promise<void> {
+    const user = this.authService.user();
+    if (!user) throw new Error('Nincs bejelentkezve felhasználó');
+
+    // Delete profile doc from Firestore
+    await deleteDoc(doc(this.firestore, 'users', user.uid));
+    // Delete auth record – user.delete() requires that this code runs client-side
+    await user.delete();
   }
 }
 
