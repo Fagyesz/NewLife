@@ -341,18 +341,44 @@ export class Fooldal implements OnInit, OnDestroy {
     if (!content) {
       return '';
     }
+
+    // Helper to clean HTML to plain text
+    const stripHtml = (html: string): string => {
+      return html
+        .replace(/<[^>]+>/g, '')      // remove tags
+        .replace(/&nbsp;/g, ' ')      // replace &nbsp;
+        .replace(/\s+/g, ' ')         // collapse whitespace
+        .trim();
+    };
+
+    // Convert to plain text depending on platform
+    let text: string;
     if (isPlatformBrowser(this.platformId)) {
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = content;
-      const text = tempDiv.textContent || tempDiv.innerText || '';
-      if (text.length <= maxLength) return text;
-      return text.substring(0, maxLength) + '...';
+      text = (tempDiv.textContent || tempDiv.innerText || '').trim();
+      text = text.replace(/\s+/g, ' '); // collapse whitespace
     } else {
-      // Basic fallback for SSR
-      const plainText = content.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ');
-      if (plainText.length <= maxLength) return plainText;
-      return plainText.substring(0, maxLength) + '...';
+      text = stripHtml(content);
     }
+
+    if (text.length <= maxLength) {
+      return text;
+    }
+
+    // Cut to maxLength but try not to break words
+    let truncated = text.slice(0, maxLength);
+
+    // If we are in the middle of a word, remove the partial word
+    const lastSpace = truncated.lastIndexOf(' ');
+    if (lastSpace > maxLength - 15) { // tolerance so we don't remove too much
+      truncated = truncated.slice(0, lastSpace);
+    }
+
+    // Remove dangling punctuation (common opening chars, commas, etc.)
+    truncated = truncated.replace(/[\s,;:!?.\-+()\[\{]+$/g, '');
+
+    return truncated + '...';
   }
 
   // Live stream helper methods
